@@ -3,22 +3,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hubmerto.com</title>
+    <title>HUBMERTO</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            width: 100%;
+            height: 100vh;
             background: #0a0a0a;
-            color: #fafafa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
-        h1 { font-size: 2rem; font-weight: 300; letter-spacing: 0.05em; }
+        #canvas {
+            width: 100%;
+            height: 100%;
+            font-family: monospace;
+            color: #ff0022;
+            font-size: clamp(8px, 1.2vw, 16px);
+            line-height: 1;
+            letter-spacing: 0.1em;
+            text-shadow: 0 0 20px rgba(255, 0, 34, 0.8);
+            font-weight: 300;
+            user-select: none;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
-    <h1>hubmerto.com</h1>
+<div id="canvas"></div>
+<script>
+(function() {
+    const canvas = document.getElementById("canvas");
+    const mousePos = { x: -1, y: -1 };
+    const width = 70;
+    const height = 50;
+    let grid = [];
+    let extendGrid = [];
+    let time = 0;
+    const word = "HUBMERTO";
+
+    canvas.addEventListener("mousemove", function(e) {
+        const rect = canvas.getBoundingClientRect();
+        const charWidth = rect.width / width;
+        const charHeight = rect.height / height;
+        mousePos.x = Math.floor((e.clientX - rect.left) / charWidth);
+        mousePos.y = Math.floor((e.clientY - rect.top) / charHeight);
+    });
+
+    function initGrid() {
+        grid = [];
+        extendGrid = [];
+        for (let y = 0; y < height; y++) {
+            let row = [];
+            let extendRow = [];
+            for (let x = 0; x < width; x++) {
+                row.push(" ");
+                extendRow.push(1);
+            }
+            grid.push(row);
+            extendGrid.push(extendRow);
+        }
+    }
+
+    function render() {
+        let html = "";
+        for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
+                const char = grid[y][x];
+                const extend = extendGrid[y][x];
+                if (char !== " " && extend > 1) {
+                    const scale = Math.min(extend, 3);
+                    html += '<span style="display:inline-block;transform:scale(' + scale + ');transform-origin:center;letter-spacing:' + ((scale - 1) * 0.5) + 'em;">' + char + '</span>';
+                } else {
+                    html += char;
+                }
+            }
+            html += "<br>";
+        }
+        canvas.innerHTML = html;
+    }
+
+    function drawCircle(cx, cy, r, char, filled) {
+        for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
+                const dx = x - cx;
+                const dy = (y - cy) * 2;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (filled) {
+                    if (dist < r) grid[y][x] = char;
+                } else {
+                    if (Math.abs(dist - r) < 1.5) grid[y][x] = char;
+                }
+            }
+        }
+    }
+
+    function drawLine(x1, y1, x2, y2, char) {
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const steps = Math.max(Math.abs(dx), Math.abs(dy) * 2);
+        for (let i = 0; i <= steps; i++) {
+            const t = i / steps;
+            const x = Math.round(x1 + dx * t);
+            const y = Math.round(y1 + dy * t);
+            if (x >= 0 && x < width && y >= 0 && y < height) {
+                grid[y][x] = char;
+            }
+        }
+    }
+
+    function update() {
+        initGrid();
+        const t = time * 0.15;
+        const intensity = Math.sin(t * 0.5) * 0.5 + 0.5;
+        const shake = Math.sin(t * 4) * 3 + Math.sin(t * 7) * 1.5;
+        const centerX = Math.floor(width / 2) + Math.floor(shake);
+        const centerY = Math.floor(height / 2);
+        const mx = mousePos.x;
+        const my = mousePos.y;
+
+        for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
+                if (mx >= 0 && my >= 0) {
+                    const dx = x - mx;
+                    const dy = (y - my) * 2;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 8) {
+                        extendGrid[y][x] = 1 + (8 - dist) / 4;
+                    }
+                }
+            }
+        }
+
+        const headRadius = 18;
+        const numPoints = 60;
+        for (let i = 0; i < numPoints; i++) {
+            const angle = (i / numPoints) * Math.PI * 2;
+            const distortion = Math.sin(t * 2 + i * 0.5) * 3;
+            const x = centerX + Math.floor(Math.cos(angle) * (headRadius + distortion));
+            const y = centerY + Math.floor(Math.sin(angle) * (headRadius / 2 + distortion));
+            if (x >= 0 && x < width && y >= 0 && y < height) {
+                grid[y][x] = word[i % word.length];
+            }
+        }
+
+        const eyeY = centerY - 6;
+        const leftEyeX = centerX - 8;
+        const rightEyeX = centerX + 8;
+        drawCircle(leftEyeX, eyeY, 3, word[time % word.length], true);
+        drawCircle(rightEyeX, eyeY, 3, word[(time + 4) % word.length], true);
+
+        const pupilShake = Math.sin(t * 3) * 1.5;
+        grid[eyeY][leftEyeX + Math.floor(pupilShake)] = "O";
+        grid[eyeY][rightEyeX + Math.floor(pupilShake)] = "O";
+
+        drawLine(leftEyeX - 4, eyeY - 4, leftEyeX + 2, eyeY - 3, word[0]);
+        drawLine(rightEyeX - 2, eyeY - 3, rightEyeX + 4, eyeY - 4, word[1]);
+
+        const mouthY = centerY + 5;
+        const mouthOpenness = 12 + Math.floor(intensity * 6);
+        const mouthWidth = 8;
+
+        for (let y = mouthY - 3; y < mouthY + mouthOpenness; y++) {
+            for (let x = centerX - mouthWidth; x < centerX + mouthWidth; x++) {
+                const dx2 = (x - centerX) / mouthWidth;
+                const dy2 = (y - (mouthY + mouthOpenness / 2)) / (mouthOpenness / 2);
+                const dist = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+                if (Math.abs(dist - 1) < 0.25) {
+                    if (y >= 0 && y < height && x >= 0 && x < width) {
+                        grid[y][x] = word[(x + y + time) % word.length];
+                    }
+                }
+            }
+        }
+
+        for (let y = mouthY - 2; y < mouthY + mouthOpenness - 1; y++) {
+            for (let x = centerX - (mouthWidth - 1); x < centerX + (mouthWidth - 1); x++) {
+                const dx2 = (x - centerX) / (mouthWidth - 1);
+                const dy2 = (y - (mouthY + mouthOpenness / 2)) / (mouthOpenness / 2 - 1);
+                const dist = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+                if (dist < 1) {
+                    if (y >= 0 && y < height && x >= 0 && x < width) {
+                        const chaos = Math.floor(Math.random() * 3);
+                        grid[y][x] = word[(time + x + y + chaos) % word.length];
+                    }
+                }
+            }
+        }
+
+        const numLines = 30;
+        for (let i = 0; i < numLines; i++) {
+            const angle = (i / numLines) * Math.PI * 2 + t * 0.3;
+            const pulsate = Math.sin(t * 3 + i * 0.5) * 8;
+            const length = 20 + pulsate;
+            const thickness = Math.floor(Math.random() * 2) + 1;
+            const x1 = centerX + Math.floor(Math.cos(angle) * 22);
+            const y1 = centerY + Math.floor(Math.sin(angle) * 11);
+            const x2 = centerX + Math.floor(Math.cos(angle) * (22 + length));
+            const y2 = centerY + Math.floor(Math.sin(angle) * (11 + length / 2));
+            for (let offset = -thickness; offset <= thickness; offset++) {
+                const offsetAngle = angle + Math.PI / 2;
+                const ox = Math.floor(Math.cos(offsetAngle) * offset * 0.5);
+                const oy = Math.floor(Math.sin(offsetAngle) * offset * 0.25);
+                drawLine(x1 + ox, y1 + oy, x2 + ox, y2 + oy, word[i % word.length]);
+            }
+        }
+
+        if (Math.floor(time) % 15 === 0) {
+            const burstLines = 8;
+            for (let i = 0; i < burstLines; i++) {
+                const angle = (i / burstLines) * Math.PI * 2;
+                const length = 25 + Math.random() * 10;
+                const x1b = centerX;
+                const y1b = centerY;
+                const x2b = centerX + Math.floor(Math.cos(angle) * length);
+                const y2b = centerY + Math.floor((Math.sin(angle) * length) / 2);
+                drawLine(x1b, y1b, x2b, y2b, word[i % word.length]);
+            }
+        }
+
+        for (let i = 0; i < 5; i++) {
+            const tearX = leftEyeX + Math.floor(Math.random() * 3) - 1;
+            const tearY = eyeY + 2 + (Math.floor((time + i * 3) * 0.5) % 18);
+            if (tearY >= 0 && tearY < height && tearX >= 0 && tearX < width) {
+                grid[tearY][tearX] = word[(tearY + i) % word.length];
+            }
+            const tearX2 = rightEyeX + Math.floor(Math.random() * 3) - 1;
+            const tearY2 = eyeY + 2 + (Math.floor((time + i * 4) * 0.5) % 18);
+            if (tearY2 >= 0 && tearY2 < height && tearX2 >= 0 && tearX2 < width) {
+                grid[tearY2][tearX2] = word[(tearY2 + i + 3) % word.length];
+            }
+        }
+
+        const floatingLetters = 12;
+        for (let i = 0; i < floatingLetters; i++) {
+            const floatAngle = time * 0.08 + (i * Math.PI) / 6;
+            const floatRadius = 26 + Math.sin(time * 0.15 + i) * 7;
+            const fx = centerX + Math.floor(Math.cos(floatAngle) * floatRadius);
+            const fy = centerY + Math.floor(Math.sin(floatAngle) * (floatRadius / 2));
+            if (fx >= 0 && fx < width && fy >= 0 && fy < height) {
+                grid[fy][fx] = word[i % word.length];
+            }
+        }
+
+        const fistX = width - 20;
+        const fistY = height - 15;
+        const fistPunch = Math.sin(t * 0.8) * 3;
+
+        for (let i = 0; i < 8; i++) {
+            const armX = fistX - 15 + i;
+            const armY = fistY + 8;
+            if (armX >= 0 && armX < width && armY >= 0 && armY < height) {
+                grid[armY][armX] = word[i % word.length];
+                if (armY + 1 < height) grid[armY + 1][armX] = word[i % word.length];
+            }
+        }
+
+        const fistOffsetX = Math.floor(fistPunch);
+        for (let y2 = 0; y2 < 8; y2++) {
+            for (let x2 = 0; x2 < 10; x2++) {
+                const fx = fistX + x2 + fistOffsetX;
+                const fy = fistY + y2;
+                const inFist = (y2 < 3 && x2 > 1 && x2 < 9) || (y2 >= 3 && y2 < 6 && x2 > 0 && x2 < 9) || (y2 >= 6 && x2 > 2 && x2 < 8);
+                if (inFist && fx >= 0 && fx < width && fy >= 0 && fy < height) {
+                    grid[fy][fx] = word[(x2 + y2 + time) % word.length];
+                }
+            }
+        }
+
+        const knuckles = [
+            { x: fistX + 3 + fistOffsetX, y: fistY + 1 },
+            { x: fistX + 5 + fistOffsetX, y: fistY + 1 },
+            { x: fistX + 7 + fistOffsetX, y: fistY + 1 },
+        ];
+        knuckles.forEach(function(knuckle, i) {
+            if (knuckle.x >= 0 && knuckle.x < width && knuckle.y >= 0 && knuckle.y < height) {
+                grid[knuckle.y][knuckle.x] = "X";
+                if (knuckle.y + 1 < height) grid[knuckle.y + 1][knuckle.x] = word[i];
+            }
+        });
+
+        for (let i = 0; i < 4; i++) {
+            const thumbX = fistX + 1 + fistOffsetX;
+            const thumbY = fistY + 4 + i;
+            if (thumbX >= 0 && thumbX < width && thumbY >= 0 && thumbY < height) {
+                grid[thumbY][thumbX] = word[i % word.length];
+            }
+        }
+
+        time++;
+    }
+
+    function animate() {
+        update();
+        render();
+        requestAnimationFrame(animate);
+    }
+
+    initGrid();
+    requestAnimationFrame(animate);
+})();
+</script>
 </body>
 </html>
