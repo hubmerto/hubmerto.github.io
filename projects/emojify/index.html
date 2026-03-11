@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hubmerto — emojify</title>
+    <title>hubmerto.emojify</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
@@ -70,7 +70,7 @@
         }
 
         .description {
-            font-size: clamp(15px, 1.8vw, 19px);
+            font-size: clamp(14px, 1.8vw, 19px);
             color: #888;
             font-weight: 300;
             line-height: 1.8;
@@ -142,27 +142,22 @@
         @media (max-width: 600px) {
             .page-header {
                 padding: 18px 16px;
-                flex-direction: column;
             }
             nav {
-                gap: 16px;
-                margin-bottom: 24px;
+                gap: 12px;
+            }
+            nav a {
+                font-size: 12px;
             }
             main {
                 padding: 0;
                 max-width: 100%;
             }
+            .description, .context, .try-link {
+                font-size: 14px;
+            }
             .image-grid {
                 grid-template-columns: 1fr;
-                margin-left: -16px;
-                margin-right: -16px;
-                width: calc(100% + 32px);
-            }
-            .project-image {
-                margin-left: -16px;
-                margin-right: -16px;
-                width: calc(100% + 32px);
-                max-width: none;
             }
         }
     </style>
@@ -179,33 +174,25 @@
     <p class="tags">webgl, creative code</p>
 
     <p class="description">
-        A real-time emoji mosaic tool that transforms any image, video, or live camera feed into a dense grid of emojis. Each pixel region is matched to the closest emoji by color and luminance, producing a playful visual translation that preserves shape, contrast, and motion.
+        Emojis are the hieroglyphs of the internet. A universal shorthand that compresses identity, emotion, and context into a single glyph. Emojify reverses that compression. Instead of reducing an image to a symbol, it reconstructs the image entirely from symbols, turning a contemporary visual language back into the thing it was always trying to represent.
     </p>
 
     <div class="project-image">
         <img src="images/emojisaic-1.png" alt="Emojify mosaic — warm tones">
     </div>
 
-    <p class="context">
-        The tool runs in two modes. Upload mode accepts images and videos up to 15 seconds, with output as PNG, JPG, MP4, or GIF. Camera mode streams your webcam in real time, with a shutter button to capture snapshots you can save or share directly from the browser.
-    </p>
-
-    <p class="context">
-        Grid resolution is adjustable from 4 to 48 pixels per cell, letting you shift between tight photographic detail and large, abstract emoji blocks. A block-merging system groups adjacent identical tiles into larger clusters, scaling the emoji proportionally for a cleaner read at low resolutions.
-    </p>
-
     <div class="image-grid">
         <img src="images/emojisaic.gif" alt="Emojify in action">
         <img src="images/emojisaic-2.png" alt="Emojify mosaic — cool tones">
     </div>
 
-    <p class="context">
-        Color matching uses Euclidean distance against a palette of 590 Apple emojis. The algorithm samples the average color of each grid cell and finds the nearest emoji by L2 distance, preserving edges and facial features even at coarse resolutions. The atlas is cached in memory for fast lookup across frames.
-    </p>
-
     <div class="project-image">
         <img src="images/emojify-sizes.gif" alt="Emojify — grid size from 1 to 48">
     </div>
+
+    <p class="context">
+        Upload images or videos up to 15 seconds, or stream your webcam in real time. Grid resolution adjusts from 4 to 48 pixels per cell — tight photographic detail at one end, large abstract blocks at the other. A merging system groups adjacent identical tiles into larger clusters for cleaner reads at low resolutions. Color matching runs Euclidean distance against 590 Apple emojis, cached in memory for fast lookup across frames.
+    </p>
 
     <p class="context">
         Video processing includes presets for speed and quality — Fast (16px grid, 10fps), Balanced (12px, 8fps), and High Detail (8px, 5fps). Camera mode runs client-side frame scaling before sending to the server, keeping the stream smooth on both desktop and mobile.
