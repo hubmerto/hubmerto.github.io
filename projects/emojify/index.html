@@ -96,6 +96,20 @@
             margin-bottom: 48px;
         }
 
+        .image-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+
+        .image-grid img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+            aspect-ratio: 1;
+        }
+
         .try-link {
             display: inline-flex;
             align-items: center;
@@ -129,6 +143,7 @@
             .page-header { padding: 18px 20px; }
             main { padding: 0; }
             nav { gap: 16px; }
+            .image-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -155,17 +170,14 @@
         Built with WebGL for GPU-accelerated rendering. The system samples the input frame, divides it into a uniform grid, and performs a nearest-neighbor lookup against a pre-computed emoji atlas. The result updates every frame, producing a fluid mosaic that follows motion and lighting changes in real time.
     </p>
 
-    <div class="project-image">
+    <div class="image-grid">
         <img src="images/emojisaic.gif" alt="Emojify in action">
+        <img src="images/emojisaic-2.png" alt="Emojify mosaic — cool tones">
     </div>
 
     <p class="context">
         The emoji selection considers both average color and structural contrast within each cell, which helps preserve edges and facial features even at low grid resolutions. The atlas was generated from Apple emoji rendered at 64px, then downsampled for fast texture lookup.
     </p>
-
-    <div class="project-image">
-        <img src="images/emojisaic-2.png" alt="Emojify mosaic — cool tones">
-    </div>
 
     <a class="try-link" href="/emojify">Try Emojify here &#8594;</a>
 </main>
