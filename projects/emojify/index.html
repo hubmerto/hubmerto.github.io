@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hubmerto — projects</title>
+    <title>hubmerto — emojify</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
@@ -30,6 +30,7 @@
             display: flex;
             gap: 24px;
             background: transparent;
+            flex-shrink: 0;
         }
 
         nav a {
@@ -47,7 +48,7 @@
         /* Main content */
         main {
             padding: 0;
-            max-width: 800px;
+            max-width: 900px;
         }
 
         h1 {
@@ -60,56 +61,58 @@
             letter-spacing: 0.08em;
         }
 
-        .subtitle {
+        .tags {
+            font-size: clamp(12px, 1.4vw, 14px);
+            color: #555;
+            font-weight: 300;
+            margin-bottom: 32px;
+            letter-spacing: 0.05em;
+        }
+
+        .description {
             font-size: clamp(13px, 1.4vw, 15px);
             color: #888;
             font-weight: 300;
-            margin-bottom: 48px;
             line-height: 1.8;
+            margin-bottom: 48px;
+            max-width: 640px;
         }
 
-        /* Projects list */
-        .project-item {
-            margin-bottom: 32px;
+        .project-image {
+            width: 100%;
+            max-width: 900px;
+            margin-bottom: 48px;
         }
 
-        .project-name {
-            position: relative;
+        .project-image img {
+            width: 100%;
+            display: block;
+        }
+
+        .context {
+            font-size: clamp(12px, 1.4vw, 14px);
+            color: #777;
+            font-weight: 300;
+            line-height: 1.8;
+            margin-bottom: 48px;
+            max-width: 640px;
+        }
+
+        .try-link {
             display: inline-flex;
             align-items: center;
-            font-size: clamp(14px, 1.6vw, 17px);
+            font-size: clamp(13px, 1.4vw, 15px);
             color: #e0e0e0;
             text-decoration: none;
             padding: 4px 8px;
             margin-left: -8px;
-            border-radius: 0;
             transition: background-color 0.3s ease, color 0.3s ease;
-            font-weight: 400;
-            letter-spacing: 0.02em;
+            margin-bottom: 80px;
         }
 
-        a.project-name {
-            cursor: pointer;
-        }
-
-        a.project-name:hover {
+        .try-link:hover {
             background-color: #ffffff;
             color: #0a0a0a;
-        }
-
-        .project-desc {
-            font-size: clamp(12px, 1.4vw, 14px);
-            color: #555;
-            line-height: 1.8;
-            padding-left: 8px;
-        }
-
-        .project-tag {
-            display: inline-block;
-            font-size: 11px;
-            color: #555;
-            letter-spacing: 0.05em;
-            margin-left: 8px;
         }
 
         /* Background video */
@@ -134,34 +137,44 @@
 <body>
 
 <video class="bg-video" autoplay muted loop playsinline>
-    <source src="../bg.mp4" type="video/mp4">
+    <source src="../../bg.mp4" type="video/mp4">
 </video>
 
 <div class="page-header">
 <main>
-    <h1>Projects</h1>
-    <p class="subtitle">Selected work</p>
+    <h1>Emojify</h1>
+    <p class="tags">webgl, creative code</p>
 
-    <div class="project-item">
-        <a class="project-name" href="/projects/emojify">Emojify</a>
+    <p class="description">
+        A real-time emoji mosaic filter that transforms any webcam feed into a living grid of emojis. Each pixel region is matched to the closest emoji by color and luminance, creating a playful, high-density visual translation of the source image.
+    </p>
+
+    <div class="project-image">
+        <img src="images/emojisaic-1.png" alt="Emojify mosaic — warm tones">
     </div>
 
-    <div class="project-item">
-        <span class="project-name">ASCII Terrier</span>
+    <p class="context">
+        Built with WebGL for GPU-accelerated rendering. The system samples the input frame, divides it into a uniform grid, and performs a nearest-neighbor lookup against a pre-computed emoji atlas. The result updates every frame, producing a fluid mosaic that follows motion and lighting changes in real time.
+    </p>
+
+    <div class="project-image">
+        <img src="images/emojisaic.gif" alt="Emojify in action">
     </div>
 
-    <div class="project-item">
-        <span class="project-name">Flow Fields</span>
+    <p class="context">
+        The emoji selection considers both average color and structural contrast within each cell, which helps preserve edges and facial features even at low grid resolutions. The atlas was generated from Apple emoji rendered at 64px, then downsampled for fast texture lookup.
+    </p>
+
+    <div class="project-image">
+        <img src="images/emojisaic-2.png" alt="Emojify mosaic — cool tones">
     </div>
 
-    <div class="project-item">
-        <span class="project-name">Mesh Distortion</span>
-    </div>
-
+    <a class="try-link" href="/emojify">Try Emojify here &#8594;</a>
 </main>
 
 <nav>
     <a href="/">home</a>
+    <a href="/projects">projects</a>
     <a href="/contact">contact</a>
 </nav>
 </div>
