@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hubmerto — projects</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 24px 40px;
+        }
+
+        nav {
+            display: flex;
+            gap: 24px;
+            background: transparent;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+        }
+
+        /* Main content */
+        main {
+            padding: 0;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: clamp(16px, 1.8vw, 20px);
+            font-weight: 300;
+            color: #ffffff;
+            line-height: 1.6;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .subtitle {
+            font-size: clamp(13px, 1.4vw, 15px);
+            color: #888;
+            font-weight: 300;
+            margin-bottom: 48px;
+            line-height: 1.8;
+        }
+
+        /* Projects list */
+        .project-item {
+            margin-bottom: 32px;
+        }
+
+        .project-name {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            font-size: clamp(14px, 1.6vw, 17px);
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 4px 8px;
+            margin-left: -8px;
+            border-radius: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+        }
+
+        a.project-name {
+            cursor: pointer;
+        }
+
+        a.project-name:hover {
+            background-color: #ffffff;
+            color: #0a0a0a;
+        }
+
+        .project-desc {
+            font-size: clamp(12px, 1.4vw, 14px);
+            color: #555;
+            line-height: 1.8;
+            padding-left: 8px;
+        }
+
+        .project-tag {
+            display: inline-block;
+            font-size: 11px;
+            color: #555;
+            letter-spacing: 0.05em;
+            margin-left: 8px;
+        }
+
+        /* Background video */
+        .bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 600px) {
+            .page-header { padding: 18px 20px; }
+            main { padding: 0; }
+            nav { gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<video class="bg-video" autoplay muted loop playsinline>
+    <source src="../bg.mp4" type="video/mp4">
+</video>
+
+<div class="page-header">
+<main>
+    <h1>Projects</h1>
+    <p class="subtitle">Selected work</p>
+
+    <div class="project-item">
+        <span class="project-name">Emojify</span>
+        <span class="project-tag">— webgl</span>
+        <p class="project-desc">Real-time emoji mosaic filter for webcam input</p>
+    </div>
+
+    <div class="project-item">
+        <span class="project-name">ASCII Terrier</span>
+        <span class="project-tag">— generative</span>
+        <p class="project-desc">Live ASCII video rendering with depth-mapped characters</p>
+    </div>
+
+    <div class="project-item">
+        <span class="project-name">Flow Fields</span>
+        <span class="project-tag">— touchdesigner</span>
+        <p class="project-desc">Particle systems driven by audio-reactive vector fields</p>
+    </div>
+
+    <div class="project-item">
+        <span class="project-name">Mesh Distortion</span>
+        <span class="project-tag">— webgpu</span>
+        <p class="project-desc">Interactive 3D mesh deformation with compute shaders</p>
+    </div>
+
+</main>
+
+<nav>
+    <a href="/">home</a>
+    <a href="/contact">contact</a>
+</nav>
+</div>
+
+<script>
+(function() {
+    var video = document.querySelector('.bg-video');
+    video.addEventListener('loadedmetadata', function() {
+        var duration = video.duration;
+        var now = (Date.now() / 1000) % duration;
+        video.currentTime = now;
+    });
+})();
+</script>
+
+</body>
+</html>
