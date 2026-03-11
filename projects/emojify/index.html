@@ -203,13 +203,13 @@
         Color matching uses Euclidean distance against a palette of 590 Apple emojis. The algorithm samples the average color of each grid cell and finds the nearest emoji by L2 distance, preserving edges and facial features even at coarse resolutions. The atlas is cached in memory for fast lookup across frames.
     </p>
 
-    <p class="context">
-        Video processing includes presets for speed and quality — Fast (16px grid, 10fps), Balanced (12px, 8fps), and High Detail (8px, 5fps). Camera mode runs client-side frame scaling before sending to the server, keeping the stream smooth on both desktop and mobile.
-    </p>
-
     <div class="project-image">
         <img src="images/emojisaic-fire-detail.png" alt="Emojify — fire scene">
     </div>
+
+    <p class="context">
+        Video processing includes presets for speed and quality — Fast (16px grid, 10fps), Balanced (12px, 8fps), and High Detail (8px, 5fps). Camera mode runs client-side frame scaling before sending to the server, keeping the stream smooth on both desktop and mobile.
+    </p>
 
     <a class="try-link" href="/emojify">Try Emojify here &#8594;</a>
 </main>
