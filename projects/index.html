@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hubmerto.projects</title>
-    <link rel="preload" href="/ascii-frames.json" as="fetch" type="application/json" crossorigin>
-    <link rel="preload" href="/bg.mp4" as="video" type="video/mp4">
+    <link rel="preload" href="/projects/bg.mp4" as="video" type="video/mp4">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
+    <link rel="prefetch" href="/ascii-frames.json" as="fetch" type="application/json" crossorigin>
+    <link rel="prefetch" href="/bg.mp4" as="video" type="video/mp4">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -21,6 +23,9 @@
             overflow-x: hidden;
             -webkit-user-select: none;
             user-select: none;
+        }
+
+        .content {
             opacity: 0;
             transition: opacity 0.4s ease;
         }
@@ -145,9 +150,10 @@
 <body>
 
 <video class="bg-video" autoplay muted loop playsinline preload="auto">
-    <source src="bg.mp4" type="video/mp4">
+    <source src="/projects/bg.mp4" type="video/mp4">
 </video>
 
+<div class="content" id="content">
 <div class="page-header">
 <main>
     <h1>Projects</h1>
@@ -165,18 +171,20 @@
     <a href="/contact">contact</a>
 </nav>
 </div>
+</div>
 
 <script>
 document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
 document.addEventListener('dblclick', function(e) { e.preventDefault(); });
-document.body.offsetHeight;
-document.body.style.opacity = '1';
+var content = document.getElementById('content');
+content.offsetHeight;
+content.style.opacity = '1';
 document.querySelectorAll('a[href]').forEach(function(a) {
     a.addEventListener('click', function(e) {
         var href = a.getAttribute('href');
         if (href.startsWith('/') || href.startsWith('./')) {
             e.preventDefault();
-            document.body.style.opacity = '0';
+            content.style.opacity = '0';
             setTimeout(function() { window.location.href = href; }, 400);
         }
     });

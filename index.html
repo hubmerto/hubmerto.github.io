@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hubmerto</title>
-    <link rel="preload" href="/bg.mp4" as="video" type="video/mp4">
-    <link rel="preload" href="/projects/bg.mp4" as="video" type="video/mp4">
     <link rel="preload" href="/ascii-frames.json" as="fetch" type="application/json" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300&display=swap">
+    <link rel="prefetch" href="/bg.mp4" as="video" type="video/mp4">
+    <link rel="prefetch" href="/projects/bg.mp4" as="video" type="video/mp4">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300&display=swap');
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -156,6 +157,88 @@
     // Measure monospace char aspect ratio once
     var charRatio = 0.6; // width/height for monospace fonts
 
+    // Mouse tracking
+    var mouseX = -9999, mouseY = -9999;
+    var magnifyRadius = 150; // px radius of zoom lens
+    var magnifyScale = 2.2; // max font scale at center
+
+    // Ripple wave effect
+    var ripples = [];
+    var rippleSpeed = 350; // px per second
+    var rippleWidth = 100; // thickness of the wave ring
+    var rippleStrength = 40; // max displacement in px
+    var rippleMaxRadius = 800; // ripple dies after this radius
+
+    canvas.addEventListener('click', function(e) {
+        ripples.push({
+            x: e.clientX,
+            y: e.clientY,
+            birth: Date.now(),
+            radius: 0
+        });
+    });
+
+    // Track mouse + spawn ripples (throttled)
+    var lastRippleTime = 0;
+    document.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        var now = Date.now();
+        if (now - lastRippleTime > 300) {
+            lastRippleTime = now;
+            ripples.push({
+                x: e.clientX,
+                y: e.clientY,
+                birth: now,
+                radius: 0
+            });
+        }
+    });
+    document.addEventListener('mouseleave', function() {
+        mouseX = -9999;
+        mouseY = -9999;
+    });
+
+    function updateRipples() {
+        var now = Date.now();
+        for (var i = ripples.length - 1; i >= 0; i--) {
+            ripples[i].radius = (now - ripples[i].birth) / 1000 * rippleSpeed;
+            if (ripples[i].radius > rippleMaxRadius) {
+                ripples.splice(i, 1);
+            }
+        }
+    }
+
+    function getRippleDisplacement(px, py) {
+        var totalDx = 0, totalDy = 0;
+        for (var i = 0; i < ripples.length; i++) {
+            var r = ripples[i];
+            var dx = px - r.x;
+            var dy = py - r.y;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 1) continue;
+
+            // How far is this point from the ripple ring?
+            var distFromRing = Math.abs(dist - r.radius);
+            if (distFromRing > rippleWidth) continue;
+
+            // Wave shape: smooth bump
+            var wave = 1 - distFromRing / rippleWidth;
+            wave = wave * wave * (3 - 2 * wave); // smoothstep
+
+            // Fade out as ripple expands
+            var fade = 1 - r.radius / rippleMaxRadius;
+            fade = fade * fade;
+
+            var strength = wave * fade * rippleStrength;
+            var nx = dx / dist;
+            var ny = dy / dist;
+            totalDx += nx * strength;
+            totalDy += ny * strength;
+        }
+        return [totalDx, totalDy];
+    }
+
     function drawFrame(idx) {
         if (!frameData) return;
         var w = window.innerWidth;
@@ -163,21 +246,19 @@
         var dataCols = frameData.cols;
         var dataRows = frameData.rows;
 
+        updateRipples();
+
         // Clear full canvas
         ctx.fillStyle = '#0a0a0a';
         ctx.fillRect(0, 0, w, h);
 
-        // Lock aspect ratio: the grid's visual aspect is
-        // (dataCols * charRatio) : dataRows (since charW = fontSize * charRatio, charH = fontSize)
+        // Lock aspect ratio
         var gridAspect = (dataCols * charRatio) / dataRows;
 
-        // object-fit: cover — scale so the grid covers the viewport
         var fontSize;
         if (w / h > gridAspect) {
-            // Viewport is wider than grid — fit to width
             fontSize = w / (dataCols * charRatio);
         } else {
-            // Viewport is taller than grid — fit to height
             fontSize = h / dataRows;
         }
 
@@ -189,19 +270,88 @@
         var offsetY = (h - gridH) / 2;
 
         ctx.font = fontSize + 'px Menlo, Monaco, Courier New, monospace';
-        ctx.fillStyle = '#e0e0e0';
         ctx.textBaseline = 'top';
+        ctx.fillStyle = '#e0e0e0';
 
         var frame = frameData.frames[idx];
+        var hasRipples = ripples.length > 0;
+        var hasMouse = mouseX > -9000;
+        var magR2 = magnifyRadius * magnifyRadius;
 
         for (var y = 0; y < dataRows; y++) {
-            var line = '';
-            for (var x = 0; x < dataCols; x++) {
-                var c = frame[y * dataCols + x];
-                var charIdx = c >= 'a' ? (c.charCodeAt(0) - 87) : parseInt(c);
-                line += ASCII[charIdx];
+            var baseY = offsetY + y * charH;
+
+            // Check if row needs per-char drawing
+            var rowHasRipple = false;
+            if (hasRipples) {
+                for (var ri = 0; ri < ripples.length; ri++) {
+                    var rDy = Math.abs(baseY - ripples[ri].y);
+                    if (rDy < ripples[ri].radius + rippleWidth) {
+                        rowHasRipple = true;
+                        break;
+                    }
+                }
             }
-            ctx.fillText(line, offsetX, offsetY + y * charH);
+            var rowHasMagnify = hasMouse && Math.abs(baseY - mouseY) < magnifyRadius + charH;
+            var needsPerChar = rowHasRipple || rowHasMagnify;
+
+            if (!needsPerChar) {
+                // Fast path — draw whole line
+                ctx.font = fontSize + 'px Menlo, Monaco, Courier New, monospace';
+                ctx.fillStyle = '#e0e0e0';
+                var line = '';
+                for (var x = 0; x < dataCols; x++) {
+                    var c = frame[y * dataCols + x];
+                    var charIdx = c >= 'a' ? (c.charCodeAt(0) - 87) : parseInt(c);
+                    line += ASCII[charIdx];
+                }
+                ctx.fillText(line, offsetX, baseY);
+            } else {
+                // Per-char path — ripple + magnify
+                for (var x = 0; x < dataCols; x++) {
+                    var cx = offsetX + x * charW;
+                    var cy = baseY;
+
+                    var c = frame[y * dataCols + x];
+                    var charIdx = c >= 'a' ? (c.charCodeAt(0) - 87) : parseInt(c);
+                    var ch = ASCII[charIdx];
+
+                    // Ripple displacement
+                    if (rowHasRipple) {
+                        var disp = getRippleDisplacement(cx, cy);
+                        cx += disp[0];
+                        cy += disp[1];
+                    }
+
+                    // Magnify effect
+                    var scale = 1;
+                    if (hasMouse) {
+                        var mdx = cx - mouseX;
+                        var mdy = cy - mouseY;
+                        var md2 = mdx * mdx + mdy * mdy;
+                        if (md2 < magR2) {
+                            var md = Math.sqrt(md2);
+                            var mt = 1 - md / magnifyRadius;
+                            mt = mt * mt * (3 - 2 * mt); // smoothstep
+                            scale = 1 + (magnifyScale - 1) * mt;
+                        }
+                    }
+
+                    if (scale > 1.01) {
+                        var scaledSize = fontSize * scale;
+                        ctx.font = scaledSize + 'px Menlo, Monaco, Courier New, monospace';
+                        // Center the scaled char on the original grid position
+                        var sx = cx - (scaledSize * charRatio - charW) * 0.5;
+                        var sy = cy - (scaledSize - charH) * 0.5;
+                        ctx.fillStyle = '#e0e0e0';
+                        ctx.fillText(ch, sx, sy);
+                    } else {
+                        ctx.font = fontSize + 'px Menlo, Monaco, Courier New, monospace';
+                        ctx.fillStyle = '#e0e0e0';
+                        ctx.fillText(ch, cx, cy);
+                    }
+                }
+            }
         }
     }
 
@@ -250,8 +400,7 @@ document.querySelectorAll('a[href]').forEach(function(a) {
         var href = a.getAttribute('href');
         if (href.startsWith('/') || href.startsWith('./')) {
             e.preventDefault();
-            document.body.style.transition = 'opacity 0.4s ease';
-            document.body.style.opacity = '0';
+            document.getElementById('nav').style.opacity = '0';
             setTimeout(function() { window.location.href = href; }, 400);
         }
     });
