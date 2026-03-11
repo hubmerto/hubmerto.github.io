@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hubmerto</title>
-    <link rel="prefetch" href="/bg.mp4" as="video">
-    <link rel="prefetch" href="/projects/bg.mp4" as="video">
+    <link rel="preload" href="/bg.mp4" as="video" type="video/mp4">
+    <link rel="preload" href="/projects/bg.mp4" as="video" type="video/mp4">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300&display=swap');
 
@@ -46,6 +46,11 @@
 
         nav a:hover {
             color: #ffffff;
+        }
+
+        nav a.disabled {
+            color: #555;
+            pointer-events: none;
         }
 
 
@@ -93,12 +98,12 @@
 
 <div class="loader" id="loader"></div>
 
-<video class="bg-video" autoplay muted loop playsinline>
+<video class="bg-video" autoplay muted loop playsinline preload="auto">
     <source src="ascii-video.mp4" type="video/mp4">
 </video>
 
 <nav id="nav">
-    <a href="/">home</a>
+    <a class="disabled" href="/">home</a>
     <a href="/projects">projects</a>
     <a href="/contact">contact</a>
 </nav>
