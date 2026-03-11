@@ -179,7 +179,7 @@
     <p class="tags">webgl, creative code</p>
 
     <p class="description">
-        A real-time emoji mosaic filter that transforms any webcam feed into a living grid of emojis. Each pixel region is matched to the closest emoji by color and luminance, creating a playful, high-density visual translation of the source image.
+        A real-time emoji mosaic tool that transforms any image, video, or live camera feed into a dense grid of emojis. Each pixel region is matched to the closest emoji by color and luminance, producing a playful visual translation that preserves shape, contrast, and motion.
     </p>
 
     <div class="project-image">
@@ -187,7 +187,11 @@
     </div>
 
     <p class="context">
-        Built with WebGL for GPU-accelerated rendering. The system samples the input frame, divides it into a uniform grid, and performs a nearest-neighbor lookup against a pre-computed emoji atlas. The result updates every frame, producing a fluid mosaic that follows motion and lighting changes in real time.
+        The tool runs in two modes. Upload mode accepts images and videos up to 15 seconds, with output as PNG, JPG, MP4, or GIF. Camera mode streams your webcam in real time, with a shutter button to capture snapshots you can save or share directly from the browser.
+    </p>
+
+    <p class="context">
+        Grid resolution is adjustable from 4 to 48 pixels per cell, letting you shift between tight photographic detail and large, abstract emoji blocks. A block-merging system groups adjacent identical tiles into larger clusters, scaling the emoji proportionally for a cleaner read at low resolutions.
     </p>
 
     <div class="image-grid">
@@ -196,8 +200,20 @@
     </div>
 
     <p class="context">
-        The emoji selection considers both average color and structural contrast within each cell, which helps preserve edges and facial features even at low grid resolutions. The atlas was generated from Apple emoji rendered at 64px, then downsampled for fast texture lookup.
+        Color matching uses Euclidean distance against a palette of 590 Apple emojis. The algorithm samples the average color of each grid cell and finds the nearest emoji by L2 distance, preserving edges and facial features even at coarse resolutions. The atlas is cached in memory for fast lookup across frames.
     </p>
+
+    <p class="context">
+        Video processing includes presets for speed and quality — Fast (16px grid, 10fps), Balanced (12px, 8fps), and High Detail (8px, 5fps). Camera mode runs client-side frame scaling before sending to the server, keeping the stream smooth on both desktop and mobile.
+    </p>
+
+    <div class="project-image">
+        <img src="images/emojisaic-fire-detail.png" alt="Emojify — fire scene, large emoji grid">
+    </div>
+
+    <div class="project-image">
+        <img src="images/emojisaic-fire-wide.png" alt="Emojify — fire scene, detailed grid">
+    </div>
 
     <a class="try-link" href="/emojify">Try Emojify here &#8594;</a>
 </main>
