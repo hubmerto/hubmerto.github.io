@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hubmerto — contact</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+
+        /* Transparent nav bar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 24px 40px;
+            display: flex;
+            justify-content: flex-end;
+            background: transparent;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ff0022;
+        }
+
+        /* Main content */
+        main {
+            padding: 80px 40px 60px;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 300;
+            color: #ffffff;
+            line-height: 1.1;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: clamp(12px, 1.5vw, 15px);
+            color: #888;
+            font-weight: 400;
+            margin-bottom: 32px;
+        }
+
+        .skills {
+            margin-bottom: 36px;
+        }
+
+        .skills p {
+            font-size: clamp(12px, 1.4vw, 14px);
+            color: #777;
+            line-height: 1.8;
+        }
+
+        .contact-section h2 {
+            font-size: 13px;
+            font-weight: 700;
+            color: #e0e0e0;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .contact-item {
+            margin-bottom: 18px;
+        }
+
+        .contact-label {
+            font-size: 12px;
+            color: #555;
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-link {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0;
+            font-size: clamp(13px, 1.4vw, 15px);
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 4px 8px;
+            margin-left: -8px;
+            border-radius: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .contact-link:hover {
+            background-color: #ff0022;
+            color: #0a0a0a;
+        }
+
+        /* Copy tooltip */
+        .copy-tooltip {
+            display: inline-block;
+            overflow: hidden;
+            max-width: 0;
+            opacity: 0;
+            white-space: nowrap;
+            font-size: 11px;
+            color: #555;
+            transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.3s ease,
+                        margin-left 0.3s ease;
+            margin-left: 0;
+        }
+
+        .contact-item:hover .copy-tooltip {
+            max-width: 160px;
+            opacity: 1;
+            margin-left: 8px;
+        }
+
+        .contact-link.copied {
+            background-color: #ff0022;
+            color: #0a0a0a;
+        }
+
+        .contact-item.copied .copy-tooltip {
+            max-width: 160px;
+            opacity: 1;
+            margin-left: 8px;
+        }
+
+        .contact-link.github:hover {
+            background-color: #ff0022;
+            color: #0a0a0a;
+        }
+
+        /* Background video */
+        .bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 600px) {
+            nav { padding: 18px 20px; }
+            main { padding: 70px 20px 40px; }
+        }
+    </style>
+</head>
+<body>
+
+<video class="bg-video" autoplay muted loop playsinline>
+    <source src="../bg.mp4" type="video/mp4">
+</video>
+
+<nav>
+    <a href="/">home</a>
+</nav>
+
+<main>
+    <h1>Humberto Gesser</h1>
+    <p class="subtitle">Digital Artist, Creative code and Art Direction</p>
+
+    <div class="skills">
+        <p>WebGPU/GL</p>
+        <p>UI Animations</p>
+        <p>ASCII and TouchDesigner</p>
+        <p>Computational Photography</p>
+        <p>Design Systems</p>
+    </div>
+
+    <section id="contact" class="contact-section">
+        <h2>Contact</h2>
+
+        <div class="contact-item" id="email-item">
+            <div class="contact-label">mail <span class="copy-tooltip" id="copy-tooltip">— copy to clipboard</span></div>
+            <a class="contact-link" id="email-link" onclick="copyEmail(event)">
+                design[at]hubmerto.com
+            </a>
+        </div>
+
+        <div class="contact-item">
+            <div class="contact-label">gitHub</div>
+            <a class="contact-link github" href="https://github.com/hubmerto" target="_blank" rel="noopener">
+                @hubmerto
+            </a>
+        </div>
+    </section>
+</main>
+
+<script>
+function copyEmail(e) {
+    e.preventDefault();
+    const email = 'design@hubmerto.com';
+    navigator.clipboard.writeText(email).then(function() {
+        const link = document.getElementById('email-link');
+        const item = document.getElementById('email-item');
+        const tooltip = document.getElementById('copy-tooltip');
+
+        link.classList.add('copied');
+        item.classList.add('copied');
+        tooltip.textContent = '— copied!';
+
+        setTimeout(function() {
+            link.classList.remove('copied');
+            item.classList.remove('copied');
+            tooltip.textContent = '— copy to clipboard';
+        }, 2000);
+    });
+}
+</script>
+
+</body>
+</html>
