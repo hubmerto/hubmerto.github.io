@@ -149,7 +149,7 @@
 </head>
 <body>
 
-<video class="bg-video" autoplay muted loop playsinline preload="auto">
+<video class="bg-video" autoplay muted loop playsinline preload="auto" poster="/projects/poster.jpg">
     <source src="/projects/bg.mp4" type="video/mp4">
 </video>
 
@@ -191,9 +191,9 @@ document.querySelectorAll('a[href]').forEach(function(a) {
 });
 (function() {
     var video = document.querySelector('.bg-video');
-    video.addEventListener('loadedmetadata', function() {
-        video.currentTime = (Date.now() / 1000) % video.duration;
-    });
+    video.addEventListener('canplay', function() {
+        video.play().catch(function() {});
+    }, { once: true });
 })();
 </script>
 

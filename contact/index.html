@@ -194,7 +194,7 @@
 </head>
 <body>
 
-<video class="bg-video" autoplay muted loop playsinline preload="auto">
+<video class="bg-video" autoplay muted loop playsinline preload="auto" poster="/poster.jpg">
     <source src="../bg.mp4" type="video/mp4">
 </video>
 
@@ -242,11 +242,9 @@
 <script>
 (function() {
     var video = document.querySelector('.bg-video');
-    video.addEventListener('loadedmetadata', function() {
-        var duration = video.duration;
-        var now = (Date.now() / 1000) % duration;
-        video.currentTime = now;
-    });
+    video.addEventListener('canplay', function() {
+        video.play().catch(function() {});
+    }, { once: true });
 })();
 
 function copyEmail(e) {
