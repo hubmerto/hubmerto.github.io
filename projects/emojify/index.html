@@ -81,6 +81,10 @@
             margin-bottom: 48px;
         }
 
+        .project-image, .image-grid {
+            position: relative;
+        }
+
         .project-image {
             width: 100%;
             max-width: 900px;
@@ -90,6 +94,28 @@
         .project-image img {
             width: 100%;
             display: block;
+        }
+
+        .img-loader {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #1a1a1a;
+            z-index: 2;
+        }
+
+        .img-loader .bar {
+            height: 100%;
+            width: 0%;
+            background: #e0e0e0;
+            transition: width 0.2s linear;
+        }
+
+        .img-loader.done {
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
 
         .context {
@@ -131,17 +157,6 @@
             color: #0a0a0a;
         }
 
-        /* Background video */
-        .bg-video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-            opacity: 0.4;
-        }
 
         @media (max-width: 600px) {
             .page-header {
@@ -168,9 +183,6 @@
 </head>
 <body>
 
-<video class="bg-video" autoplay muted loop playsinline>
-    <source src="../../bg.mp4" type="video/mp4">
-</video>
 
 <div class="page-header">
     <div class="title-row">
@@ -191,7 +203,7 @@
         </p>
 
         <div class="project-image">
-            <img src="images/emojisaic-1.png" alt="Emojify mosaic, warm tones">
+            <img src="images/emojisaic-3.png" alt="Emojify mosaic, news broadcast">
         </div>
 
         <p class="context">
@@ -219,15 +231,41 @@
     </main>
 </div>
 
+
 <script>
-(function() {
-    var video = document.querySelector('.bg-video');
-    video.addEventListener('loadedmetadata', function() {
-        var duration = video.duration;
-        var now = (Date.now() / 1000) % duration;
-        video.currentTime = now;
+document.querySelectorAll('.project-image img, .image-grid img').forEach(function(img) {
+    var wrapper = img.closest('.project-image') || img.parentElement;
+    var loader = document.createElement('div');
+    loader.className = 'img-loader';
+    loader.innerHTML = '<div class="bar"></div>';
+    wrapper.appendChild(loader);
+    var bar = loader.querySelector('.bar');
+
+    if (img.complete) {
+        bar.style.width = '100%';
+        loader.classList.add('done');
+        return;
+    }
+
+    // Simulate progress while loading
+    var progress = 0;
+    var interval = setInterval(function() {
+        progress += Math.random() * 15;
+        if (progress > 90) progress = 90;
+        bar.style.width = progress + '%';
+    }, 200);
+
+    img.addEventListener('load', function() {
+        clearInterval(interval);
+        bar.style.width = '100%';
+        setTimeout(function() { loader.classList.add('done'); }, 300);
     });
-})();
+
+    img.addEventListener('error', function() {
+        clearInterval(interval);
+        loader.classList.add('done');
+    });
+});
 </script>
 
 </body>

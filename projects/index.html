@@ -112,17 +112,6 @@
             margin-left: 8px;
         }
 
-        /* Background video */
-        .bg-video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-            opacity: 0.4;
-        }
 
         @media (max-width: 600px) {
             .page-header { padding: 18px 20px; }
@@ -133,9 +122,6 @@
 </head>
 <body>
 
-<video class="bg-video" autoplay muted loop playsinline>
-    <source src="../bg.mp4" type="video/mp4">
-</video>
 
 <div class="page-header">
 <main>
@@ -154,16 +140,6 @@
 </nav>
 </div>
 
-<script>
-(function() {
-    var video = document.querySelector('.bg-video');
-    video.addEventListener('loadedmetadata', function() {
-        var duration = video.duration;
-        var now = (Date.now() / 1000) % duration;
-        video.currentTime = now;
-    });
-})();
-</script>
 
 </body>
 </html>
