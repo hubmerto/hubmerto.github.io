@@ -112,7 +112,7 @@
     var loader = document.getElementById('loader');
     var nav = document.getElementById('nav');
     var visited = sessionStorage.getItem('visited');
-    var ASCII = ' .:-=+*#%@';
+    var ASCII = ' .·:;~!¡†‡*+≠#%▓@█';
     var frameData = null;
     var currentFrame = 0;
     var animInterval = null;
@@ -160,29 +160,36 @@
         var dataCols = frameData.cols;
         var dataRows = frameData.rows;
 
-        // Calculate font size to fill viewport
-        var charW = w / dataCols;
-        var charH = h / dataRows;
-        var fontSize = Math.max(charH, charW * 1.8);
-
+        // Clear full canvas
         ctx.fillStyle = '#0a0a0a';
         ctx.fillRect(0, 0, w, h);
+
+        // 1:1 aspect ratio — cover the viewport like object-fit: cover
+        // Data aspect: cols/rows chars, but chars are ~2:1 (height:width)
+        // So visual aspect of data is (cols * charW) : (rows * charH)
+        // For 1:1 source, we want the rendered block to be square
+        var size = Math.max(w, h);
+        var charW = size / dataCols;
+        var charH = size / dataRows;
+        var fontSize = charH * 1.1;
+
+        var offsetX = (w - size) / 2;
+        var offsetY = (h - size) / 2;
 
         ctx.font = fontSize + 'px Menlo, Monaco, Courier New, monospace';
         ctx.fillStyle = '#e0e0e0';
         ctx.textBaseline = 'top';
 
         var frame = frameData.frames[idx];
-        var cellW = w / dataCols;
-        var cellH = h / dataRows;
 
         for (var y = 0; y < dataRows; y++) {
             var line = '';
             for (var x = 0; x < dataCols; x++) {
-                var charIdx = parseInt(frame[y * dataCols + x]);
+                var c = frame[y * dataCols + x];
+                var charIdx = c >= 'a' ? (c.charCodeAt(0) - 87) : parseInt(c);
                 line += ASCII[charIdx];
             }
-            ctx.fillText(line, 0, y * cellH);
+            ctx.fillText(line, offsetX, offsetY + y * charH);
         }
     }
 
