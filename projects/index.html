@@ -191,9 +191,20 @@ document.querySelectorAll('a[href]').forEach(function(a) {
 });
 (function() {
     var video = document.querySelector('.bg-video');
-    video.addEventListener('canplay', function() {
+    function tryPlay() {
         video.play().catch(function() {});
-    }, { once: true });
+    }
+    if (video.readyState >= 3) {
+        tryPlay();
+    } else {
+        video.addEventListener('canplay', tryPlay, { once: true });
+    }
+    // Fallback: keep retrying every 500ms until playing
+    var check = setInterval(function() {
+        if (!video.paused) { clearInterval(check); return; }
+        tryPlay();
+    }, 500);
+    setTimeout(function() { clearInterval(check); }, 10000);
 })();
 </script>
 
