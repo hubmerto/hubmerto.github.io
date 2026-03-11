@@ -225,6 +225,15 @@
 </div>
 
 <script>
+(function() {
+    var video = document.querySelector('.bg-video');
+    video.addEventListener('loadedmetadata', function() {
+        var duration = video.duration;
+        var now = (Date.now() / 1000) % duration;
+        video.currentTime = now;
+    });
+})();
+
 function copyEmail(e) {
     e.preventDefault();
     const email = 'design@hubmerto.com';

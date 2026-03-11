@@ -74,5 +74,15 @@
     <a href="/contact">contact</a>
 </nav>
 
+<script>
+(function() {
+    var video = document.querySelector('.bg-video');
+    video.addEventListener('loadedmetadata', function() {
+        var duration = video.duration;
+        var now = (Date.now() / 1000) % duration;
+        video.currentTime = now;
+    });
+})();
+</script>
 </body>
 </html>
