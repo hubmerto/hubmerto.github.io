@@ -20,10 +20,14 @@
         }
 
         .page-header {
+            padding: 24px 40px;
+        }
+
+        .title-row {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            padding: 24px 40px;
+            margin-bottom: 0;
         }
 
         nav {
@@ -169,43 +173,50 @@
 </video>
 
 <div class="page-header">
-<main>
-    <h1>Emojify</h1>
-    <p class="tags">webgl, creative code</p>
-
-    <p class="description">
-        Emojis are the hieroglyphs of the internet. A universal shorthand that compresses identity, emotion, and context into a single glyph. Emojify reverses that compression. Instead of reducing an image to a symbol, it reconstructs the image entirely from symbols, turning a contemporary visual language back into the thing it was always trying to represent.
-    </p>
-
-    <div class="project-image">
-        <img src="images/emojisaic-1.png" alt="Emojify mosaic — warm tones">
+    <div class="title-row">
+        <div>
+            <h1>Emojify</h1>
+            <p class="tags">webgl, creative code</p>
+        </div>
+        <nav>
+            <a href="/">home</a>
+            <a href="/projects">projects</a>
+            <a href="/contact">contact</a>
+        </nav>
     </div>
 
-    <div class="image-grid">
-        <img src="images/emojisaic.gif" alt="Emojify in action">
-        <img src="images/emojisaic-2.png" alt="Emojify mosaic — cool tones">
-    </div>
+    <main>
+        <p class="description">
+            Emojis are the hieroglyphs of the internet. A universal shorthand that compresses identity, emotion, and context into a single glyph. Emojify reverses that compression. Instead of reducing an image to a symbol, it reconstructs the image entirely from symbols, turning a contemporary visual language back into the thing it was always trying to represent.
+        </p>
 
-    <div class="project-image">
-        <img src="images/emojify-sizes.gif" alt="Emojify — grid size from 1 to 48">
-    </div>
+        <div class="project-image">
+            <img src="images/emojisaic-1.png" alt="Emojify mosaic, warm tones">
+        </div>
 
-    <p class="context">
-        Upload images or videos up to 15 seconds, or stream your webcam in real time. Grid resolution adjusts from 4 to 48 pixels per cell — tight photographic detail at one end, large abstract blocks at the other. A merging system groups adjacent identical tiles into larger clusters for cleaner reads at low resolutions. Color matching runs Euclidean distance against 590 Apple emojis, cached in memory for fast lookup across frames.
-    </p>
+        <p class="context">
+            Built with WebGL and a precomputed emoji atlas. Each frame gets downsampled to a grid, every cell averaged to a single color, then matched against 590 Apple emojis by Euclidean distance. The atlas sits in memory so lookups stay fast across frames. A merging pass groups adjacent identical tiles into larger blocks, scaling the emoji proportionally so low resolutions read cleaner.
+        </p>
 
-    <p class="context">
-        Video processing includes presets for speed and quality — Fast (16px grid, 10fps), Balanced (12px, 8fps), and High Detail (8px, 5fps). Camera mode runs client-side frame scaling before sending to the server, keeping the stream smooth on both desktop and mobile.
-    </p>
+        <div class="image-grid">
+            <img src="images/emojisaic.gif" alt="Emojify in action">
+            <img src="images/emojisaic-2.png" alt="Emojify mosaic, cool tones">
+        </div>
 
-    <a class="try-link" href="/emojify">Try Emojify here &#8594;</a>
-</main>
+        <p class="context">
+            Upload images or videos up to 15 seconds, or stream your webcam in real time. Grid resolution adjusts from 4 to 48 pixels per cell. Tight photographic detail at one end, large abstract blocks at the other.
+        </p>
 
-<nav>
-    <a href="/">home</a>
-    <a href="/projects">projects</a>
-    <a href="/contact">contact</a>
-</nav>
+        <div class="project-image">
+            <img src="images/emojify-sizes.gif" alt="Emojify, grid size from 1 to 48">
+        </div>
+
+        <p class="context">
+            Video processing includes presets for speed and quality. Fast (16px grid, 10fps), Balanced (12px, 8fps), and High Detail (8px, 5fps). Camera mode runs client-side frame scaling before sending to the server, keeping the stream smooth on both desktop and mobile.
+        </p>
+
+        <a class="try-link" href="/emojify">Try Emojify here &#8594;</a>
+    </main>
 </div>
 
 <script>
