@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hubmerto.emojify</title>
+    <link rel="prefetch" href="/ascii-video.mp4" as="video">
+    <link rel="prefetch" href="/bg.mp4" as="video">
+    <link rel="prefetch" href="/projects/bg.mp4" as="video">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
@@ -19,6 +22,8 @@
             overflow-x: hidden;
             -webkit-user-select: none;
             user-select: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
 
         .page-header {
@@ -243,6 +248,18 @@
 <script>
 document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
 document.addEventListener('dblclick', function(e) { e.preventDefault(); });
+document.body.offsetHeight;
+document.body.style.opacity = '1';
+document.querySelectorAll('a[href]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+        var href = a.getAttribute('href');
+        if (href.startsWith('/') || href.startsWith('./')) {
+            e.preventDefault();
+            document.body.style.opacity = '0';
+            setTimeout(function() { window.location.href = href; }, 400);
+        }
+    });
+});
 document.querySelectorAll('.project-image img, .image-grid img').forEach(function(img) {
     var wrapper = img.closest('.project-image') || img.closest('.img-wrap');
     var loader = document.createElement('div');

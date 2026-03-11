@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hubmerto</title>
+    <link rel="prefetch" href="/bg.mp4" as="video">
+    <link rel="prefetch" href="/projects/bg.mp4" as="video">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300&display=swap');
 
@@ -96,6 +98,7 @@
 </video>
 
 <nav id="nav">
+    <a href="/">home</a>
     <a href="/projects">projects</a>
     <a href="/contact">contact</a>
 </nav>
@@ -105,11 +108,27 @@
     var video = document.querySelector('.bg-video');
     var loader = document.getElementById('loader');
     var nav = document.getElementById('nav');
-    var progress = 0;
-    var interval;
+    var visited = sessionStorage.getItem('visited');
 
-    // Animate loader bar while video buffers
-    interval = setInterval(function() {
+    video.addEventListener('loadedmetadata', function() {
+        var duration = video.duration;
+        var now = (Date.now() / 1000) % duration;
+        video.currentTime = now;
+    });
+
+    // Mark visited immediately so returning to home skips the loader
+    sessionStorage.setItem('visited', '1');
+
+    if (visited) {
+        // Returning visitor in this session — skip loading bar
+        loader.style.display = 'none';
+        video.classList.add('loaded');
+        nav.classList.add('loaded');
+        return;
+    }
+
+    var progress = 0;
+    var interval = setInterval(function() {
         progress += (90 - progress) * 0.08;
         loader.style.width = progress + '%';
     }, 50);
@@ -124,19 +143,22 @@
         }, 300);
     }
 
-    video.addEventListener('loadedmetadata', function() {
-        var duration = video.duration;
-        var now = (Date.now() / 1000) % duration;
-        video.currentTime = now;
-    });
-
     video.addEventListener('canplaythrough', reveal);
-
-    // Fallback if video takes too long
     setTimeout(reveal, 8000);
 })();
 document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
 document.addEventListener('dblclick', function(e) { e.preventDefault(); });
+document.querySelectorAll('a[href]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+        var href = a.getAttribute('href');
+        if (href.startsWith('/') || href.startsWith('./')) {
+            e.preventDefault();
+            document.body.style.transition = 'opacity 0.4s ease';
+            document.body.style.opacity = '0';
+            setTimeout(function() { window.location.href = href; }, 400);
+        }
+    });
+});
 </script>
 </body>
 </html>
