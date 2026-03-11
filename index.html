@@ -6,6 +6,7 @@
     <title>hubmerto</title>
     <link rel="preload" href="/bg.mp4" as="video" type="video/mp4">
     <link rel="preload" href="/projects/bg.mp4" as="video" type="video/mp4">
+    <link rel="preload" href="/ascii-frames.json" as="fetch" type="application/json" crossorigin>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300&display=swap');
 
@@ -53,20 +54,18 @@
             pointer-events: none;
         }
 
-
-        .bg-video {
+        #ascii-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
             z-index: 0;
             opacity: 0;
             transition: opacity 0.6s ease;
         }
 
-        .bg-video.loaded {
+        #ascii-canvas.loaded {
             opacity: 1;
         }
 
@@ -98,9 +97,7 @@
 
 <div class="loader" id="loader"></div>
 
-<video class="bg-video" autoplay muted loop playsinline preload="auto">
-    <source src="ascii-video.mp4" type="video/mp4">
-</video>
+<canvas id="ascii-canvas"></canvas>
 
 <nav id="nav">
     <a class="disabled" href="/">home</a>
@@ -110,50 +107,122 @@
 
 <script>
 (function() {
-    var video = document.querySelector('.bg-video');
+    var canvas = document.getElementById('ascii-canvas');
+    var ctx = canvas.getContext('2d');
     var loader = document.getElementById('loader');
     var nav = document.getElementById('nav');
     var visited = sessionStorage.getItem('visited');
+    var ASCII = ' .:-=+*#%@';
+    var frameData = null;
+    var currentFrame = 0;
+    var animInterval = null;
 
-    video.addEventListener('loadedmetadata', function() {
-        var duration = video.duration;
-        var now = (Date.now() / 1000) % duration;
-        video.currentTime = now;
-    });
-
-    // Mark visited immediately so returning to home skips the loader
     sessionStorage.setItem('visited', '1');
 
-    if (visited) {
-        // Returning visitor in this session — skip loading bar
-        loader.style.display = 'none';
-        video.classList.add('loaded');
-        nav.classList.add('loaded');
-        return;
-    }
-
+    // Start loading bar if first visit
     var progress = 0;
-    var interval = setInterval(function() {
-        progress += (90 - progress) * 0.08;
-        loader.style.width = progress + '%';
-    }, 50);
+    var loadInterval = null;
+    if (!visited) {
+        loadInterval = setInterval(function() {
+            progress += (90 - progress) * 0.08;
+            loader.style.width = progress + '%';
+        }, 50);
+    } else {
+        loader.style.display = 'none';
+    }
 
     function reveal() {
-        clearInterval(interval);
-        loader.style.width = '100%';
-        setTimeout(function() {
-            loader.classList.add('done');
-            video.classList.add('loaded');
+        if (loadInterval) clearInterval(loadInterval);
+        if (!visited) {
+            loader.style.width = '100%';
+            setTimeout(function() {
+                loader.classList.add('done');
+                canvas.classList.add('loaded');
+                nav.classList.add('loaded');
+            }, 300);
+        } else {
+            canvas.classList.add('loaded');
             nav.classList.add('loaded');
-        }, 300);
+        }
     }
 
-    if (video.readyState >= 3) {
-        reveal();
-    } else {
-        video.addEventListener('canplaythrough', reveal);
-        setTimeout(reveal, 8000);
+    function setupCanvas() {
+        var dpr = window.devicePixelRatio || 1;
+        canvas.width = window.innerWidth * dpr;
+        canvas.height = window.innerHeight * dpr;
+        ctx.scale(dpr, dpr);
     }
+
+    function drawFrame(idx) {
+        if (!frameData) return;
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+        var dataCols = frameData.cols;
+        var dataRows = frameData.rows;
+
+        // Calculate font size to fill viewport
+        var charW = w / dataCols;
+        var charH = h / dataRows;
+        var fontSize = Math.max(charH, charW * 1.8);
+
+        ctx.fillStyle = '#0a0a0a';
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.font = fontSize + 'px Menlo, Monaco, Courier New, monospace';
+        ctx.fillStyle = '#e0e0e0';
+        ctx.textBaseline = 'top';
+
+        var frame = frameData.frames[idx];
+        var cellW = w / dataCols;
+        var cellH = h / dataRows;
+
+        for (var y = 0; y < dataRows; y++) {
+            var line = '';
+            for (var x = 0; x < dataCols; x++) {
+                var charIdx = parseInt(frame[y * dataCols + x]);
+                line += ASCII[charIdx];
+            }
+            ctx.fillText(line, 0, y * cellH);
+        }
+    }
+
+    function startAnimation() {
+        // Sync to time so all pages feel continuous
+        var totalFrames = frameData.frames.length;
+        var msPerFrame = frameData.fps;
+        var totalDuration = totalFrames * msPerFrame;
+        currentFrame = Math.floor(((Date.now()) % totalDuration) / msPerFrame);
+
+        drawFrame(currentFrame);
+        reveal();
+
+        animInterval = setInterval(function() {
+            currentFrame = (currentFrame + 1) % frameData.frames.length;
+            drawFrame(currentFrame);
+        }, msPerFrame);
+    }
+
+    setupCanvas();
+    window.addEventListener('resize', function() {
+        setupCanvas();
+        if (frameData) drawFrame(currentFrame);
+    });
+
+    fetch('/ascii-frames.json')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            frameData = data;
+            startAnimation();
+        })
+        .catch(function() {
+            // Fallback: just show nav
+            reveal();
+        });
+
+    // Timeout fallback
+    setTimeout(function() {
+        if (!frameData) reveal();
+    }, 8000);
 })();
 document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
 document.addEventListener('dblclick', function(e) { e.preventDefault(); });
