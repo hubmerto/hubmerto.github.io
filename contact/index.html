@@ -19,16 +19,15 @@
             overflow-x: hidden;
         }
 
-        /* Transparent nav bar */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            padding: 24px 40px;
+        .page-header {
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 24px 40px;
+        }
+
+        nav {
+            display: flex;
             gap: 24px;
             background: transparent;
         }
@@ -45,9 +44,15 @@
             color: #ff0022;
         }
 
+        nav a.disabled {
+            color: #555;
+            pointer-events: none;
+            cursor: default;
+        }
+
         /* Main content */
         main {
-            padding: 80px 40px 60px;
+            padding: 0;
             max-width: 800px;
         }
 
@@ -170,8 +175,8 @@
         }
 
         @media (max-width: 600px) {
-            nav { padding: 18px 20px; }
-            main { padding: 70px 20px 40px; }
+            .page-header { padding: 18px 20px; flex-direction: column; }
+            main { padding: 0; }
         }
     </style>
 </head>
@@ -181,11 +186,7 @@
     <source src="../bg.mp4" type="video/mp4">
 </video>
 
-<nav>
-    <a href="/projects">projects</a>
-    <a href="/contact">contact</a>
-</nav>
-
+<div class="page-header">
 <main>
     <h1>Humberto Gesser</h1>
     <p class="subtitle">Digital Artist, Creative code and Art Direction</p>
@@ -216,6 +217,12 @@
         </div>
     </section>
 </main>
+
+<nav>
+    <a href="/">home</a>
+    <a href="/projects" class="disabled">projects</a>
+</nav>
+</div>
 
 <script>
 function copyEmail(e) {
