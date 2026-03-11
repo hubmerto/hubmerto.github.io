@@ -13,6 +13,8 @@
             height: 100vh;
             background: #0a0a0a;
             overflow: hidden;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         nav {
@@ -133,6 +135,8 @@
     // Fallback if video takes too long
     setTimeout(reveal, 8000);
 })();
+document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+document.addEventListener('dblclick', function(e) { e.preventDefault(); });
 </script>
 </body>
 </html>

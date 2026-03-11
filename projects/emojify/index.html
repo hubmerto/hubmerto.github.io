@@ -17,6 +17,8 @@
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 300;
             overflow-x: hidden;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         .page-header {
@@ -81,7 +83,7 @@
             margin-bottom: 48px;
         }
 
-        .project-image, .image-grid {
+        .project-image, .img-wrap {
             position: relative;
         }
 
@@ -91,9 +93,15 @@
             margin-bottom: 48px;
         }
 
-        .project-image img {
+        .project-image img, .img-wrap img {
             width: 100%;
             display: block;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .project-image img.loaded, .img-wrap img.loaded {
+            opacity: 1;
         }
 
         .img-loader {
@@ -211,8 +219,8 @@
         </p>
 
         <div class="image-grid">
-            <img src="images/emojisaic.gif" alt="Emojify in action">
-            <img src="images/emojisaic-2.png" alt="Emojify mosaic, cool tones">
+            <div class="img-wrap"><img src="images/emojisaic.gif" alt="Emojify in action"></div>
+            <div class="img-wrap"><img src="images/emojisaic-2.png" alt="Emojify mosaic, cool tones"></div>
         </div>
 
         <p class="context">
@@ -233,8 +241,10 @@
 
 
 <script>
+document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+document.addEventListener('dblclick', function(e) { e.preventDefault(); });
 document.querySelectorAll('.project-image img, .image-grid img').forEach(function(img) {
-    var wrapper = img.closest('.project-image') || img.parentElement;
+    var wrapper = img.closest('.project-image') || img.closest('.img-wrap');
     var loader = document.createElement('div');
     loader.className = 'img-loader';
     loader.innerHTML = '<div class="bar"></div>';
@@ -244,6 +254,7 @@ document.querySelectorAll('.project-image img, .image-grid img').forEach(functio
     if (img.complete) {
         bar.style.width = '100%';
         loader.classList.add('done');
+        img.classList.add('loaded');
         return;
     }
 
@@ -258,7 +269,10 @@ document.querySelectorAll('.project-image img, .image-grid img').forEach(functio
     img.addEventListener('load', function() {
         clearInterval(interval);
         bar.style.width = '100%';
-        setTimeout(function() { loader.classList.add('done'); }, 300);
+        setTimeout(function() {
+            loader.classList.add('done');
+            img.classList.add('loaded');
+        }, 300);
     });
 
     img.addEventListener('error', function() {

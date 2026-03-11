@@ -17,6 +17,8 @@
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 300;
             overflow-x: hidden;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         .page-header {
@@ -190,7 +192,7 @@
     <div class="skills">
         <p>WebGPU/GL</p>
         <p>UI Animations</p>
-        <p>ASCII and TouchDesigner</p>
+        <p>TouchDesigner</p>
         <p>Computational Photography</p>
         <p>Design Systems</p>
     </div>
@@ -249,6 +251,8 @@ function copyEmail(e) {
         }, 2000);
     });
 }
+document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+document.addEventListener('dblclick', function(e) { e.preventDefault(); });
 </script>
 
 </body>
