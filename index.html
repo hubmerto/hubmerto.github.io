@@ -280,7 +280,9 @@
         var offsetX = (w - gridW) / 2;
         var offsetY = (h - gridH) / 2;
 
-        ctx.font = fontSize + 'px Menlo, Monaco, Courier New, monospace';
+        var baseFont = fontSize + 'px Menlo,Monaco,Courier New,monospace';
+        var lastFont = baseFont;
+        ctx.font = baseFont;
         ctx.textBaseline = 'top';
         ctx.fillStyle = '#e0e0e0';
 
@@ -320,8 +322,7 @@
 
             if (!needsPerChar) {
                 // Fast path — draw whole line
-                ctx.font = fontSize + 'px Menlo, Monaco, Courier New, monospace';
-                ctx.fillStyle = '#e0e0e0';
+                if (lastFont !== baseFont) { ctx.font = baseFont; lastFont = baseFont; }
                 var line = '';
                 for (var x = 0; x < dataCols; x++) {
                     var c = frame[y * dataCols + x];
@@ -383,15 +384,13 @@
 
                     if (scale > 1.01) {
                         var scaledSize = fontSize * scale;
-                        ctx.font = scaledSize + 'px Menlo, Monaco, Courier New, monospace';
-                        // Center the scaled char on the original grid position
+                        var sf = scaledSize + 'px Menlo,Monaco,Courier New,monospace';
+                        if (lastFont !== sf) { ctx.font = sf; lastFont = sf; }
                         var sx = cx - (scaledSize * charRatio - charW) * 0.5;
                         var sy = cy - (scaledSize - charH) * 0.5;
-                        ctx.fillStyle = '#e0e0e0';
                         ctx.fillText(ch, sx, sy);
                     } else {
-                        ctx.font = fontSize + 'px Menlo, Monaco, Courier New, monospace';
-                        ctx.fillStyle = '#e0e0e0';
+                        if (lastFont !== baseFont) { ctx.font = baseFont; lastFont = baseFont; }
                         ctx.fillText(ch, cx, cy);
                     }
                 }
@@ -408,19 +407,21 @@
     }
 
     function startAnimation() {
-        // Sync to time so all pages feel continuous
         var totalFrames = frameData.frames.length;
         var msPerFrame = frameData.fps;
         var totalDuration = totalFrames * msPerFrame;
-        currentFrame = Math.floor(((Date.now()) % totalDuration) / msPerFrame);
 
+        // Sync to time so all pages feel continuous
+        currentFrame = Math.floor(((Date.now()) % totalDuration) / msPerFrame);
         drawFrame(currentFrame);
         reveal();
 
-        animInterval = setInterval(function() {
-            currentFrame = (currentFrame + 1) % frameData.frames.length;
+        function tick() {
+            currentFrame = Math.floor(((Date.now()) % totalDuration) / msPerFrame);
             drawFrame(currentFrame);
-        }, msPerFrame);
+            requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
     }
 
     setupCanvas();
