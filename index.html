@@ -148,8 +148,12 @@
         }, 300);
     }
 
-    video.addEventListener('canplaythrough', reveal);
-    setTimeout(reveal, 8000);
+    if (video.readyState >= 3) {
+        reveal();
+    } else {
+        video.addEventListener('canplaythrough', reveal);
+        setTimeout(reveal, 8000);
+    }
 })();
 document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
 document.addEventListener('dblclick', function(e) { e.preventDefault(); });
