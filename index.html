@@ -169,12 +169,23 @@
     var rippleStrength = 40; // max displacement in px
     var rippleMaxRadius = 800; // ripple dies after this radius
 
+    // Explosion — chars fly out then snap back
+    var explosions = [];
+    var EXPLOSION_RADIUS = 160; // px area of effect
+    var EXPLOSION_STRENGTH = 60; // max displacement
+    var EXPLOSION_LIFE = 800; // ms total
+
     canvas.addEventListener('click', function(e) {
         ripples.push({
             x: e.clientX,
             y: e.clientY,
             birth: Date.now(),
             radius: 0
+        });
+        explosions.push({
+            x: e.clientX,
+            y: e.clientY,
+            birth: Date.now()
         });
     });
 
@@ -275,8 +286,11 @@
 
         var frame = frameData.frames[idx];
         var hasRipples = ripples.length > 0;
+        var hasExplosions = explosions.length > 0;
         var hasMouse = mouseX > -9000;
         var magR2 = magnifyRadius * magnifyRadius;
+        var expR2 = EXPLOSION_RADIUS * EXPLOSION_RADIUS;
+        var now = Date.now();
 
         for (var y = 0; y < dataRows; y++) {
             var baseY = offsetY + y * charH;
@@ -292,8 +306,17 @@
                     }
                 }
             }
+            var rowHasExplosion = false;
+            if (hasExplosions) {
+                for (var ei = 0; ei < explosions.length; ei++) {
+                    if (Math.abs(baseY - explosions[ei].y) < EXPLOSION_RADIUS + EXPLOSION_STRENGTH) {
+                        rowHasExplosion = true;
+                        break;
+                    }
+                }
+            }
             var rowHasMagnify = hasMouse && Math.abs(baseY - mouseY) < magnifyRadius + charH;
-            var needsPerChar = rowHasRipple || rowHasMagnify;
+            var needsPerChar = rowHasRipple || rowHasMagnify || rowHasExplosion;
 
             if (!needsPerChar) {
                 // Fast path — draw whole line
@@ -321,6 +344,27 @@
                         var disp = getRippleDisplacement(cx, cy);
                         cx += disp[0];
                         cy += disp[1];
+                    }
+
+                    // Explosion: fly out then snap back
+                    if (rowHasExplosion) {
+                        for (var ei = 0; ei < explosions.length; ei++) {
+                            var exp = explosions[ei];
+                            var edx = cx - exp.x;
+                            var edy = cy - exp.y;
+                            var ed2 = edx * edx + edy * edy;
+                            if (ed2 < expR2 && ed2 > 0) {
+                                var ed = Math.sqrt(ed2);
+                                var et = (now - exp.birth) / EXPLOSION_LIFE;
+                                // Ease: quick out, slow back — using sin curve
+                                var wave = Math.sin(et * Math.PI);
+                                var proximity = 1 - ed / EXPLOSION_RADIUS;
+                                proximity = proximity * proximity;
+                                var push = wave * proximity * EXPLOSION_STRENGTH;
+                                cx += (edx / ed) * push;
+                                cy += (edy / ed) * push;
+                            }
+                        }
                     }
 
                     // Magnify effect
@@ -351,6 +395,14 @@
                         ctx.fillText(ch, cx, cy);
                     }
                 }
+            }
+        }
+
+        // Clean up expired explosions
+        var now = Date.now();
+        for (var ei = explosions.length - 1; ei >= 0; ei--) {
+            if (now - explosions[ei].birth > EXPLOSION_LIFE) {
+                explosions.splice(ei, 1);
             }
         }
     }
