@@ -153,6 +153,9 @@
         ctx.scale(dpr, dpr);
     }
 
+    // Measure monospace char aspect ratio once
+    var charRatio = 0.6; // width/height for monospace fonts
+
     function drawFrame(idx) {
         if (!frameData) return;
         var w = window.innerWidth;
@@ -164,17 +167,26 @@
         ctx.fillStyle = '#0a0a0a';
         ctx.fillRect(0, 0, w, h);
 
-        // 1:1 aspect ratio — cover the viewport like object-fit: cover
-        // Data aspect: cols/rows chars, but chars are ~2:1 (height:width)
-        // So visual aspect of data is (cols * charW) : (rows * charH)
-        // For 1:1 source, we want the rendered block to be square
-        var size = Math.max(w, h);
-        var charW = size / dataCols;
-        var charH = size / dataRows;
-        var fontSize = charH * 1.1;
+        // Lock aspect ratio: the grid's visual aspect is
+        // (dataCols * charRatio) : dataRows (since charW = fontSize * charRatio, charH = fontSize)
+        var gridAspect = (dataCols * charRatio) / dataRows;
 
-        var offsetX = (w - size) / 2;
-        var offsetY = (h - size) / 2;
+        // object-fit: cover — scale so the grid covers the viewport
+        var fontSize;
+        if (w / h > gridAspect) {
+            // Viewport is wider than grid — fit to width
+            fontSize = w / (dataCols * charRatio);
+        } else {
+            // Viewport is taller than grid — fit to height
+            fontSize = h / dataRows;
+        }
+
+        var charW = fontSize * charRatio;
+        var charH = fontSize;
+        var gridW = dataCols * charW;
+        var gridH = dataRows * charH;
+        var offsetX = (w - gridW) / 2;
+        var offsetY = (h - gridH) / 2;
 
         ctx.font = fontSize + 'px Menlo, Monaco, Courier New, monospace';
         ctx.fillStyle = '#e0e0e0';
