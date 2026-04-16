@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hubmerto.anonymous-empire</title>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
+    <link rel="prefetch" href="/ascii-frames.json" as="fetch" type="application/json" crossorigin>
+    <link rel="prefetch" href="/bg.mp4" as="video" type="video/mp4">
+    <link rel="prefetch" href="/projects/bg.mp4" as="video" type="video/mp4">
+    <style>
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 300;
+            overflow-x: hidden;
+            -webkit-user-select: none;
+            user-select: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .page-header {
+            padding: 24px 40px;
+        }
+
+        .title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0;
+        }
+
+        nav {
+            display: flex;
+            gap: 24px;
+            background: transparent;
+            flex-shrink: 0;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+        }
+
+        nav a.disabled {
+            color: #555;
+            pointer-events: none;
+        }
+
+        main {
+            padding: 0;
+            max-width: 900px;
+        }
+
+        h1 {
+            font-size: clamp(18px, 2.2vw, 24px);
+            font-weight: 300;
+            color: #ffffff;
+            line-height: 1.6;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .tags {
+            font-size: clamp(13px, 1.5vw, 16px);
+            color: #555;
+            font-weight: 300;
+            margin-bottom: 32px;
+            letter-spacing: 0.05em;
+        }
+
+        .description {
+            font-size: clamp(14px, 1.8vw, 19px);
+            color: #888;
+            font-weight: 300;
+            line-height: 1.8;
+            margin-bottom: 48px;
+        }
+
+        .meta {
+            font-size: clamp(13px, 1.4vw, 15px);
+            color: #666;
+            line-height: 2;
+            margin-bottom: 48px;
+        }
+
+        .meta span {
+            color: #aaa;
+        }
+
+        h2 {
+            font-size: clamp(14px, 1.5vw, 16px);
+            font-weight: 400;
+            color: #ffffff;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 16px;
+        }
+
+        .context {
+            font-size: clamp(14px, 1.6vw, 17px);
+            color: #888;
+            font-weight: 300;
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+
+        .context strong {
+            color: #e0e0e0;
+            font-weight: 400;
+        }
+
+        ul.points {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        ul.points li {
+            font-size: clamp(14px, 1.6vw, 17px);
+            color: #888;
+            font-weight: 300;
+            line-height: 1.8;
+            padding-left: 24px;
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        ul.points li::before {
+            content: "·";
+            position: absolute;
+            left: 0;
+            color: #555;
+            font-size: 20px;
+            line-height: 1.4;
+        }
+
+        ul.points li strong {
+            color: #e0e0e0;
+            font-weight: 400;
+        }
+
+        .divider {
+            height: 1px;
+            background: #1a1a1a;
+            margin: 48px 0;
+        }
+
+        .try-link {
+            display: inline-flex;
+            align-items: center;
+            font-size: clamp(15px, 1.8vw, 19px);
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 4px 8px;
+            margin-left: -8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            margin-bottom: 80px;
+        }
+
+        .try-link:hover {
+            background-color: #ffffff;
+            color: #0a0a0a;
+        }
+
+        @media (max-width: 600px) {
+            .page-header {
+                padding: 18px 16px;
+            }
+            nav {
+                gap: 12px;
+            }
+            nav a {
+                font-size: 12px;
+            }
+            main {
+                padding: 0;
+                max-width: 100%;
+            }
+            .description, .context, ul.points li, .try-link {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="page-header">
+    <div class="title-row">
+        <div>
+            <h1>Anonymous Empire</h1>
+            <p class="tags">research, design, code</p>
+        </div>
+        <nav>
+            <a href="/">home</a>
+            <a href="/projects">projects</a>
+            <a href="/contact">contact</a>
+        </nav>
+    </div>
+
+    <main>
+        <p class="description">
+            Visual archive of techno's forty-year refusal to show its face.
+        </p>
+
+        <div class="project-video" style="margin-bottom: 48px;">
+            <video autoplay muted loop playsinline style="width:100%; display:block;">
+                <source src="media/pile.webm" type="video/webm">
+            </video>
+        </div>
+
+        <div class="meta">
+            <div>Role <span>Research, design, art direction, code.</span></div>
+            <div>Medium <span>Editorial web archive.</span></div>
+            <div>Year <span>2026.</span></div>
+        </div>
+
+        <h2>Premise</h2>
+        <p class="context">
+            Techno is the only major music genre that systematically removed the human face from its visual identity. I wanted to understand why, and I suspected the answer wasn't aesthetic preference. It was structural. Anonymous Empire is the archive I built to make that argument visible.
+        </p>
+
+        <h2>Research</h2>
+        <p class="context">
+            I catalogued ~770 releases across 22 geographic scenes and 438 labels, from Metroplex's first pressing in 1985 through 2026. Each entry preserves artwork, catalogue number, label, year, and scene, treated as a primary document rather than as illustration. The argument is then structured around three forces that produced the genre's visual language:
+        </p>
+
+        <ul class="points">
+            <li><strong>Poverty.</strong> Producers who couldn't afford designers invented an aesthetic of restraint. Even after money arrived, the austerity stayed.</li>
+            <li><strong>Politics.</strong> Labels like Underground Resistance and Drexciya turned anonymity into a weapon against an industry that commodifies Black artists.</li>
+            <li><strong>Post-industry.</strong> The abandoned factories, vaults, and power stations where the music was made dictated a visual language of concrete, steel, and monochrome.</li>
+        </ul>
+
+        <h2>Design System</h2>
+        <p class="context">
+            The site is deliberately faceless. No portraits, no bios, no hero images of DJs. Typography does the heavy lifting: a single display face (Megatron Sans) for headings, IBM Plex Mono/Sans for body, a monochrome palette, and a rigid 1px border language borrowed from the aesthetic I'm archiving. Hierarchy is enforced through scale and weight, not colour. The type scale is modular, capped at a 65 to 75ch measure, and sized with clamp() so one stylesheet holds together from mobile to 4K.
+        </p>
+
+        <h2>Kinetic Pieces</h2>
+        <p class="context">
+            Two custom interactive pieces sit between the archive sections and function as the project's visual thesis:
+        </p>
+
+        <ul class="points">
+            <li><strong>Scarcity · Refusal · Ruin.</strong> Three words tiled into the viewport as inline SVG, stretched non-uniformly via preserveAspectRatio="none" so they fill any rectangle without letterboxing. The content rotates through three zones via a 2-collapse spring-driven state machine (semi-implicit Euler integration on a damped harmonic oscillator: a = -2ζω·v - ω²·(x - target)). Topologically, a three-zone rotation can't stay continuous, so the piece uses scheduled collapse points instead of trying to hide the discontinuity.</li>
+            <li><strong>Poverty · Politics · Industry.</strong> Same physics, different choreography: an L-shaped two-variable (X, Y) partition that always tiles the full viewport regardless of orientation.</li>
+        </ul>
+
+        <p class="context">
+            These aren't decoration. They translate the thesis (scarcity, refusal, ruin) into motion: the words physically occupy all available space, collapse without warning, and rebuild. Design mirroring argument.
+        </p>
+
+        <h2>Archive Views</h2>
+        <p class="context">
+            The catalogue is navigable four ways, each surfacing a different structural pattern:
+        </p>
+
+        <ul class="points">
+            <li><strong>Grid.</strong> The default, filterable by scene, label, decade.</li>
+            <li><strong>Timeline.</strong> Year-by-year strip showing density shifts across the genre's four decades.</li>
+            <li><strong>Map.</strong> Leaflet-backed geographic view with scene clusters.</li>
+            <li><strong>Colour.</strong> A mosaic sorted by a chroma-weighted palette scan (pre-computed via a small Python pipeline). Reveals the genre's monochrome bias at a glance: whites flow into the rainbow and exit into pure black. Sorting covers by colour makes visible what a text-only catalogue can't. This is a genre whose visual language tilts overwhelmingly toward no colour at all.</li>
+        </ul>
+
+        <h2>Stack</h2>
+        <p class="context">
+            Static site. Vanilla JS, no framework, no build step. Leaflet for the map. A Python pipeline handles image ingestion, k-means palette extraction, and JSON serialisation. Hosted on GitHub Pages with a custom subdomain. The absence of tooling is part of the point: the archive's infrastructure should be as restrained as the design tradition it documents.
+        </p>
+
+        <h2>Why It Matters</h2>
+        <p class="context">
+            Most music archives sell the personality. Anonymous Empire sells the method. It's a reference tool for designers, researchers, and DJs trying to understand how a genre built on erasure produced one of the most coherent visual languages in modern graphic culture, and a demonstration that design research can be a form of argument, not just documentation.
+        </p>
+
+        <div class="divider"></div>
+    </main>
+</div>
+
+
+<script>
+document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+document.addEventListener('dblclick', function(e) { e.preventDefault(); });
+document.body.offsetHeight;
+document.body.style.opacity = '1';
+document.querySelectorAll('a[href]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+        var href = a.getAttribute('href');
+        if (href.startsWith('/') || href.startsWith('./')) {
+            e.preventDefault();
+            document.body.style.opacity = '0';
+            setTimeout(function() { window.location.href = href; }, 400);
+        }
+    });
+});
+</script>
+
+</body>
+</html>
