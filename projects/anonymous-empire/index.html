@@ -6,310 +6,387 @@
     <title>hubmerto.anonymous-empire</title>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" as="style">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
-    <link rel="prefetch" href="/ascii-frames.json" as="fetch" type="application/json" crossorigin>
-    <link rel="prefetch" href="/bg.mp4" as="video" type="video/mp4">
-    <link rel="prefetch" href="/projects/bg.mp4" as="video" type="video/mp4">
     <style>
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
+        html, body {
             width: 100%;
-            min-height: 100vh;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
             background: #0a0a0a;
             color: #e0e0e0;
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 300;
-            overflow-x: hidden;
             -webkit-user-select: none;
             user-select: none;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .page-header {
-            padding: 24px 40px;
-        }
-
-        .title-row {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 0;
+            flex-direction: column;
+        }
+
+        .content {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         nav {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 20px 32px;
             display: flex;
             gap: 24px;
-            background: transparent;
-            flex-shrink: 0;
+            z-index: 20;
         }
 
         nav a {
             color: #e0e0e0;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 13px;
             letter-spacing: 0.05em;
             transition: color 0.3s ease;
         }
 
-        nav a:hover {
-            color: #ffffff;
+        nav a:hover { color: #ffffff; }
+        nav a.disabled { color: #555; pointer-events: none; }
+
+        .workspace {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            cursor: grab;
+            min-height: 0;
+            background:
+                radial-gradient(circle at center, rgba(255,255,255,0.015) 0%, transparent 60%),
+                #0a0a0a;
         }
 
-        nav a.disabled {
-            color: #555;
+        .workspace.grabbing { cursor: grabbing; }
+
+        .canvas-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1px;
+            height: 1px;
+            transform-origin: 0 0;
+            will-change: transform;
+        }
+
+        .grid-bg {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, #1a1a1a 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.4;
+            will-change: background-position, background-size;
+        }
+
+        .node {
+            position: absolute;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .node video,
+        .node img,
+        .node iframe {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 0;
             pointer-events: none;
         }
 
-        main {
-            padding: 0;
-            max-width: 900px;
-        }
-
-        h1 {
-            font-size: clamp(18px, 2.2vw, 24px);
-            font-weight: 300;
-            color: #ffffff;
-            line-height: 1.6;
-            margin-bottom: 2px;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-
-        .tags {
-            font-size: clamp(13px, 1.5vw, 16px);
+        .hud {
+            position: absolute;
+            top: 20px;
+            left: 32px;
+            font-size: 12px;
             color: #555;
-            font-weight: 300;
-            margin-bottom: 32px;
+            letter-spacing: 0.1em;
+            z-index: 20;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .hud-hint {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: #333;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .bottom-bar {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            border-top: 1px solid #1a1a1a;
+            flex-shrink: 0;
+        }
+
+        .col {
+            padding: 14px 32px;
+            border-right: 1px solid #1a1a1a;
+        }
+
+        .col:last-child { border-right: none; }
+
+        .col-title {
+            font-size: clamp(13px, 1.3vw, 15px);
+            font-weight: 400;
+            color: #ffffff;
+            letter-spacing: 0.02em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .col-text {
+            font-size: clamp(11px, 1.05vw, 12.5px);
+            color: #666;
+            line-height: 1.55;
+        }
+
+        .col-text strong {
+            color: #aaa;
+            font-weight: 400;
+        }
+
+        .col-meta {
+            font-size: clamp(10px, 1vw, 12px);
+            color: #888;
+            line-height: 1.7;
+        }
+
+        .meta-row {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 12px;
+        }
+
+        .meta-row span:first-child {
+            color: #444;
             letter-spacing: 0.05em;
         }
 
-        .description {
-            font-size: clamp(14px, 1.8vw, 19px);
+        .meta-row span:last-child {
             color: #888;
-            font-weight: 300;
-            line-height: 1.8;
-            margin-bottom: 48px;
         }
 
-        .meta {
-            font-size: clamp(13px, 1.4vw, 15px);
-            color: #666;
-            line-height: 2;
-            margin-bottom: 48px;
-        }
-
-        .meta span {
+        .meta-row a {
             color: #aaa;
-        }
-
-        h2 {
-            font-size: clamp(14px, 1.5vw, 16px);
-            font-weight: 400;
-            color: #ffffff;
-            line-height: 1.6;
-            margin-bottom: 16px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-top: 16px;
-        }
-
-        .context {
-            font-size: clamp(14px, 1.6vw, 17px);
-            color: #888;
-            font-weight: 300;
-            line-height: 1.8;
-            margin-bottom: 32px;
-        }
-
-        .context strong {
-            color: #e0e0e0;
-            font-weight: 400;
-        }
-
-        ul.points {
-            list-style: none;
-            margin-bottom: 32px;
-        }
-
-        ul.points li {
-            font-size: clamp(14px, 1.6vw, 17px);
-            color: #888;
-            font-weight: 300;
-            line-height: 1.8;
-            padding-left: 24px;
-            position: relative;
-            margin-bottom: 12px;
-        }
-
-        ul.points li::before {
-            content: "·";
-            position: absolute;
-            left: 0;
-            color: #555;
-            font-size: 20px;
-            line-height: 1.4;
-        }
-
-        ul.points li strong {
-            color: #e0e0e0;
-            font-weight: 400;
-        }
-
-        .divider {
-            height: 1px;
-            background: #1a1a1a;
-            margin: 48px 0;
-        }
-
-        .try-link {
-            display: inline-flex;
-            align-items: center;
-            font-size: clamp(15px, 1.8vw, 19px);
-            color: #e0e0e0;
             text-decoration: none;
-            padding: 4px 8px;
-            margin-left: -8px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            margin-bottom: 80px;
+            border-bottom: 1px solid #333;
         }
 
-        .try-link:hover {
-            background-color: #ffffff;
-            color: #0a0a0a;
+        .meta-row a:hover {
+            color: #fff;
+            border-bottom-color: #fff;
         }
 
-        @media (max-width: 600px) {
-            .page-header {
-                padding: 18px 16px;
-            }
-            nav {
-                gap: 12px;
-            }
-            nav a {
-                font-size: 12px;
-            }
-            main {
-                padding: 0;
-                max-width: 100%;
-            }
-            .description, .context, ul.points li, .try-link {
-                font-size: 14px;
-            }
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; gap: 16px; }
+            .col { padding: 12px 16px; }
+            .hud { left: 20px; top: 16px; }
         }
+
     </style>
 </head>
 <body>
 
+<div class="content" id="content">
 
-<div class="page-header">
-    <div class="title-row">
-        <div>
-            <h1>Anonymous Empire</h1>
-            <p class="tags">research, design, code</p>
+    <nav>
+        <a href="/">home</a>
+        <a href="/projects">projects</a>
+        <a href="/contact">contact</a>
+    </nav>
+
+    <div class="workspace" id="workspace">
+        <div class="grid-bg" id="grid-bg"></div>
+        <div class="hud" id="hud">02 · ANONYMOUS EMPIRE</div>
+        <div class="hud-hint">drag to pan · scroll to zoom</div>
+
+        <div class="canvas-layer" id="canvas">
+            <div class="node" style="left: -450px; top: -450px; width: 900px; height: 900px;">
+                <iframe src="https://anonymousempire.art/animations/deck/" loading="lazy" allow="autoplay" title="Scene deck"></iframe>
+            </div>
+            <div class="node" style="left: 550px; top: -300px; width: 520px; height: 520px;">
+                <video autoplay muted loop playsinline><source src="media/pile.webm" type="video/webm"></video>
+            </div>
         </div>
-        <nav>
-            <a href="/">home</a>
-            <a href="/projects">projects</a>
-            <a href="/contact">contact</a>
-        </nav>
     </div>
 
-    <main>
-        <p class="description">
-            Visual archive of techno's forty-year refusal to show its face.
-        </p>
-
-        <div class="project-video" style="margin-bottom: 48px;">
-            <video autoplay muted loop playsinline style="width:100%; display:block;">
-                <source src="media/pile.webm" type="video/webm">
-            </video>
+    <div class="bottom-bar">
+        <div class="col">
+            <div class="col-title">Anonymous Empire</div>
+            <div class="col-meta">
+                <div class="meta-row"><span>Client</span><span>Self-initiated</span></div>
+                <div class="meta-row"><span>Location</span><span>Berlin</span></div>
+                <div class="meta-row"><span>Year</span><span>2026</span></div>
+                <div class="meta-row"><span>Program</span><span>Editorial web archive</span></div>
+                <div class="meta-row"><span>Status</span><span>Live</span></div>
+                <div class="meta-row"><span>Scale</span><span>~800 records · 20 scenes · 90 labels</span></div>
+            </div>
         </div>
-
-        <div class="meta">
-            <div>Role <span>Research, design, art direction, code.</span></div>
-            <div>Medium <span>Editorial web archive.</span></div>
-            <div>Year <span>2026.</span></div>
+        <div class="col">
+            <div class="col-text">Anonymous Empire is a web archive of techno's visual language, documenting roughly 800 releases across 20 geographic scenes and 90 labels, from Metroplex's first Detroit pressing in 1985 to records pressing this month. The archive treats the sleeve, the logo, and the catalogue number as primary documents rather than illustration, reading each scene against the material conditions that produced it.</div>
         </div>
+        <div class="col">
+            <div class="col-text">The site enacts the thesis it documents. No portraits, no artist images, no nostalgia framing. A single display face against monochrome body type, a locked #0a0a0a ground, and typography carrying the full expressive load. Vanilla JavaScript, no framework, no build step, hosted on GitHub Pages behind a custom .art domain.</div>
+            <div class="col-meta" style="margin-top: 10px;">
+                <div class="meta-row"><span>Domain</span><span><a href="https://anonymousempire.art" target="_blank" rel="noopener">anonymousempire.art</a></span></div>
+            </div>
+        </div>
+    </div>
 
-        <h2>Premise</h2>
-        <p class="context">
-            Techno is the only major music genre that systematically removed the human face from its visual identity. I wanted to understand why, and I suspected the answer wasn't aesthetic preference. It was structural. Anonymous Empire is the archive I built to make that argument visible.
-        </p>
-
-        <h2>Research</h2>
-        <p class="context">
-            I catalogued ~770 releases across 22 geographic scenes and 438 labels, from Metroplex's first pressing in 1985 through 2026. Each entry preserves artwork, catalogue number, label, year, and scene, treated as a primary document rather than as illustration. The argument is then structured around three forces that produced the genre's visual language:
-        </p>
-
-        <ul class="points">
-            <li><strong>Poverty.</strong> Producers who couldn't afford designers invented an aesthetic of restraint. Even after money arrived, the austerity stayed.</li>
-            <li><strong>Politics.</strong> Labels like Underground Resistance and Drexciya turned anonymity into a weapon against an industry that commodifies Black artists.</li>
-            <li><strong>Post-industry.</strong> The abandoned factories, vaults, and power stations where the music was made dictated a visual language of concrete, steel, and monochrome.</li>
-        </ul>
-
-        <h2>Design System</h2>
-        <p class="context">
-            The site is deliberately faceless. No portraits, no bios, no hero images of DJs. Typography does the heavy lifting: a single display face (Megatron Sans) for headings, IBM Plex Mono/Sans for body, a monochrome palette, and a rigid 1px border language borrowed from the aesthetic I'm archiving. Hierarchy is enforced through scale and weight, not colour. The type scale is modular, capped at a 65 to 75ch measure, and sized with clamp() so one stylesheet holds together from mobile to 4K.
-        </p>
-
-        <h2>Kinetic Pieces</h2>
-        <p class="context">
-            Two custom interactive pieces sit between the archive sections and function as the project's visual thesis:
-        </p>
-
-        <ul class="points">
-            <li><strong>Scarcity · Refusal · Ruin.</strong> Three words tiled into the viewport as inline SVG, stretched non-uniformly via preserveAspectRatio="none" so they fill any rectangle without letterboxing. The content rotates through three zones via a 2-collapse spring-driven state machine (semi-implicit Euler integration on a damped harmonic oscillator: a = -2ζω·v - ω²·(x - target)). Topologically, a three-zone rotation can't stay continuous, so the piece uses scheduled collapse points instead of trying to hide the discontinuity.</li>
-            <li><strong>Poverty · Politics · Industry.</strong> Same physics, different choreography: an L-shaped two-variable (X, Y) partition that always tiles the full viewport regardless of orientation.</li>
-        </ul>
-
-        <p class="context">
-            These aren't decoration. They translate the thesis (scarcity, refusal, ruin) into motion: the words physically occupy all available space, collapse without warning, and rebuild. Design mirroring argument.
-        </p>
-
-        <h2>Archive Views</h2>
-        <p class="context">
-            The catalogue is navigable four ways, each surfacing a different structural pattern:
-        </p>
-
-        <ul class="points">
-            <li><strong>Grid.</strong> The default, filterable by scene, label, decade.</li>
-            <li><strong>Timeline.</strong> Year-by-year strip showing density shifts across the genre's four decades.</li>
-            <li><strong>Map.</strong> Leaflet-backed geographic view with scene clusters.</li>
-            <li><strong>Colour.</strong> A mosaic sorted by a chroma-weighted palette scan (pre-computed via a small Python pipeline). Reveals the genre's monochrome bias at a glance: whites flow into the rainbow and exit into pure black. Sorting covers by colour makes visible what a text-only catalogue can't. This is a genre whose visual language tilts overwhelmingly toward no colour at all.</li>
-        </ul>
-
-        <h2>Stack</h2>
-        <p class="context">
-            Static site. Vanilla JS, no framework, no build step. Leaflet for the map. A Python pipeline handles image ingestion, k-means palette extraction, and JSON serialisation. Hosted on GitHub Pages with a custom subdomain. The absence of tooling is part of the point: the archive's infrastructure should be as restrained as the design tradition it documents.
-        </p>
-
-        <h2>Why It Matters</h2>
-        <p class="context">
-            Most music archives sell the personality. Anonymous Empire sells the method. It's a reference tool for designers, researchers, and DJs trying to understand how a genre built on erasure produced one of the most coherent visual languages in modern graphic culture, and a demonstration that design research can be a form of argument, not just documentation.
-        </p>
-
-        <div class="divider"></div>
-    </main>
 </div>
 
-
 <script>
-document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
-document.addEventListener('dblclick', function(e) { e.preventDefault(); });
-document.body.offsetHeight;
-document.body.style.opacity = '1';
-document.querySelectorAll('a[href]').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-        var href = a.getAttribute('href');
-        if (href.startsWith('/') || href.startsWith('./')) {
-            e.preventDefault();
-            document.body.style.opacity = '0';
-            setTimeout(function() { window.location.href = href; }, 400);
-        }
+(function() {
+    var workspace = document.getElementById('workspace');
+    var canvas = document.getElementById('canvas');
+    var gridBg = document.getElementById('grid-bg');
+    var content = document.getElementById('content');
+
+    var tx = 0, ty = 0, scale = 1;
+    var minScale = 0.25, maxScale = 2.5;
+
+    function applyTransform() {
+        canvas.style.transform = 'translate(' + tx + 'px, ' + ty + 'px) scale(' + scale + ')';
+        var gridSize = 40 * scale;
+        gridBg.style.backgroundSize = gridSize + 'px ' + gridSize + 'px';
+        gridBg.style.backgroundPosition = tx + 'px ' + ty + 'px';
+    }
+
+    function centerView() {
+        var w = workspace.offsetWidth;
+        var h = workspace.offsetHeight;
+        tx = w / 2 - (w * 0.1);
+        ty = h / 2;
+        scale = Math.min(1, Math.min(w / 1800, h / 1200));
+        applyTransform();
+    }
+
+    var isDragging = false;
+    var startX = 0, startY = 0;
+    var startTx = 0, startTy = 0;
+
+    workspace.addEventListener('mousedown', function(e) {
+        if (e.button !== 0) return;
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        startTx = tx;
+        startTy = ty;
+        workspace.classList.add('grabbing');
+        e.preventDefault();
     });
-});
+
+    window.addEventListener('mousemove', function(e) {
+        if (!isDragging) return;
+        tx = startTx + (e.clientX - startX);
+        ty = startTy + (e.clientY - startY);
+        applyTransform();
+    });
+
+    window.addEventListener('mouseup', function() {
+        isDragging = false;
+        workspace.classList.remove('grabbing');
+    });
+
+    workspace.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        var rect = workspace.getBoundingClientRect();
+        var cx = e.clientX - rect.left;
+        var cy = e.clientY - rect.top;
+        var zoomFactor = Math.pow(1.0025, -e.deltaY);
+        var newScale = Math.max(minScale, Math.min(maxScale, scale * zoomFactor));
+        if (newScale === scale) return;
+        var ratio = newScale / scale;
+        tx = cx - (cx - tx) * ratio;
+        ty = cy - (cy - ty) * ratio;
+        scale = newScale;
+        applyTransform();
+    }, { passive: false });
+
+    var initialDist = 0;
+    var initialScale = 1;
+
+    workspace.addEventListener('touchstart', function(e) {
+        if (e.touches.length === 1) {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+            startTx = tx;
+            startTy = ty;
+            isDragging = true;
+        } else if (e.touches.length === 2) {
+            isDragging = false;
+            var dx = e.touches[0].clientX - e.touches[1].clientX;
+            var dy = e.touches[0].clientY - e.touches[1].clientY;
+            initialDist = Math.sqrt(dx * dx + dy * dy);
+            initialScale = scale;
+        }
+    }, { passive: true });
+
+    workspace.addEventListener('touchmove', function(e) {
+        if (e.touches.length === 1 && isDragging) {
+            tx = startTx + (e.touches[0].clientX - startX);
+            ty = startTy + (e.touches[0].clientY - startY);
+            applyTransform();
+        } else if (e.touches.length === 2) {
+            var dx = e.touches[0].clientX - e.touches[1].clientX;
+            var dy = e.touches[0].clientY - e.touches[1].clientY;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+            var newScale = Math.max(minScale, Math.min(maxScale, initialScale * (dist / initialDist)));
+            var rect = workspace.getBoundingClientRect();
+            var cx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
+            var cy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
+            var ratio = newScale / scale;
+            tx = cx - (cx - tx) * ratio;
+            ty = cy - (cy - ty) * ratio;
+            scale = newScale;
+            applyTransform();
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    workspace.addEventListener('touchend', function(e) {
+        if (e.touches.length === 0) isDragging = false;
+    });
+
+    centerView();
+    window.addEventListener('resize', centerView);
+
+    content.offsetHeight;
+    content.style.opacity = '1';
+
+    document.querySelectorAll('nav a[href]').forEach(function(a) {
+        a.addEventListener('click', function(e) {
+            var href = a.getAttribute('href');
+            if (href.startsWith('/') || href.startsWith('./')) {
+                e.preventDefault();
+                content.style.opacity = '0';
+                setTimeout(function() { window.location.href = href; }, 400);
+            }
+        });
+    });
+
+    document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+})();
 </script>
 
 </body>
