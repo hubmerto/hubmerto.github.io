@@ -1,0 +1,29 @@
+{
+    "slug": "strelitzia",
+    "title": "Strelitzia",
+    "hudIndex": "01",
+    "media": [
+        { "type": "video", "src": "media/VTR_02.mp4" },
+        { "type": "video", "src": "media/VTR_04.mp4" },
+        { "type": "video", "src": "media/VTR_06.mp4" },
+        { "type": "video", "src": "media/VTR_10.mp4" },
+        { "type": "video", "src": "media/VTR_unnamed.mp4" }
+    ],
+    "columns": [
+        {
+            "title": "Strelitzia",
+            "tags": "3d, blender · 2026",
+            "meta": [
+                { "label": "Client", "value": "Self-initiated" },
+                { "label": "Year", "value": "2026" },
+                { "label": "Scope", "value": "3D, material design" }
+            ]
+        },
+        {
+            "text": "A 3D study built around a single botanical subject, the bird of paradise, stripped of its tropical palette and pushed into something darker. Black lacquer on the outer petals, deep gold on the inner ones, surface condensation catching light like something kept behind glass."
+        },
+        {
+            "text": "An exercise in learning Blender, using the flower's complex geometry to test surface detail, lighting, and material behavior. The strelitzia was chosen for its structure. Asymmetric, angular, already aggressive in its natural form."
+        }
+    ]
+}

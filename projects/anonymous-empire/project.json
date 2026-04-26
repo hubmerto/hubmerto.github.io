@@ -1,0 +1,40 @@
+{
+    "slug": "anonymous-empire",
+    "title": "Anonymous Empire",
+    "hudIndex": "02",
+    "media": [
+        {
+            "type": "iframe",
+            "src": "https://anonymousempire.art/animations/deck/",
+            "title": "Scene deck",
+            "w": 900,
+            "h": 900
+        },
+        {
+            "type": "video",
+            "src": "media/pile.webm"
+        }
+    ],
+    "columns": [
+        {
+            "title": "Anonymous Empire",
+            "meta": [
+                { "label": "Client", "value": "Self-initiated" },
+                { "label": "Location", "value": "Berlin" },
+                { "label": "Year", "value": "2026" },
+                { "label": "Program", "value": "Editorial web archive" },
+                { "label": "Status", "value": "Live" },
+                { "label": "Scale", "value": "~800 records · 20 scenes · 90 labels" }
+            ]
+        },
+        {
+            "text": "Anonymous Empire is a web archive of techno's visual language, documenting roughly 800 releases across 20 geographic scenes and 90 labels, from Metroplex's first Detroit pressing in 1985 to records pressing this month. The archive treats the sleeve, the logo, and the catalogue number as primary documents rather than illustration, reading each scene against the material conditions that produced it."
+        },
+        {
+            "text": "The site enacts the thesis it documents. No portraits, no artist images, no nostalgia framing. A single display face against monochrome body type, a locked #0a0a0a ground, and typography carrying the full expressive load. Vanilla JavaScript, no framework, no build step, hosted on GitHub Pages behind a custom .art domain.",
+            "meta": [
+                { "label": "Domain", "value": "anonymousempire.art", "href": "https://anonymousempire.art" }
+            ]
+        }
+    ]
+}

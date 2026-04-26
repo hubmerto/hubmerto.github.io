@@ -1,0 +1,29 @@
+{
+    "slug": "emojify",
+    "title": "Emojify",
+    "hudIndex": "03",
+    "media": [
+        { "type": "video", "src": "media/emojisaic.mp4" },
+        { "type": "video", "src": "media/emojisaic-2.mp4" },
+        { "type": "image", "src": "media/emojisaic-6.png" },
+        { "type": "image", "src": "media/emojisaic-7.png" }
+    ],
+    "columns": [
+        {
+            "title": "Emojify",
+            "tags": "webgl, creative code · 2025",
+            "meta": [
+                { "label": "Client", "value": "Self-initiated" },
+                { "label": "Stack", "value": "WebGL, JS, Python" },
+                { "label": "Status", "value": "Live" },
+                { "label": "Try it", "value": "/emojify", "href": "/emojify" }
+            ]
+        },
+        {
+            "text": "Emojis are the hieroglyphs of the internet. A universal shorthand that compresses identity, emotion, and context into a single glyph. Emojify reverses that compression. Instead of reducing an image to a symbol, it reconstructs the image entirely from symbols, turning a contemporary visual language back into the thing it was always trying to represent."
+        },
+        {
+            "text": "Built with WebGL and a precomputed emoji atlas. Each frame gets downsampled to a grid, every cell averaged to a single color, then matched against 590 Apple emojis by Euclidean distance. A merging pass groups adjacent identical tiles into larger blocks. Upload images or video, stream a webcam, adjust grid resolution from 4 to 48 pixels per cell."
+        }
+    ]
+}
