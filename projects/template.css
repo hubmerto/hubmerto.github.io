@@ -340,6 +340,7 @@ nav a.disabled { color: var(--fg-faint); pointer-events: none; }
     transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
     will-change: transform, left, top;
     cursor: grab;
+    border-radius: 12px;
 }
 
 .node.dragging {
