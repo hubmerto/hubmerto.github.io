@@ -40,13 +40,6 @@
         },
         {
             "type": "iframe",
-            "src": "https://anonymousempire.art/animations/deck/",
-            "title": "Scene deck",
-            "w": 900,
-            "h": 900
-        },
-        {
-            "type": "iframe",
             "src": "https://anonymousempire.art/animations/covers-fast/",
             "title": "Covers",
             "w": 900,
