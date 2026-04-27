@@ -55,10 +55,6 @@
         {
             "type": "video",
             "src": "media/pile.webm"
-        },
-        {
-            "type": "image",
-            "src": "media/timeline_01.png"
         }
     ],
     "columns": [
