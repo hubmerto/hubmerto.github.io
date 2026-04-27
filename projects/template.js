@@ -358,8 +358,8 @@
             nodes.forEach(function(n, i) {
                 var col = i % cols;
                 var row = Math.floor(i / cols);
-                var cx = (col - (cols - 1) / 2) * cellW + rand(i * 2) * 60;
-                var cy = (row - (rows - 1) / 2) * cellH + rand(i * 2 + 1) * 60;
+                var cx = (col - (cols - 1) / 2) * cellW + rand(i * 2) * 40;
+                var cy = (row - (rows - 1) / 2) * cellH;
                 n.dataset.cx = cx;
                 n.dataset.cy = cy;
             });
