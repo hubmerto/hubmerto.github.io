@@ -308,8 +308,8 @@
         var nodes = Array.prototype.slice.call(document.querySelectorAll('.node'));
         var gap = 240;
 
-        var MAX_H = 380;
-        var MAX_W = 480;
+        var MAX_H = 760;
+        var MAX_W = 960;
 
         function sizeNode(n) {
             var video = n.querySelector('video');

@@ -5,6 +5,13 @@
     "media": [
         {
             "type": "iframe",
+            "src": "https://anonymousempire.art/animations/window/?section=hero",
+            "title": "Hero window",
+            "w": 900,
+            "h": 900
+        },
+        {
+            "type": "iframe",
             "src": "https://anonymousempire.art/animations/deck/",
             "title": "Scene deck",
             "w": 900,
