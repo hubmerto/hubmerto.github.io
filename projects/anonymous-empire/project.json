@@ -6,8 +6,43 @@
         {
             "type": "iframe",
             "src": "https://anonymousempire.art/animations/window/?section=hero",
-            "title": "Hero window",
-            "w": 900,
+            "title": "Hero",
+            "w": 1440,
+            "h": 900
+        },
+        {
+            "type": "iframe",
+            "src": "https://anonymousempire.art/animations/window/?section=library",
+            "title": "Library grid",
+            "w": 1440,
+            "h": 900
+        },
+        {
+            "type": "iframe",
+            "src": "https://anonymousempire.art/animations/window/?section=scenes",
+            "title": "Scenes",
+            "w": 1440,
+            "h": 900
+        },
+        {
+            "type": "iframe",
+            "src": "https://anonymousempire.art/animations/window/?section=ppi",
+            "title": "PPI",
+            "w": 1440,
+            "h": 900
+        },
+        {
+            "type": "iframe",
+            "src": "https://anonymousempire.art/animations/window/?section=deck",
+            "title": "Deck",
+            "w": 1440,
+            "h": 900
+        },
+        {
+            "type": "iframe",
+            "src": "https://anonymousempire.art/animations/window/?section=map",
+            "title": "Map",
+            "w": 1440,
             "h": 900
         },
         {
@@ -29,14 +64,33 @@
     "columns": [
         {
             "title": "Anonymous Empire",
-            "tags": "research, design, code · 2026",
+            "tags": "research, design, code \u00b7 2026",
             "meta": [
-                { "label": "Client", "value": "Self-initiated" },
-                { "label": "Location", "value": "Berlin" },
-                { "label": "Program", "value": "Editorial web archive" },
-                { "label": "Status", "value": "Live" },
-                { "label": "Scale", "value": "~800 records · 20 scenes · 90 labels" },
-                { "label": "Domain", "value": "anonymousempire.art", "href": "https://anonymousempire.art" }
+                {
+                    "label": "Client",
+                    "value": "Self-initiated"
+                },
+                {
+                    "label": "Location",
+                    "value": "Berlin"
+                },
+                {
+                    "label": "Program",
+                    "value": "Editorial web archive"
+                },
+                {
+                    "label": "Status",
+                    "value": "Live"
+                },
+                {
+                    "label": "Scale",
+                    "value": "~800 records \u00b7 20 scenes \u00b7 90 labels"
+                },
+                {
+                    "label": "Domain",
+                    "value": "anonymousempire.art",
+                    "href": "https://anonymousempire.art"
+                }
             ]
         },
         {
