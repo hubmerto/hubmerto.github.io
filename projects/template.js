@@ -1,33 +1,38 @@
 (function() {
     function esc(s) { return String(s == null ? '' : s); }
 
-    function renderColumns(project) {
-        var bar = document.getElementById('bottom-bar');
-        (project.columns || []).forEach(function(col) {
-            var el = document.createElement('div');
-            el.className = 'col';
+    function renderLeftSidebar(project) {
+        var rail = document.getElementById('sidebar-left');
+        if (!rail) return;
+        (project.columns || []).forEach(function(col, idx) {
+            var section = document.createElement('div');
+            section.className = 'sidebar-section';
 
             if (col.title) {
+                if (idx === 0) {
+                    var label = document.createElement('div');
+                    label.className = 'sidebar-label';
+                    label.textContent = (project.hudIndex || '') + ' · Project';
+                    section.appendChild(label);
+                }
                 var t = document.createElement('div');
-                t.className = 'col-title';
+                t.className = 'sidebar-title';
                 t.textContent = col.title;
-                el.appendChild(t);
+                section.appendChild(t);
             }
             if (col.tags) {
                 var tg = document.createElement('div');
-                tg.className = 'col-tags';
+                tg.className = 'sidebar-tags';
                 tg.textContent = col.tags;
-                el.appendChild(tg);
+                section.appendChild(tg);
             }
             if (col.text) {
                 var tx = document.createElement('div');
-                tx.className = 'col-text';
+                tx.className = 'sidebar-text';
                 tx.textContent = col.text;
-                el.appendChild(tx);
+                section.appendChild(tx);
             }
             if (col.meta && col.meta.length) {
-                var m = document.createElement('div');
-                m.className = 'col-meta';
                 col.meta.forEach(function(row) {
                     var r = document.createElement('div');
                     r.className = 'meta-row';
@@ -46,14 +51,204 @@
                     }
                     r.appendChild(l);
                     r.appendChild(v);
-                    m.appendChild(r);
+                    section.appendChild(r);
                 });
-                el.appendChild(m);
             }
 
-            bar.appendChild(el);
+            rail.appendChild(section);
         });
+
+        // Tools panel — pinned to the bottom of the rail
+        var tools = document.createElement('div');
+        tools.className = 'tools';
+
+        function makeBtn(label, kbd, onClick) {
+            var b = document.createElement('button');
+            b.className = 'tool-btn';
+            var lbl = document.createElement('span');
+            lbl.textContent = label;
+            b.appendChild(lbl);
+            if (kbd) {
+                var k = document.createElement('span');
+                k.className = 'kbd';
+                k.textContent = kbd;
+                b.appendChild(k);
+            }
+            b.addEventListener('click', onClick);
+            return b;
+        }
+
+        tools.appendChild(makeBtn('Rearrange', 'R', function() {
+            if (window._canvas && window._canvas.rearrange) window._canvas.rearrange();
+        }));
+        tools.appendChild(makeBtn('Fit all', '⇧1', function() {
+            if (window._canvas && window._canvas.fitAll) window._canvas.fitAll();
+        }));
+        tools.appendChild(makeBtn('Reset zoom', '⌘0', function() {
+            if (window._canvas && window._canvas.resetZoom) window._canvas.resetZoom();
+        }));
+
+        rail.appendChild(tools);
     }
+
+    function fmtPx(n) { return Math.round(n) + ' px'; }
+
+    function basename(s) {
+        if (!s) return '';
+        var i = s.lastIndexOf('/');
+        return i >= 0 ? s.substring(i + 1) : s;
+    }
+
+    var _inspectorState = { node: null, refs: null };
+
+    function _readNodeSpecs(node) {
+        return {
+            w: parseFloat(node.dataset.w),
+            h: parseFloat(node.dataset.h),
+            cx: parseFloat(node.dataset.cx),
+            cy: parseFloat(node.dataset.cy)
+        };
+    }
+
+    function _writeInspectorValues(refs, specs) {
+        if (refs.w) refs.w.textContent = fmtPx(specs.w);
+        if (refs.h) refs.h.textContent = fmtPx(specs.h);
+        if (refs.x) refs.x.textContent = fmtPx(specs.cx);
+        if (refs.y) refs.y.textContent = fmtPx(specs.cy);
+        if (refs.ratio && specs.w && specs.h) refs.ratio.textContent = (specs.w / specs.h).toFixed(3);
+    }
+
+    window.updateInspector = function(node) {
+        var pane = document.getElementById('inspector');
+        var content = document.getElementById('content');
+        if (!pane) return;
+
+        // Same node: just update value cells, no rebuild
+        if (node && _inspectorState.node === node && _inspectorState.refs) {
+            _writeInspectorValues(_inspectorState.refs, _readNodeSpecs(node));
+            return;
+        }
+
+        // Clear and rebuild
+        while (pane.firstChild) pane.removeChild(pane.firstChild);
+        _inspectorState = { node: null, refs: null };
+
+        if (!node) {
+            var empty = document.createElement('div');
+            empty.className = 'inspector-empty';
+            empty.textContent = 'Select an item';
+            pane.appendChild(empty);
+            content.classList.remove('inspector-open');
+            return;
+        }
+        content.classList.add('inspector-open');
+
+        var media = node.querySelector('video, img, iframe');
+        var type = media ? media.tagName.toLowerCase() : '';
+        var src = '';
+        if (media) {
+            if (media.tagName === 'VIDEO') {
+                var s = media.querySelector('source');
+                src = s ? s.src : (media.currentSrc || media.src);
+            } else {
+                src = media.src;
+            }
+        }
+
+        var w = parseFloat(node.dataset.w);
+        var h = parseFloat(node.dataset.h);
+        var cx = parseFloat(node.dataset.cx);
+        var cy = parseFloat(node.dataset.cy);
+
+        var refs = { w: null, h: null, x: null, y: null, ratio: null };
+
+        function row(label, value, refKey) {
+            var r = document.createElement('div');
+            r.className = 'spec-row';
+            var l = document.createElement('span');
+            l.textContent = label;
+            var v = document.createElement('span');
+            v.textContent = value;
+            r.appendChild(l);
+            r.appendChild(v);
+            if (refKey) refs[refKey] = v;
+            return r;
+        }
+
+        function pairRow(labelA, a, refA, labelB, b, refB) {
+            var pair = document.createElement('div');
+            pair.className = 'spec-pair';
+            [[labelA, a, refA], [labelB, b, refB]].forEach(function(p) {
+                var c = document.createElement('div');
+                c.className = 'spec-pair-cell';
+                var l = document.createElement('span');
+                l.textContent = p[0];
+                var v = document.createElement('span');
+                v.textContent = p[1];
+                c.appendChild(l);
+                c.appendChild(v);
+                if (p[2]) refs[p[2]] = v;
+                pair.appendChild(c);
+            });
+            return pair;
+        }
+
+        // Header
+        var header = document.createElement('div');
+        header.className = 'sidebar-section';
+        var hLabel = document.createElement('div');
+        hLabel.className = 'sidebar-label';
+        hLabel.textContent = 'Inspector';
+        header.appendChild(hLabel);
+        var hTitle = document.createElement('div');
+        hTitle.className = 'sidebar-title';
+        hTitle.textContent = src ? basename(src) : (type || 'item');
+        hTitle.style.textTransform = 'none';
+        hTitle.style.wordBreak = 'break-all';
+        header.appendChild(hTitle);
+        var hSub = document.createElement('div');
+        hSub.className = 'sidebar-tags';
+        hSub.textContent = type || '';
+        header.appendChild(hSub);
+        pane.appendChild(header);
+
+        // Layout specs
+        var layout = document.createElement('div');
+        layout.className = 'sidebar-section';
+        var lLabel = document.createElement('div');
+        lLabel.className = 'sidebar-label';
+        lLabel.textContent = 'Layout';
+        layout.appendChild(lLabel);
+        layout.appendChild(pairRow('W', fmtPx(w), 'w', 'H', fmtPx(h), 'h'));
+        var spacer = document.createElement('div');
+        spacer.style.height = '6px';
+        layout.appendChild(spacer);
+        layout.appendChild(pairRow('X', fmtPx(cx), 'x', 'Y', fmtPx(cy), 'y'));
+        if (w && h) {
+            var ratio = (w / h).toFixed(3);
+            layout.appendChild(row('Ratio', ratio, 'ratio'));
+        }
+        pane.appendChild(layout);
+
+        // Preview thumbnail
+        if (type === 'image') {
+            var prev = document.createElement('div');
+            prev.className = 'sidebar-section';
+            var pLabel = document.createElement('div');
+            pLabel.className = 'sidebar-label';
+            pLabel.textContent = 'Preview';
+            prev.appendChild(pLabel);
+            var thumb = document.createElement('div');
+            thumb.className = 'preview-thumb';
+            var thumbImg = document.createElement('img');
+            thumbImg.src = src;
+            thumb.appendChild(thumbImg);
+            prev.appendChild(thumb);
+            pane.appendChild(prev);
+        }
+
+        _inspectorState = { node: node, refs: refs };
+    };
 
     function createNode(media) {
         var n = document.createElement('div');
@@ -170,7 +365,71 @@
 
             relaxLayout(20);
             placeAll();
+
+            // Snapshot the rest state so "Rearrange" can restore it
+            nodes.forEach(function(n) {
+                n.dataset.initCx = n.dataset.cx;
+                n.dataset.initCy = n.dataset.cy;
+                n.dataset.initW = n.dataset.w;
+                n.dataset.initH = n.dataset.h;
+            });
         }
+
+        function rearrange() {
+            cancelAnim();
+            // Animate every node back to its snapshot
+            var startStates = nodes.map(function(n) {
+                return {
+                    n: n,
+                    cx0: parseFloat(n.dataset.cx), cy0: parseFloat(n.dataset.cy),
+                    w0: parseFloat(n.dataset.w), h0: parseFloat(n.dataset.h),
+                    cx1: parseFloat(n.dataset.initCx), cy1: parseFloat(n.dataset.initCy),
+                    w1: parseFloat(n.dataset.initW), h1: parseFloat(n.dataset.initH)
+                };
+            });
+            var duration = 700;
+            var t0 = performance.now();
+            function ease(t) { return 1 - Math.pow(1 - t, 3); }
+            function step(now) {
+                var t = Math.min(1, (now - t0) / duration);
+                var e = ease(t);
+                startStates.forEach(function(s) {
+                    var cx = s.cx0 + (s.cx1 - s.cx0) * e;
+                    var cy = s.cy0 + (s.cy1 - s.cy0) * e;
+                    var w = s.w0 + (s.w1 - s.w0) * e;
+                    var h = s.h0 + (s.h1 - s.h0) * e;
+                    s.n.dataset.cx = cx;
+                    s.n.dataset.cy = cy;
+                    s.n.dataset.w = w;
+                    s.n.dataset.h = h;
+                    s.n.style.width = w + 'px';
+                    s.n.style.height = h + 'px';
+                });
+                placeAll();
+                if (window.updateInspector) {
+                    var sel = document.querySelector('.node.selected');
+                    if (sel) window.updateInspector(sel);
+                }
+                if (t < 1) animHandle = requestAnimationFrame(step);
+                else animHandle = null;
+            }
+            animHandle = requestAnimationFrame(step);
+        }
+
+        // Expose for sidebar tool buttons
+        window._canvas = window._canvas || {};
+        window._canvas.rearrange = rearrange;
+        window._canvas.fitAll = function() { centerView(); };
+        window._canvas.resetZoom = function() {
+            cancelAnim();
+            var box = bbox();
+            var vw = workspace.offsetWidth;
+            var vh = workspace.offsetHeight;
+            scale = 1;
+            tx = vw / 2 - box.cx;
+            ty = vh / 2 - box.cy;
+            applyTransform();
+        };
 
         function relaxLayout(iterations) {
             var pad = 120;
@@ -307,24 +566,23 @@
         layoutNodes();
 
         function placeAll() {
+            // Position nodes in canvas-space; the canvas transform applies the
+            // zoom uniformly to positions + sizes so layout never shifts.
             nodes.forEach(function(n) {
                 var cx = parseFloat(n.dataset.cx) || 0;
                 var cy = parseFloat(n.dataset.cy) || 0;
                 var w = parseFloat(n.dataset.w);
                 var h = parseFloat(n.dataset.h);
-                n.style.left = (tx + cx * scale - w / 2) + 'px';
-                n.style.top = (ty + cy * scale - h / 2) + 'px';
+                n.style.left = (cx - w / 2) + 'px';
+                n.style.top = (cy - h / 2) + 'px';
             });
         }
 
         function applyTransform() {
-            // Canvas layer stays at identity; nodes are placed in screen space so
-            // they keep their native pixel size regardless of zoom.
-            canvas.style.transform = 'none';
+            canvas.style.transform = 'translate(' + tx + 'px, ' + ty + 'px) scale(' + scale + ')';
             var gridSize = 40 * scale;
             gridBg.style.backgroundSize = gridSize + 'px ' + gridSize + 'px';
             gridBg.style.backgroundPosition = tx + 'px ' + ty + 'px';
-            placeAll();
             updateMagnification();
         }
 
@@ -492,6 +750,7 @@
                 workspace.classList.add('grabbing');
                 // Deselect when clicking empty space
                 document.querySelectorAll('.node.selected').forEach(function(n) { n.classList.remove('selected'); });
+                if (window.updateInspector) window.updateInspector(null);
             }
             e.preventDefault();
         });
@@ -522,6 +781,7 @@
                 resizingNode.style.width = newW + 'px';
                 resizingNode.style.height = newH + 'px';
                 placeAll();
+                if (window.updateInspector) window.updateInspector(resizingNode);
                 return;
             }
             if (draggingNode) {
@@ -532,6 +792,9 @@
                 resolveCollisions(draggingNode, 4);
                 placeAll();
                 updateMagnification();
+                if (window.updateInspector && draggingNode.classList.contains('selected')) {
+                    window.updateInspector(draggingNode);
+                }
             } else if (isDragging) {
                 tx = startTx + (e.clientX - startX);
                 ty = startTy + (e.clientY - startY);
@@ -559,17 +822,42 @@
                     if (n !== pressTarget) n.classList.remove('selected');
                 });
                 pressTarget.classList.add('selected');
+                if (window.updateInspector) window.updateInspector(pressTarget);
                 centerOnNode(pressTarget);
             }
             pressTarget = null;
         });
 
-        // Wheel / trackpad: pan the canvas (no zoom — images stay in place)
+        // Zoom toward cursor (canonical math — images keep native size,
+        // scale only affects spacing between them).
+        function zoomToward(cursorX, cursorY, factor) {
+            var newScale = Math.max(minScale, Math.min(maxScale, scale * factor));
+            if (newScale === scale) return;
+            // Anchor: keep the canvas-space point under the cursor in the same
+            // screen position. canvas-space pt = (screen - t) / scale.
+            var canvasX = (cursorX - tx) / scale;
+            var canvasY = (cursorY - ty) / scale;
+            scale = newScale;
+            tx = cursorX - canvasX * scale;
+            ty = cursorY - canvasY * scale;
+            applyTransform();
+        }
+
+        // Wheel: discriminate by ctrlKey (Chrome/Mac trackpad pinch fires
+        // wheel + ctrlKey). Pinch zooms, plain scroll pans.
         workspace.addEventListener('wheel', function(e) {
             e.preventDefault();
-            tx -= e.deltaX;
-            ty -= e.deltaY;
-            applyTransform();
+            var rect = workspace.getBoundingClientRect();
+            var cx = e.clientX - rect.left;
+            var cy = e.clientY - rect.top;
+            if (e.ctrlKey || e.metaKey) {
+                // Exponential zoom — convention is Math.pow(2, deltaY * -0.01)
+                zoomToward(cx, cy, Math.pow(2, e.deltaY * -0.01));
+            } else {
+                tx -= e.deltaX;
+                ty -= e.deltaY;
+                applyTransform();
+            }
         }, { passive: false });
 
         // Touch
@@ -639,6 +927,96 @@
         centerView();
         window.addEventListener('resize', function() { centerView(true); });
 
+        // Universal canvas hotkeys
+        var spaceHeld = false;
+        document.addEventListener('keydown', function(e) {
+            // Spacebar = temporary pan mode
+            if (e.code === 'Space' && !spaceHeld && !isInputFocused()) {
+                spaceHeld = true;
+                workspace.classList.add('space-mode');
+                e.preventDefault();
+                return;
+            }
+            // Shift+1: fit all
+            if (e.shiftKey && e.code === 'Digit1') {
+                e.preventDefault();
+                centerView();
+                return;
+            }
+            // Shift+2: fit selection (or fall back to fit all)
+            if (e.shiftKey && e.code === 'Digit2') {
+                e.preventDefault();
+                var sel = document.querySelector('.node.selected');
+                if (sel) {
+                    centerOnNode(sel);
+                } else {
+                    centerView();
+                }
+                return;
+            }
+            // Cmd/Ctrl+0: reset zoom to 100%
+            if ((e.metaKey || e.ctrlKey) && e.code === 'Digit0') {
+                e.preventDefault();
+                cancelAnim();
+                var box = bbox();
+                var vw = workspace.offsetWidth;
+                var vh = workspace.offsetHeight;
+                scale = 1;
+                tx = vw / 2 - box.cx;
+                ty = vh / 2 - box.cy;
+                applyTransform();
+                return;
+            }
+            // R: rearrange
+            if (e.code === 'KeyR' && !e.metaKey && !e.ctrlKey && !e.shiftKey && !isInputFocused()) {
+                e.preventDefault();
+                rearrange();
+                return;
+            }
+        });
+
+        document.addEventListener('keyup', function(e) {
+            if (e.code === 'Space') {
+                spaceHeld = false;
+                workspace.classList.remove('space-mode');
+            }
+        });
+
+        function isInputFocused() {
+            var a = document.activeElement;
+            return a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA' || a.isContentEditable);
+        }
+
+        // Override mousedown so space+drag always pans regardless of target
+        workspace.addEventListener('mousedown', function(e) {
+            if (spaceHeld && e.button === 0) {
+                e.stopImmediatePropagation();
+                cancelAnim();
+                isDragging = true;
+                draggingNode = null;
+                pressTarget = null;
+                startX = e.clientX;
+                startY = e.clientY;
+                startTx = tx;
+                startTy = ty;
+                workspace.classList.add('grabbing');
+                e.preventDefault();
+            }
+            // Middle mouse = pan
+            if (e.button === 1) {
+                e.preventDefault();
+                cancelAnim();
+                isDragging = true;
+                draggingNode = null;
+                pressTarget = null;
+                startX = e.clientX;
+                startY = e.clientY;
+                startTx = tx;
+                startTy = ty;
+                workspace.classList.add('grabbing');
+            }
+        }, true); // capture-phase so it beats the node-drag handler
+
         content.offsetHeight;
         content.style.opacity = '1';
 
@@ -664,7 +1042,7 @@
                 var hud = document.getElementById('hud');
                 if (hud) hud.textContent = (project.hudIndex ? project.hudIndex + ' · ' : '') + (project.title || '').toUpperCase();
                 renderCanvas(project);
-                renderColumns(project);
+                renderLeftSidebar(project);
                 initWorkspace();
             })
             .catch(function(err) {

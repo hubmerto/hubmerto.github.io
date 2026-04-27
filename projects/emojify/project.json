@@ -4,9 +4,11 @@
     "hudIndex": "03",
     "media": [
         { "type": "video", "src": "media/emojisaic.mp4" },
-        { "type": "video", "src": "media/emojisaic-2.mp4" },
-        { "type": "image", "src": "media/emojisaic-6.png" },
-        { "type": "image", "src": "media/emojisaic-7.png" }
+        { "type": "video", "src": "media/diablo_running.mp4" },
+        { "type": "image", "src": "media/susanne_daubner.png" },
+        { "type": "image", "src": "media/musik_plastikman.png" },
+        { "type": "image", "src": "media/ri_hun_hi.png" },
+        { "type": "image", "src": "media/monday.png" }
     ],
     "columns": [
         {

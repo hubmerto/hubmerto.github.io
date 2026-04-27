@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="/theme.js"></script>
     <script src="/gate.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hubmerto.emojify</title>
@@ -11,20 +12,25 @@
 </head>
 <body>
     <div class="content" id="content">
-        <nav>
-            <a href="/">home</a>
-            <a href="/projects">projects</a>
-            <a href="/contact">contact</a>
-        </nav>
+
+        <aside class="sidebar sidebar-left" id="sidebar-left"></aside>
 
         <div class="workspace" id="workspace">
+            <nav>
+                <a href="/">home</a>
+                <a href="/projects">projects</a>
+                <a href="/contact">contact</a>
+            </nav>
             <div class="grid-bg" id="grid-bg"></div>
             <div class="hud" id="hud"></div>
             <div class="hud-hint">drag to explore</div>
             <div class="canvas-layer" id="canvas"></div>
         </div>
 
-        <div class="bottom-bar" id="bottom-bar"></div>
+        <aside class="sidebar sidebar-right inspector" id="inspector">
+            <div class="inspector-empty">Select an item</div>
+        </aside>
+
     </div>
 
     <script src="/projects/template.js"></script>

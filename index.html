@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="/theme.js"></script>
     <script src="/gate.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hubmerto</title>
@@ -12,11 +13,37 @@
     <link rel="prefetch" href="/projects/bg.mp4" as="video" type="video/mp4">
     <style>
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg: #0a0a0a;
+            --fg: #e0e0e0;
+            --fg-strong: #ffffff;
+            --fg-muted: #888;
+            --fg-faint: #555;
+        }
+        [data-theme="light"] {
+            --bg: #f5f5f3;
+            --fg: #1a1a1a;
+            --fg-strong: #000000;
+            --fg-muted: #555;
+            --fg-faint: #888;
+        }
+        .bg-video, .bg-video + * { z-index: 0; }
+        [data-theme="light"] .bg-video { display: none; }
+        .theme-toggle {
+            appearance: none; background: transparent; border: none;
+            color: var(--fg); cursor: pointer; padding: 0;
+            margin-left: 4px; font-size: 18px; line-height: 1;
+            width: 22px; height: 22px;
+            display: inline-flex; align-items: center; justify-content: center;
+            transition: color 0.2s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .theme-toggle:hover { color: var(--fg-strong); transform: rotate(180deg); }
+* { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             width: 100%;
             height: 100vh;
-            background: #0a0a0a;
+            background: var(--bg);
             overflow: hidden;
             -webkit-user-select: none;
             user-select: none;
@@ -38,7 +65,7 @@
         }
 
         nav a {
-            color: #e0e0e0;
+            color: var(--fg);
             text-decoration: none;
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 300;
@@ -48,11 +75,11 @@
         }
 
         nav a:hover {
-            color: #ffffff;
+            color: var(--fg-strong);
         }
 
         nav a.disabled {
-            color: #555;
+            color: var(--fg-faint);
             pointer-events: none;
         }
 
@@ -76,7 +103,7 @@
             bottom: 0;
             left: 0;
             height: 2px;
-            background: #e0e0e0;
+            background: var(--fg);
             z-index: 200;
             width: 0;
             transition: width 0.3s ease, opacity 0.4s ease;
