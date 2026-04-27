@@ -514,3 +514,31 @@ nav a.disabled { color: var(--fg-faint); pointer-events: none; }
 }
 .theme-toggle:hover { color: var(--fg-strong); transform: rotate(180deg); }
 .theme-toggle-icon { display: inline-block; }
+
+/* Code block in inspector */
+.code-block {
+    background: var(--bg-soft);
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    padding: 12px;
+    margin-top: 12px;
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 11px;
+    line-height: 1.55;
+    color: var(--fg);
+    overflow-x: auto;
+    white-space: pre;
+    -webkit-user-select: text;
+    user-select: text;
+    pointer-events: auto;
+}
+.code-block .tok-kw { color: #c792ea; }
+.code-block .tok-fn { color: #82aaff; }
+.code-block .tok-num { color: #f78c6c; }
+.code-block .tok-str { color: #c3e88d; }
+.code-block .tok-com { color: var(--fg-faint); font-style: italic; }
+.code-block .tok-op { color: var(--fg); }
+[data-theme="light"] .code-block .tok-kw { color: #aa00aa; }
+[data-theme="light"] .code-block .tok-fn { color: #1f6feb; }
+[data-theme="light"] .code-block .tok-num { color: #b25000; }
+[data-theme="light"] .code-block .tok-str { color: #2e7d32; }

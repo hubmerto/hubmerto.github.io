@@ -247,6 +247,21 @@
             pane.appendChild(prev);
         }
 
+        // Code block (if the media has an attached snippet)
+        if (node._code) {
+            var codeSec = document.createElement('div');
+            codeSec.className = 'sidebar-section';
+            var cLabel = document.createElement('div');
+            cLabel.className = 'sidebar-label';
+            cLabel.textContent = node._codeTitle || 'Code';
+            codeSec.appendChild(cLabel);
+            var pre = document.createElement('pre');
+            pre.className = 'code-block';
+            pre.appendChild(highlightJSToFragment(node._code));
+            codeSec.appendChild(pre);
+            pane.appendChild(codeSec);
+        }
+
         _inspectorState = { node: node, refs: refs };
     };
 
@@ -287,7 +302,42 @@
         });
         if (media.w) n.dataset.w = media.w;
         if (media.h) n.dataset.h = media.h;
+        if (media.code) {
+            n._code = media.code;
+            n._codeLang = media.codeLang || 'js';
+            n._codeTitle = media.codeTitle || '';
+        }
         return n;
+    }
+
+    // Lightweight JS syntax highlighter — returns a DocumentFragment.
+    function highlightJSToFragment(src) {
+        var KEYWORDS = /^(function|return|let|const|var|for|of|in|if|else|new|true|false|null|undefined|class|extends|this|async|await|try|catch|finally|throw|while|do|switch|case|break|continue|import|export|from|as|default|typeof|instanceof|delete|void)$/;
+        var re = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)|('(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*"|`(?:\\.|[^`\\])*`)|(\d+(?:\.\d+)?)|([A-Za-z_$][A-Za-z0-9_$]*)|([\s\S])/g;
+        var frag = document.createDocumentFragment();
+        var m;
+        function append(cls, text) {
+            if (!cls) { frag.appendChild(document.createTextNode(text)); return; }
+            var s = document.createElement('span');
+            s.className = 'tok-' + cls;
+            s.textContent = text;
+            frag.appendChild(s);
+        }
+        while ((m = re.exec(src)) !== null) {
+            if (m[1] !== undefined) append('com', m[1]);
+            else if (m[2] !== undefined) append('str', m[2]);
+            else if (m[3] !== undefined) append('num', m[3]);
+            else if (m[4] !== undefined) {
+                if (KEYWORDS.test(m[4])) append('kw', m[4]);
+                else {
+                    var nextIdx = re.lastIndex;
+                    var trailing = src.slice(nextIdx).match(/^\s*\(/);
+                    append(trailing ? 'fn' : '', m[4]);
+                }
+            }
+            else append('', m[5]);
+        }
+        return frag;
     }
 
     function renderCanvas(project) {

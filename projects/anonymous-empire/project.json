@@ -43,7 +43,10 @@
             "src": "https://anonymousempire.art/animations/vectorscope/",
             "title": "Vectorscope",
             "w": 900,
-            "h": 900
+            "h": 900,
+            "codeTitle": "analyze(release)",
+            "codeLang": "js",
+            "code": "function analyze(release) {\n  let sumX = 0, sumY = 0, totalChroma = 0;\n  for (const swatch of release.palette) {\n    const w = swatch.chroma * swatch.fraction;   // weight\n    const θ = swatch.hue * Math.PI / 180;\n    sumX += Math.cos(θ) * w;                     // polar → cartesian\n    sumY += Math.sin(θ) * w;                     // (chroma-weighted)\n    totalChroma += swatch.chroma * swatch.fraction;\n  }\n  const hue    = Math.atan2(sumY, sumX) * 180 / Math.PI;\n  const chroma = totalChroma;\n  return { hue, chroma };                        // → polar dot\n}"
         },
         {
             "type": "video",
