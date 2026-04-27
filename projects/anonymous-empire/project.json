@@ -46,6 +46,13 @@
             "h": 900
         },
         {
+            "type": "iframe",
+            "src": "https://anonymousempire.art/animations/vectorscope/",
+            "title": "Vectorscope",
+            "w": 900,
+            "h": 900
+        },
+        {
             "type": "video",
             "src": "media/pile.webm"
         },
