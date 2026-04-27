@@ -268,8 +268,9 @@
         } else if (media.type === 'iframe') {
             el = document.createElement('iframe');
             el.src = media.src;
-            el.loading = 'lazy';
+            el.loading = 'eager';
             el.setAttribute('allow', 'autoplay');
+            el.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
             if (media.title) el.title = media.title;
         } else {
             el = document.createElement('img');
