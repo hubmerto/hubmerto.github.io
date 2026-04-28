@@ -141,6 +141,21 @@
             color: var(--bg);
         }
 
+        .project-name.locked {
+            color: var(--fg-faint);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .project-name.locked::after {
+            content: " · locked";
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--fg-fainter);
+            margin-left: 8px;
+        }
+
         .project-desc {
             font-size: clamp(12px, 1.4vw, 14px);
             color: var(--fg-faint);
@@ -188,11 +203,11 @@
     <p class="subtitle">Selected work</p>
 
     <div class="project-item">
-        <a class="project-name" href="/projects/anonymous-empire">Anonymous Empire</a>
+        <span class="project-name locked">Anonymous Empire</span>
     </div>
 
     <div class="project-item">
-        <a class="project-name" href="/projects/strelitzia">Strelitzia</a>
+        <span class="project-name locked">Strelitzia</span>
     </div>
 
     <div class="project-item">
