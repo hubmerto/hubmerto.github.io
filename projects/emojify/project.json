@@ -36,7 +36,7 @@
             ]
         },
         {
-            "text": "Emojify reconstructs an arbitrary input as a grid of emoji glyphs chosen by colour match, treating the Unicode emoji set as a constrained quantization palette. The tool accepts still images, animated GIFs, video files, and live webcam feed, returning the same content reassembled in the emoji vocabulary. A variable-block feature merges adjacent regions of identical glyphs into larger squares, producing visual hierarchy where uniform tiling would flatten into texture. The CLI is written in Ruby for batch use, the web app in Python Flask for drag-and-drop. Video runs through ffmpeg. The project is internally named Emojisaic.",
+            "text": "Emojify reconstructs an arbitrary input as a grid of emoji glyphs chosen by colour match, treating the Unicode emoji set as a constrained quantization palette. The tool accepts still images, animated GIFs, video files, and live webcam feed, returning the same content reassembled in the emoji vocabulary. A variable-block feature merges adjacent regions of identical glyphs into larger squares, producing visual hierarchy where uniform tiling would flatten into texture. The CLI is written in Ruby for batch use, the web app in Python Flask for drag-and-drop. Video runs through ffmpeg.",
             "meta": [
                 { "label": "Live at", "value": "hubmerto.com/emojify", "href": "/emojify" }
             ]
