@@ -339,64 +339,6 @@ body {
 }
 
 .tool-btn:hover .kbd { color: var(--fg-faint); opacity: 1; }
-
-@media (max-width: 900px) {
-    /* Stack: meta → canvas → body paragraphs → inspector */
-    html, body {
-        overflow: auto;
-        height: auto;
-    }
-    body {
-        min-height: 100dvh;
-    }
-    .topbar {
-        position: sticky;
-        top: 0;
-        padding: 12px 18px;
-        gap: 12px;
-    }
-    .topbar-nav { gap: 16px; }
-    .topbar-nav a { font-size: 12px; }
-    .crumb-current { font-size: 11px; }
-    .content {
-        display: flex;
-        flex-direction: column;
-        height: auto;
-        min-height: 100dvh;
-    }
-    /* Promote the left rail's children up into the .content flex layout
-       so they can be reordered around the canvas. */
-    .sidebar-left {
-        display: contents;
-    }
-    .sidebar-left .sidebar-section {
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-    }
-    .sidebar-left .sidebar-section:first-of-type {
-        order: 1;
-    }
-    /* Same canvas as desktop, just with a fixed mobile height. */
-    .workspace {
-        order: 2;
-        flex: none;
-        height: 70vh;
-        min-height: 420px;
-    }
-    .sidebar-left .sidebar-section:not(:first-of-type) {
-        order: 3;
-    }
-    .inspector {
-        order: 4;
-        width: 100%;
-        border-left: none;
-        border-bottom: 1px solid var(--border);
-    }
-    .content:not(.inspector-open) .inspector {
-        display: block;
-    }
-}
-
 .workspace > nav {
     position: absolute;
     top: 0;
@@ -716,4 +658,61 @@ body {
     font-variant-numeric: tabular-nums;
     pointer-events: none;
     user-select: none;
+}
+
+@media (max-width: 900px) {
+    /* Stack: meta → canvas → body paragraphs → inspector */
+    html, body {
+        overflow: auto;
+        height: auto;
+    }
+    body {
+        min-height: 100dvh;
+    }
+    .topbar {
+        position: sticky;
+        top: 0;
+        padding: 12px 18px;
+        gap: 12px;
+    }
+    .topbar-nav { gap: 16px; }
+    .topbar-nav a { font-size: 12px; }
+    .crumb-current { font-size: 11px; }
+    .content {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        min-height: 100dvh;
+    }
+    /* Promote the left rail's children up into the .content flex layout
+       so they can be reordered around the canvas. */
+    .sidebar-left {
+        display: contents;
+    }
+    .sidebar-left .sidebar-section {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+    .sidebar-left .sidebar-section:first-of-type {
+        order: 1;
+    }
+    /* Same canvas as desktop, just with a fixed mobile height. */
+    .workspace {
+        order: 2;
+        flex: none;
+        height: 70vh;
+        min-height: 420px;
+    }
+    .sidebar-left .sidebar-section:not(:first-of-type) {
+        order: 3;
+    }
+    .inspector {
+        order: 4;
+        width: 100%;
+        border-left: none;
+        border-bottom: 1px solid var(--border);
+    }
+    .content:not(.inspector-open) .inspector {
+        display: block;
+    }
 }
