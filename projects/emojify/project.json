@@ -13,19 +13,21 @@
     "columns": [
         {
             "title": "Emojify",
-            "tags": "webgl, creative code · 2025",
+            "tags": "digital · 2025",
             "meta": [
-                { "label": "Client", "value": "Self-initiated" },
-                { "label": "Stack", "value": "WebGL, JS, Python" },
-                { "label": "Status", "value": "Live" },
-                { "label": "Try it", "value": "/emojify", "href": "/emojify" }
+                { "label": "Year", "value": "2025" },
+                { "label": "Department", "value": "Digital" },
+                { "label": "Typology", "value": "Spec project, tool" },
+                { "label": "Program", "value": "Image, GIF, video, and webcam mosaic generator" },
+                { "label": "Scope", "value": "Concept, Algorithm, Engineering, Deployment" },
+                { "label": "Stack", "value": "Ruby (CLI), Python · Flask (web app), ffmpeg, Docker, Railway" }
             ]
         },
         {
-            "text": "Emojis are the hieroglyphs of the internet. A universal shorthand that compresses identity, emotion, and context into a single glyph. Emojify reverses that compression. Instead of reducing an image to a symbol, it reconstructs the image entirely from symbols, turning a contemporary visual language back into the thing it was always trying to represent."
-        },
-        {
-            "text": "Built with WebGL and a precomputed emoji atlas. Each frame gets downsampled to a grid, every cell averaged to a single color, then matched against 590 Apple emojis by Euclidean distance. A merging pass groups adjacent identical tiles into larger blocks. Upload images or video, stream a webcam, adjust grid resolution from 4 to 48 pixels per cell."
+            "text": "Emojify reconstructs an arbitrary input as a grid of emoji glyphs chosen by colour match, treating the Unicode emoji set as a constrained quantization palette. The tool accepts still images, animated GIFs, video files, and live webcam feed, returning the same content reassembled in the emoji vocabulary. A variable-block feature merges adjacent regions of identical glyphs into larger squares, producing visual hierarchy where uniform tiling would flatten into texture. The CLI is written in Ruby for batch use, the web app in Python Flask for drag-and-drop. Video runs through ffmpeg. The project is internally named Emojisaic.",
+            "meta": [
+                { "label": "Live at", "value": "hubmerto.com/emojify", "href": "/emojify" }
+            ]
         }
     ]
 }
