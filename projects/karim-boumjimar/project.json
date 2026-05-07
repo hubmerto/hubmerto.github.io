@@ -1,6 +1,6 @@
 {
     "slug": "karim-boumjimar",
-    "title": "Karim Boumjimar",
+    "title": "Karim Boumjimar Portfolio",
     "hudIndex": "04",
     "media": [
         { "type": "video", "src": "media/navigation-1.mp4" },
@@ -8,20 +8,27 @@
     ],
     "columns": [
         {
-            "title": "Karim Boumjimar",
-            "tags": "web, creative direction · 2026",
+            "title": "Karim Boumjimar Portfolio",
+            "tags": "digital · 2026",
             "meta": [
                 { "label": "Client", "value": "Karim Boumjimar" },
+                { "label": "Location", "value": "Berlin / Copenhagen" },
                 { "label": "Year", "value": "2026" },
-                { "label": "Scope", "value": "Web design, creative direction" },
-                { "label": "Status", "value": "In progress" }
+                { "label": "Department", "value": "Digital" },
+                { "label": "Typology", "value": "Cultural" },
+                { "label": "Program", "value": "Portfolio, SPA" },
+                { "label": "Scope", "value": "Concept, Interaction, Engineering, Deployment" },
+                { "label": "Status", "value": "Completed" },
+                { "label": "Catalog", "value": "122 photographs · 13 exhibitions" },
+                { "label": "Design", "value": "Humberto Gesser" },
+                { "label": "Live", "value": "karimboumjimar.com", "href": "https://karimboumjimar.com" }
             ]
         },
         {
-            "text": "Description coming soon."
+            "text": "The portfolio organizes one hundred and twenty-two photographs from thirteen exhibitions onto a single navigable canvas, structured around the conditions under which the work earns weight — physical scale and proximity — rather than as a paginated archive."
         },
         {
-            "text": "Process notes coming soon."
+            "text": "On arrival, the catalog is packed into a tapered diamond, a self-balancing column distribution that rebuilds its silhouette as the catalog grows or contracts. Past a defined zoom threshold, the formation disperses: tiles redistribute into per-project clusters, each marked by a hairline outline and a metadata title. Selecting a cluster opens a horizontal reading strip in which each photograph animates from its tile slot to its full-resolution position, a transition handled through paired rect captures rather than a view swap. The canvas runs through two parallel rendering paths — DOM on desktop, WebGL via Pixi.js on mobile — sharing a single store and dispersion model, with image loading staggered along the entry sequence to hold within mobile Safari's memory ceiling."
         }
     ]
 }
