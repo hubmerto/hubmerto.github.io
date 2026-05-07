@@ -10,7 +10,11 @@
             "src": "media/susanne_daubner.png",
             "caption": "ARD Tagesschau anchor, broadcast still. The composed face of public-service news, reconstructed in a vocabulary that contains no profession."
         },
-        { "type": "image", "src": "media/musik_plastikman.png" },
+        {
+            "type": "image",
+            "src": "media/musik_plastikman.png",
+            "caption": "Plastikman, Musik. NovaMute, 1994."
+        },
         {
             "type": "image",
             "src": "media/ri_hun_hi.png",
