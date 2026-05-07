@@ -320,6 +320,7 @@
         });
         if (media.w) n.dataset.w = media.w;
         if (media.h) n.dataset.h = media.h;
+        if (media.size) n.dataset.size = media.size;
         if (media.code) {
             n._code = media.code;
             n._codeLang = media.codeLang || 'js';
@@ -410,6 +411,12 @@
             var ratio = Math.min(MAX_W / w, MAX_H / h, 1);
             w = w * ratio;
             h = h * ratio;
+            // Optional per-media size multiplier (e.g. size: 0.5 = half)
+            var sizeMult = parseFloat(n.dataset.size);
+            if (!isNaN(sizeMult) && sizeMult > 0) {
+                w = w * sizeMult;
+                h = h * sizeMult;
+            }
             n.style.width = w + 'px';
             n.style.height = h + 'px';
             n.dataset.w = w;

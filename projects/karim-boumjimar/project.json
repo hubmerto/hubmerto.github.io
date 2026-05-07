@@ -21,7 +21,8 @@
         {
             "type": "image",
             "src": "media/vase.png",
-            "spin": "fast"
+            "spin": "fast",
+            "size": 0.5
         }
     ],
     "columns": [
