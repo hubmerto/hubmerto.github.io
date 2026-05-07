@@ -15,77 +15,81 @@
     <meta property="og:image" content="https://hubmerto.com/og.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image" content="https://hubmerto.com/og-square.png">
-    <meta property="og:image:width" content="630">
-    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="hubmerto · projects">
     <meta name="twitter:description" content="Selected work. Creative direction across web, code, and real-time worlds.">
     <meta name="twitter:image" content="https://hubmerto.com/og.png">
     <meta name="theme-color" content="#0a0a0a">
-    <link rel="preload" href="/projects/bg.mp4" as="video" type="video/mp4">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" as="style">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
-    <link rel="prefetch" href="/ascii-frames.json" as="fetch" type="application/json" crossorigin>
-    <link rel="prefetch" href="/bg.mp4" as="video" type="video/mp4">
     <style>
-
-        
         :root {
             --bg: #0a0a0a;
+            --bg-elev: #131313;
+            --bg-soft: #1a1a1a;
             --fg: #e0e0e0;
             --fg-strong: #ffffff;
             --fg-muted: #888;
             --fg-faint: #555;
+            --fg-fainter: #444;
+            --border: #1a1a1a;
+            --border-strong: #2a2a2a;
         }
         [data-theme="light"] {
             --bg: #f5f5f3;
+            --bg-elev: #ffffff;
+            --bg-soft: #ececea;
             --fg: #1a1a1a;
             --fg-strong: #000000;
             --fg-muted: #555;
             --fg-faint: #888;
+            --fg-fainter: #aaa;
+            --border: #e2e2e0;
+            --border-strong: #d0d0ce;
         }
-        .bg-video, .bg-video + * { z-index: 0; }
-        [data-theme="light"] .bg-video { display: none; }
-        .theme-toggle {
-            appearance: none; background: transparent; border: none;
-            color: var(--fg); cursor: pointer; padding: 0;
-            margin-left: 4px; font-size: 18px; line-height: 1;
-            width: 22px; height: 22px;
-            display: inline-flex; align-items: center; justify-content: center;
-            transition: color 0.2s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .theme-toggle:hover { color: var(--fg-strong); transform: rotate(180deg); }
-* { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            width: 100%;
-            min-height: 100vh;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
             background: var(--bg);
             color: var(--fg);
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 300;
-            overflow-x: hidden;
             -webkit-user-select: none;
             user-select: none;
+            min-height: 100vh;
         }
 
-        .content {
-            opacity: 0;
-            transition: opacity 0.4s ease;
+        .theme-toggle {
+            appearance: none;
+            background: transparent;
+            border: none;
+            color: var(--fg);
+            cursor: pointer;
+            padding: 0;
+            margin-left: 4px;
+            font-size: 18px;
+            line-height: 1;
+            width: 22px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
+        .theme-toggle:hover { color: var(--fg-strong); transform: rotate(180deg); }
 
         .page-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            padding: 24px 40px;
+            padding: 28px 40px 0;
         }
 
         nav {
             display: flex;
             gap: 24px;
-            background: transparent;
+            align-items: center;
         }
 
         nav a {
@@ -95,21 +99,8 @@
             letter-spacing: 0.05em;
             transition: color 0.3s ease;
         }
-
-        nav a:hover {
-            color: var(--fg-strong);
-        }
-
-        nav a.disabled {
-            color: var(--fg-faint);
-            pointer-events: none;
-        }
-
-        /* Main content */
-        main {
-            padding: 0;
-            max-width: 800px;
-        }
+        nav a:hover { color: var(--fg-strong); }
+        nav a.disabled { color: var(--fg-faint); pointer-events: none; }
 
         h1 {
             font-size: clamp(16px, 1.8vw, 20px);
@@ -120,164 +111,237 @@
             text-transform: uppercase;
             letter-spacing: 0.08em;
         }
-
         .subtitle {
             font-size: clamp(13px, 1.4vw, 15px);
             color: var(--fg-muted);
             font-weight: 300;
-            margin-bottom: 48px;
             line-height: 1.8;
         }
 
-        /* Projects list */
-        .project-item {
-            margin-bottom: 32px;
+        main {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            padding: 48px 40px 80px;
+        }
+        main.loaded { opacity: 1; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
         }
 
-        .project-name {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            font-size: clamp(14px, 1.6vw, 17px);
-            color: var(--fg);
+        .card {
+            display: flex;
+            flex-direction: column;
             text-decoration: none;
-            padding: 4px 8px;
-            margin-left: -8px;
-            border-radius: 0;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            font-weight: 400;
-            letter-spacing: 0.02em;
+            color: inherit;
+            background: var(--bg-elev);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.3s ease,
+                        background 0.3s ease;
+            position: relative;
         }
 
-        a.project-name {
-            cursor: pointer;
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-strong);
         }
 
-        a.project-name:hover {
-            background-color: var(--fg-strong);
-            color: var(--bg);
-        }
-
-        .project-name.locked {
-            color: var(--fg-faint);
+        .card.locked {
             cursor: not-allowed;
             pointer-events: none;
+            opacity: 0.55;
         }
 
-        .project-name.locked::after {
-            content: " · locked";
-            font-size: 11px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--fg-fainter);
-            margin-left: 8px;
+        .card-cover {
+            aspect-ratio: 4 / 3;
+            background: var(--bg-soft);
+            overflow: hidden;
+            position: relative;
         }
 
-        .project-desc {
-            font-size: clamp(12px, 1.4vw, 14px);
-            color: var(--fg-faint);
-            line-height: 1.8;
-            padding-left: 8px;
-        }
-
-        .project-tag {
-            display: inline-block;
-            font-size: 11px;
-            color: var(--fg-faint);
-            letter-spacing: 0.05em;
-            margin-left: 8px;
-        }
-
-
-        .bg-video {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .card-cover video,
+        .card-cover img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: -1;
-            opacity: 0.4;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .card:hover .card-cover video,
+        .card:hover .card-cover img {
+            transform: scale(1.04);
+        }
+
+        .card-body {
+            padding: 16px 18px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .card-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--fg-strong);
+            letter-spacing: 0.01em;
+        }
+
+        .card-year {
+            font-size: 12px;
+            color: var(--fg-faint);
+            font-variant-numeric: tabular-nums;
+            flex-shrink: 0;
+        }
+
+        .card-tags {
+            font-size: 12px;
+            color: var(--fg-muted);
+            letter-spacing: 0.02em;
+        }
+
+        .card-status {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            font-size: 9px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--fg-strong);
+            background: rgba(0, 0, 0, 0.65);
+            padding: 5px 9px;
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        [data-theme="light"] .card-status {
+            background: rgba(255, 255, 255, 0.75);
         }
 
         @media (max-width: 600px) {
-            .page-header { padding: 18px 20px; }
-            main { padding: 0; }
-            nav { gap: 16px; }
+            .page-header { padding: 20px 20px 0; }
+            main { padding: 24px 20px 60px; }
+            .grid { grid-template-columns: 1fr; gap: 16px; margin-top: 24px; }
+            .card-cover { aspect-ratio: 16 / 10; }
         }
     </style>
-    <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
 <body>
 
-<video class="bg-video" autoplay muted loop playsinline preload="auto" poster="/projects/poster.jpg">
-    <source src="/projects/bg.mp4" type="video/mp4">
-</video>
-
-<div class="content" id="content">
 <div class="page-header">
-<main>
-    <h1>Projects</h1>
-    <p class="subtitle">Selected work</p>
-
-    <div class="project-item">
-        <a class="project-name" href="/projects/karim-boumjimar">Karim Boumjimar</a>
+    <div>
+        <h1>Projects</h1>
+        <p class="subtitle">Selected work</p>
     </div>
+    <nav>
+        <a href="/">home</a>
+        <a class="disabled" href="/projects">projects</a>
+        <a href="/contact">contact</a>
+    </nav>
+</div>
 
-    <div class="project-item">
-        <span class="project-name locked">Anonymous Empire</span>
+<main id="main">
+    <div class="grid">
+
+        <a class="card" href="/projects/karim-boumjimar">
+            <div class="card-cover">
+                <video autoplay muted loop playsinline preload="metadata">
+                    <source src="/projects/karim-boumjimar/media/navigation-1.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="card-body">
+                <div class="card-title-row">
+                    <div class="card-title">Karim Boumjimar</div>
+                    <div class="card-year">2026</div>
+                </div>
+                <div class="card-tags">Web · Creative direction · Engineering</div>
+            </div>
+        </a>
+
+        <span class="card locked">
+            <div class="card-cover">
+                <video autoplay muted loop playsinline preload="metadata">
+                    <source src="/projects/anonymous-empire/media/pile.webm" type="video/webm">
+                </video>
+                <div class="card-status">Locked</div>
+            </div>
+            <div class="card-body">
+                <div class="card-title-row">
+                    <div class="card-title">Anonymous Empire</div>
+                    <div class="card-year">2026</div>
+                </div>
+                <div class="card-tags">Research · Design · Code</div>
+            </div>
+        </span>
+
+        <span class="card locked">
+            <div class="card-cover">
+                <video autoplay muted loop playsinline preload="metadata">
+                    <source src="/projects/strelitzia/media/VTR_06.mp4" type="video/mp4">
+                </video>
+                <div class="card-status">Locked</div>
+            </div>
+            <div class="card-body">
+                <div class="card-title-row">
+                    <div class="card-title">Strelitzia</div>
+                    <div class="card-year">2026</div>
+                </div>
+                <div class="card-tags">3D · Blender</div>
+            </div>
+        </span>
+
+        <a class="card" href="/projects/emojify">
+            <div class="card-cover">
+                <video autoplay muted loop playsinline preload="metadata">
+                    <source src="/projects/emojify/media/emojisaic.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="card-body">
+                <div class="card-title-row">
+                    <div class="card-title">Emojify</div>
+                    <div class="card-year">2025</div>
+                </div>
+                <div class="card-tags">WebGL · Creative code</div>
+            </div>
+        </a>
+
     </div>
-
-    <div class="project-item">
-        <span class="project-name locked">Strelitzia</span>
-    </div>
-
-    <div class="project-item">
-        <a class="project-name" href="/projects/emojify">Emojify</a>
-    </div>
-
 </main>
 
-<nav>
-    <a href="/">home</a>
-    <a class="disabled" href="/projects">projects</a>
-    <a href="/contact">contact</a>
-</nav>
-</div>
-</div>
-
+<script defer src="/_vercel/speed-insights/script.js"></script>
 <script>
-document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
-document.addEventListener('dblclick', function(e) { e.preventDefault(); });
-var content = document.getElementById('content');
-content.offsetHeight;
-content.style.opacity = '1';
-document.querySelectorAll('a[href]').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-        var href = a.getAttribute('href');
-        if (href.startsWith('/') || href.startsWith('./')) {
-            e.preventDefault();
-            content.style.opacity = '0';
-            setTimeout(function() { window.location.href = href; }, 400);
-        }
-    });
-});
 (function() {
-    var video = document.querySelector('.bg-video');
-    function tryPlay() {
-        video.play().catch(function() {});
-    }
-    if (video.readyState >= 3) {
-        tryPlay();
-    } else {
-        video.addEventListener('canplay', tryPlay, { once: true });
-    }
-    // Fallback: keep retrying every 500ms until playing
-    var check = setInterval(function() {
-        if (!video.paused) { clearInterval(check); return; }
-        tryPlay();
-    }, 500);
-    setTimeout(function() { clearInterval(check); }, 10000);
+    var main = document.getElementById('main');
+    main.offsetHeight;
+    main.classList.add('loaded');
+
+    document.querySelectorAll('.card video').forEach(function(v) {
+        v.addEventListener('canplay', function() { v.play().catch(function(){}); });
+    });
+
+    document.querySelectorAll('a[href]').forEach(function(a) {
+        a.addEventListener('click', function(e) {
+            var href = a.getAttribute('href');
+            if (href.startsWith('/') || href.startsWith('./')) {
+                e.preventDefault();
+                main.style.opacity = '0';
+                setTimeout(function() { window.location.href = href; }, 350);
+            }
+        });
+    });
 })();
 </script>
 
