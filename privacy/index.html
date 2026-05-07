@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <script src="/theme.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hubmerto · privacy</title>
+    <meta name="description" content="Privacy policy and data handling — hubmerto.com.">
+    <meta name="robots" content="noindex">
+    <meta property="og:title" content="hubmerto · privacy">
+    <meta property="og:url" content="https://hubmerto.com/privacy/">
+    <meta property="og:image" content="https://hubmerto.com/og.png">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="canonical" href="https://hubmerto.com/privacy/">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
+    <style>
+        :root {
+            --bg: #0a0a0a; --fg: #e0e0e0; --fg-strong: #ffffff;
+            --fg-muted: #888; --fg-faint: #555; --border: #1a1a1a;
+        }
+        [data-theme="light"] {
+            --bg: #f5f5f3; --fg: #1a1a1a; --fg-strong: #000;
+            --fg-muted: #555; --fg-faint: #888; --border: #e2e2e0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            background: var(--bg); color: var(--fg);
+            font-family: 'Space Grotesk', sans-serif; font-weight: 300;
+            min-height: 100vh;
+        }
+        .topbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 24px; border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; background: var(--bg); z-index: 30;
+        }
+        .crumbs { font-size: 13px; color: var(--fg-muted); letter-spacing: 0.03em; }
+        .crumbs a { color: var(--fg-muted); text-decoration: none; }
+        .crumbs a:hover { color: var(--fg-strong); }
+        nav { display: flex; gap: 22px; align-items: center; }
+        nav a {
+            color: var(--fg); text-decoration: none;
+            font-size: 13px; letter-spacing: 0.05em;
+            transition: color 0.2s ease;
+        }
+        nav a:hover { color: var(--fg-strong); }
+        .theme-toggle {
+            appearance: none; background: transparent; border: none;
+            color: var(--fg); cursor: pointer; padding: 0;
+            margin-left: 4px; font-size: 18px; line-height: 1;
+            width: 22px; height: 22px;
+            display: inline-flex; align-items: center; justify-content: center;
+            transition: color 0.2s, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .theme-toggle:hover { color: var(--fg-strong); transform: rotate(180deg); }
+
+        main {
+            max-width: 720px;
+            padding: 56px 32px 96px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: clamp(20px, 2.4vw, 28px);
+            font-weight: 400;
+            color: var(--fg-strong);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 6px;
+        }
+        h1 + .lang {
+            font-size: 12px;
+            color: var(--fg-faint);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 36px;
+        }
+        h2 {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--fg-strong);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 36px;
+            margin-bottom: 12px;
+        }
+        section.bilingual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+        section.bilingual h2 { margin-top: 0; }
+        p, address {
+            font-size: 14px;
+            line-height: 1.65;
+            color: var(--fg);
+            font-style: normal;
+        }
+        p + p { margin-top: 12px; }
+        ul {
+            margin: 12px 0 0 18px;
+            padding: 0;
+            font-size: 14px;
+            line-height: 1.65;
+        }
+        ul li { margin-bottom: 6px; }
+        a.body-link {
+            color: var(--fg);
+            text-decoration: none;
+            border-bottom: 1px solid var(--fg-faint);
+            transition: color 0.2s, border-color 0.2s;
+        }
+        a.body-link:hover { color: var(--fg-strong); border-color: var(--fg-strong); }
+        @media (max-width: 700px) {
+            .topbar { padding: 12px 18px; }
+            main { padding: 40px 22px 80px; }
+            section.bilingual { grid-template-columns: 1fr; gap: 0; }
+            section.bilingual > div + div { margin-top: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="topbar">
+    <div class="crumbs"><a href="/">hubmerto</a> / Privacy</div>
+    <nav>
+        <a href="/">home</a>
+        <a href="/projects">projects</a>
+        <a href="/contact">contact</a>
+    </nav>
+</header>
+
+<main>
+    <h1>Privacy</h1>
+    <p class="lang">Datenschutzerklärung · Privacy Policy</p>
+
+    <section class="bilingual">
+        <div>
+            <h2>Verantwortliche</h2>
+            <address>
+                Humberto dos Anjos Gesser Neves<br>
+                Steinstrasse 10, 10119 Berlin<br>
+                Tel.: +49 176 61214008<br>
+                E-Mail: <a class="body-link" href="mailto:design@hubmerto.com">design@hubmerto.com</a>
+            </address>
+        </div>
+        <div>
+            <h2>Data Controller</h2>
+            <address>
+                Humberto dos Anjos Gesser Neves<br>
+                Steinstrasse 10, 10119 Berlin, Germany<br>
+                Phone: +49 176 61214008<br>
+                Email: <a class="body-link" href="mailto:design@hubmerto.com">design@hubmerto.com</a>
+            </address>
+        </div>
+    </section>
+
+    <section class="bilingual">
+        <div>
+            <h2>Hosting</h2>
+            <p>Diese Website wird gehostet von Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA. Beim Aufruf werden technisch notwendige Daten (IP-Adresse, User-Agent, angefragte URL, Zeitstempel) verarbeitet, um die Auslieferung der Seite zu ermöglichen. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer sicheren und zuverlässigen Bereitstellung). Eine Übermittlung in die USA erfolgt auf Grundlage des EU-US Data Privacy Framework, dem Vercel beigetreten ist.</p>
+        </div>
+        <div>
+            <h2>Hosting</h2>
+            <p>This website is hosted by Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA. When accessing the site, technically necessary data (IP address, user agent, requested URL, timestamp) is processed to enable delivery of the page. Legal basis: Art. 6 (1)(f) GDPR (legitimate interest in secure and reliable provision). Transfer to the US is based on the EU-US Data Privacy Framework, to which Vercel adheres.</p>
+        </div>
+    </section>
+
+    <section class="bilingual">
+        <div>
+            <h2>Logfiles</h2>
+            <p>Vercel speichert Zugriffsdaten (Server-Logs) für maximal 28 Tage zur Sicherstellung des Betriebs und zur Abwehr von Angriffen. Keine Verknüpfung mit anderen Daten. Anschließend werden die Daten gelöscht oder anonymisiert.</p>
+        </div>
+        <div>
+            <h2>Server logs</h2>
+            <p>Vercel stores access data (server logs) for up to 28 days to ensure operation and prevent abuse. Logs are not combined with any other data. After this period the data is deleted or anonymized.</p>
+        </div>
+    </section>
+
+    <section class="bilingual">
+        <div>
+            <h2>Speed Insights</h2>
+            <p>Diese Website verwendet Vercel Speed Insights zur anonymisierten Messung von Web-Performance-Metriken (Core Web Vitals). Es werden keine Cookies gesetzt; IP-Adressen werden nicht gespeichert; eine Identifikation einzelner Besucher ist nicht möglich. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO.</p>
+        </div>
+        <div>
+            <h2>Speed Insights</h2>
+            <p>This site uses Vercel Speed Insights to measure anonymized web-performance metrics (Core Web Vitals). No cookies are set, no IP addresses are stored, and no individual visitor can be identified. Legal basis: Art. 6 (1)(f) GDPR.</p>
+        </div>
+    </section>
+
+    <section class="bilingual">
+        <div>
+            <h2>Kontakt per E-Mail</h2>
+            <p>Wenn Sie per E-Mail Kontakt aufnehmen, werden Ihre Angaben zur Bearbeitung der Anfrage und für mögliche Anschlussfragen gespeichert. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen) bzw. lit. f (berechtigtes Interesse an Beantwortung). Eine Weitergabe der Daten erfolgt nicht. Die Daten werden gelöscht, sobald sie für den Zweck nicht mehr erforderlich sind, spätestens nach Ablauf gesetzlicher Aufbewahrungsfristen.</p>
+        </div>
+        <div>
+            <h2>Email contact</h2>
+            <p>If you contact me by email, your information is stored to process the request and for any follow-up questions. Legal basis: Art. 6 (1)(b) GDPR (pre-contractual measures) or (1)(f) (legitimate interest in responding). Data is not shared with third parties. It is deleted when no longer required for the purpose, at the latest after statutory retention periods expire.</p>
+        </div>
+    </section>
+
+    <section class="bilingual">
+        <div>
+            <h2>Ihre Rechte</h2>
+            <p>Sie haben das Recht auf:</p>
+            <ul>
+                <li>Auskunft (Art. 15 DSGVO)</li>
+                <li>Berichtigung (Art. 16 DSGVO)</li>
+                <li>Löschung (Art. 17 DSGVO)</li>
+                <li>Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+                <li>Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)</li>
+                <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
+                <li>Beschwerde bei einer Aufsichtsbehörde (Art. 77 DSGVO)</li>
+            </ul>
+            <p>Zuständige Aufsichtsbehörde: <a class="body-link" href="https://www.datenschutz-berlin.de" target="_blank" rel="noopener">Berliner Beauftragte für Datenschutz und Informationsfreiheit</a>.</p>
+        </div>
+        <div>
+            <h2>Your rights</h2>
+            <p>You have the right to:</p>
+            <ul>
+                <li>Access (Art. 15 GDPR)</li>
+                <li>Rectification (Art. 16 GDPR)</li>
+                <li>Erasure (Art. 17 GDPR)</li>
+                <li>Restriction of processing (Art. 18 GDPR)</li>
+                <li>Object to processing (Art. 21 GDPR)</li>
+                <li>Data portability (Art. 20 GDPR)</li>
+                <li>Lodge a complaint with a supervisory authority (Art. 77 GDPR)</li>
+            </ul>
+            <p>Competent supervisory authority: <a class="body-link" href="https://www.datenschutz-berlin.de" target="_blank" rel="noopener">Berlin Commissioner for Data Protection and Freedom of Information</a>.</p>
+        </div>
+    </section>
+
+    <section class="bilingual">
+        <div>
+            <h2>Stand</h2>
+            <p>Diese Datenschutzerklärung gilt ab Mai 2026 und wird bei Bedarf aktualisiert.</p>
+        </div>
+        <div>
+            <h2>Last updated</h2>
+            <p>This privacy policy is effective from May 2026 and will be updated as needed.</p>
+        </div>
+    </section>
+</main>
+
+<script defer src="/_vercel/speed-insights/script.js"></script>
+
+</body>
+</html>

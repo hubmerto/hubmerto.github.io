@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <script src="/theme.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hubmerto · imprint</title>
+    <meta name="description" content="Imprint and legal notice — Humberto Gesser, Berlin.">
+    <meta name="robots" content="noindex">
+    <meta property="og:title" content="hubmerto · imprint">
+    <meta property="og:url" content="https://hubmerto.com/imprint/">
+    <meta property="og:image" content="https://hubmerto.com/og.png">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="canonical" href="https://hubmerto.com/imprint/">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
+    <style>
+        :root {
+            --bg: #0a0a0a; --fg: #e0e0e0; --fg-strong: #ffffff;
+            --fg-muted: #888; --fg-faint: #555; --border: #1a1a1a;
+        }
+        [data-theme="light"] {
+            --bg: #f5f5f3; --fg: #1a1a1a; --fg-strong: #000;
+            --fg-muted: #555; --fg-faint: #888; --border: #e2e2e0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            background: var(--bg); color: var(--fg);
+            font-family: 'Space Grotesk', sans-serif; font-weight: 300;
+            min-height: 100vh;
+        }
+        .topbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 24px; border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; background: var(--bg); z-index: 30;
+        }
+        .crumbs { font-size: 13px; color: var(--fg-muted); letter-spacing: 0.03em; }
+        .crumbs a { color: var(--fg-muted); text-decoration: none; }
+        .crumbs a:hover { color: var(--fg-strong); }
+        nav { display: flex; gap: 22px; align-items: center; }
+        nav a {
+            color: var(--fg); text-decoration: none;
+            font-size: 13px; letter-spacing: 0.05em;
+            transition: color 0.2s ease;
+        }
+        nav a:hover { color: var(--fg-strong); }
+        nav a.disabled { color: var(--fg-faint); pointer-events: none; }
+        .theme-toggle {
+            appearance: none; background: transparent; border: none;
+            color: var(--fg); cursor: pointer; padding: 0;
+            margin-left: 4px; font-size: 18px; line-height: 1;
+            width: 22px; height: 22px;
+            display: inline-flex; align-items: center; justify-content: center;
+            transition: color 0.2s, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .theme-toggle:hover { color: var(--fg-strong); transform: rotate(180deg); }
+
+        main {
+            max-width: 720px;
+            padding: 56px 32px 96px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: clamp(20px, 2.4vw, 28px);
+            font-weight: 400;
+            color: var(--fg-strong);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 6px;
+        }
+        h1 + .lang {
+            font-size: 12px;
+            color: var(--fg-faint);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 36px;
+        }
+        h2 {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--fg-strong);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 36px;
+            margin-bottom: 12px;
+        }
+        section.bilingual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 0;
+        }
+        section.bilingual h2 { margin-top: 0; }
+        p, address {
+            font-size: 14px;
+            line-height: 1.65;
+            color: var(--fg);
+            font-style: normal;
+        }
+        p + p { margin-top: 12px; }
+        a.body-link {
+            color: var(--fg);
+            text-decoration: none;
+            border-bottom: 1px solid var(--fg-faint);
+            transition: color 0.2s, border-color 0.2s;
+        }
+        a.body-link:hover { color: var(--fg-strong); border-color: var(--fg-strong); }
+        @media (max-width: 700px) {
+            .topbar { padding: 12px 18px; }
+            main { padding: 40px 22px 80px; }
+            section.bilingual { grid-template-columns: 1fr; gap: 0; }
+            section.bilingual > div + div { margin-top: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="topbar">
+    <div class="crumbs"><a href="/">hubmerto</a> / Imprint</div>
+    <nav>
+        <a href="/">home</a>
+        <a href="/projects">projects</a>
+        <a href="/contact">contact</a>
+    </nav>
+</header>
+
+<main>
+    <h1>Imprint</h1>
+    <p class="lang">Impressum · Angaben gemäß § 5 TMG</p>
+
+    <section class="bilingual">
+        <div>
+            <h2>Verantwortlich</h2>
+            <address>
+                Humberto dos Anjos Gesser Neves<br>
+                Steinstrasse 10<br>
+                10119 Berlin<br>
+                Deutschland
+            </address>
+            <p>
+                Telefon: +49 176 61214008<br>
+                E-Mail: <a class="body-link" href="mailto:design@hubmerto.com">design@hubmerto.com</a>
+            </p>
+        </div>
+        <div>
+            <h2>Responsible</h2>
+            <address>
+                Humberto dos Anjos Gesser Neves<br>
+                Steinstrasse 10<br>
+                10119 Berlin<br>
+                Germany
+            </address>
+            <p>
+                Phone: +49 176 61214008<br>
+                Email: <a class="body-link" href="mailto:design@hubmerto.com">design@hubmerto.com</a>
+            </p>
+        </div>
+    </section>
+
+    <h2>Steuernummer · Tax number</h2>
+    <p>47 756 732 100 — Finanzamt Berlin</p>
+
+    <h2>Verantwortlich für den Inhalt · Responsible for content</h2>
+    <p>Verantwortlich gemäß § 18 Abs. 2 MStV: Humberto dos Anjos Gesser Neves (Anschrift wie oben).</p>
+    <p>Responsible under § 18 (2) MStV: Humberto dos Anjos Gesser Neves (address as above).</p>
+
+    <section class="bilingual">
+        <div>
+            <h2>Haftungsausschluss</h2>
+            <p>Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann jedoch keine Gewähr übernommen werden. Für Inhalte externer Links wird keine Haftung übernommen; für deren Inhalte sind ausschließlich die jeweiligen Betreiber verantwortlich.</p>
+        </div>
+        <div>
+            <h2>Disclaimer</h2>
+            <p>The content of this website has been compiled with the greatest possible care. No liability is assumed for the accuracy, completeness, or timeliness of the content. No responsibility is taken for the content of external links; the respective operators are solely responsible for those.</p>
+        </div>
+    </section>
+
+    <section class="bilingual">
+        <div>
+            <h2>Urheberrecht</h2>
+            <p>Sämtliche auf dieser Website veröffentlichten Inhalte (Texte, Bilder, Videos, Code) unterliegen dem deutschen Urheberrecht. Vervielfältigung, Bearbeitung oder Verbreitung außerhalb der Grenzen des Urheberrechts bedürfen der schriftlichen Zustimmung des Urhebers.</p>
+        </div>
+        <div>
+            <h2>Copyright</h2>
+            <p>All content published on this website (texts, images, videos, code) is subject to German copyright law. Reproduction, editing, or distribution beyond the limits of copyright law requires the written consent of the author.</p>
+        </div>
+    </section>
+</main>
+
+<script defer src="/_vercel/speed-insights/script.js"></script>
+
+</body>
+</html>
