@@ -696,23 +696,25 @@ body {
     .sidebar-left .sidebar-section:first-of-type {
         order: 1;
     }
-    /* Same canvas as desktop, just with a fixed mobile height. */
+    /* Canvas occupies the full mobile viewport. */
     .workspace {
         order: 2;
         flex: none;
-        height: 70vh;
-        min-height: 420px;
+        height: 100dvh;
+        min-height: 480px;
     }
-    .sidebar-left .sidebar-section:not(:first-of-type) {
-        order: 3;
-    }
+    /* Inspector slides in right below the canvas when a node is selected. */
     .inspector {
-        order: 4;
+        order: 3;
         width: 100%;
         border-left: none;
         border-bottom: 1px solid var(--border);
     }
+    .sidebar-left .sidebar-section:not(:first-of-type) {
+        order: 4;
+    }
+    /* Hide the inspector entirely when nothing is selected on mobile. */
     .content:not(.inspector-open) .inspector {
-        display: block;
+        display: none;
     }
 }
