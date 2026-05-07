@@ -276,7 +276,7 @@ body {
 .tool-btn:hover .kbd { color: var(--fg-faint); opacity: 1; }
 
 @media (max-width: 900px) {
-    /* Stack: canvas first, then text rail, then inspector below it */
+    /* Stack: meta → canvas → body paragraphs → inspector */
     html, body {
         overflow: auto;
         height: auto;
@@ -290,27 +290,34 @@ body {
         height: auto;
         min-height: 100dvh;
     }
+    /* Promote the left rail's children up into the .content flex layout
+       so they can be reordered around the canvas. */
+    .sidebar-left {
+        display: contents;
+    }
+    .sidebar-left .sidebar-section {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+    .sidebar-left .sidebar-section:first-of-type {
+        order: 1;
+    }
     .workspace {
+        order: 2;
         flex: none;
         height: 65vh;
         min-height: 380px;
-        order: 1;
         touch-action: pan-y; /* let vertical scroll pass through */
     }
-    .sidebar-left {
-        order: 2;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-        max-height: none;
+    .sidebar-left .sidebar-section:not(:first-of-type) {
+        order: 3;
     }
     .inspector {
-        order: 3;
+        order: 4;
         width: 100%;
         border-left: none;
         border-bottom: 1px solid var(--border);
     }
-    /* Inspector sits inline in the document flow on mobile.
-       It's always visible — empty state shows "Select an item". */
     .content:not(.inspector-open) .inspector {
         display: block;
     }
