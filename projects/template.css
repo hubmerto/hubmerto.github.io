@@ -302,55 +302,13 @@ body {
     .sidebar-left .sidebar-section:first-of-type {
         order: 1;
     }
+    /* Same canvas as desktop, just with a fixed mobile height. */
     .workspace {
         order: 2;
         flex: none;
-        height: auto;
-        min-height: 0;
-        overflow: visible;
-        touch-action: auto;
-        background: transparent;
+        height: 70vh;
+        min-height: 420px;
     }
-    /* Stack the canvas children as a horizontal carousel */
-    .canvas-layer {
-        position: static !important;
-        transform: none !important;
-        width: 100% !important;
-        height: auto !important;
-        display: flex !important;
-        flex-direction: row !important;
-        gap: 14px !important;
-        padding: 8px 20px 20px !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-    }
-    .canvas-layer::-webkit-scrollbar { display: none; }
-    .node {
-        position: static !important;
-        transform: none !important;
-        width: 78vw !important;
-        max-width: 360px !important;
-        flex: 0 0 auto !important;
-        aspect-ratio: 4 / 5 !important;
-        height: auto !important;
-        cursor: default;
-        outline: none !important;
-        scroll-snap-align: center;
-    }
-    .node img,
-    .node video,
-    .node iframe {
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-        pointer-events: auto;
-    }
-    /* Hide canvas chrome that doesn't apply in stacked mode */
-    .grid-bg, .hud, .hud-hint, .workspace-tools, .zoom-hud,
-    .node .handle { display: none !important; }
     .sidebar-left .sidebar-section:not(:first-of-type) {
         order: 3;
     }
