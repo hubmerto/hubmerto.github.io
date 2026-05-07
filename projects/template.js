@@ -58,37 +58,40 @@
             rail.appendChild(section);
         });
 
-        // Tools panel — pinned to the bottom of the rail
-        var tools = document.createElement('div');
-        tools.className = 'tools';
+        // Floating tool dock — appended to the workspace (bottom-right).
+        var workspace = document.getElementById('workspace');
+        if (workspace && !workspace.querySelector('.workspace-tools')) {
+            var tools = document.createElement('div');
+            tools.className = 'workspace-tools';
 
-        function makeBtn(label, kbd, onClick) {
-            var b = document.createElement('button');
-            b.className = 'tool-btn';
-            var lbl = document.createElement('span');
-            lbl.textContent = label;
-            b.appendChild(lbl);
-            if (kbd) {
-                var k = document.createElement('span');
-                k.className = 'kbd';
-                k.textContent = kbd;
-                b.appendChild(k);
+            function makeBtn(label, kbd, onClick) {
+                var b = document.createElement('button');
+                b.className = 'tool-btn';
+                var lbl = document.createElement('span');
+                lbl.textContent = label;
+                b.appendChild(lbl);
+                if (kbd) {
+                    var k = document.createElement('span');
+                    k.className = 'kbd';
+                    k.textContent = kbd;
+                    b.appendChild(k);
+                }
+                b.addEventListener('click', onClick);
+                return b;
             }
-            b.addEventListener('click', onClick);
-            return b;
+
+            tools.appendChild(makeBtn('Rearrange', 'R', function() {
+                if (window._canvas && window._canvas.rearrange) window._canvas.rearrange();
+            }));
+            tools.appendChild(makeBtn('Fit', '⇧1', function() {
+                if (window._canvas && window._canvas.fitAll) window._canvas.fitAll();
+            }));
+            tools.appendChild(makeBtn('Reset', '⌘0', function() {
+                if (window._canvas && window._canvas.resetZoom) window._canvas.resetZoom();
+            }));
+
+            workspace.appendChild(tools);
         }
-
-        tools.appendChild(makeBtn('Rearrange', 'R', function() {
-            if (window._canvas && window._canvas.rearrange) window._canvas.rearrange();
-        }));
-        tools.appendChild(makeBtn('Fit all', '⇧1', function() {
-            if (window._canvas && window._canvas.fitAll) window._canvas.fitAll();
-        }));
-        tools.appendChild(makeBtn('Reset zoom', '⌘0', function() {
-            if (window._canvas && window._canvas.resetZoom) window._canvas.resetZoom();
-        }));
-
-        rail.appendChild(tools);
     }
 
     function fmtPx(n) { return Math.round(n) + ' px'; }
