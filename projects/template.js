@@ -322,6 +322,7 @@
         if (media.h) n.dataset.h = media.h;
         if (media.size) n.dataset.size = media.size;
         if (media.invertOnDark) n.classList.add('invert-on-dark');
+        if (media.format === 'mobile' || media.mobileFrame) n.classList.add('mobile-frame');
         if (media.cx !== undefined) n.dataset.cx = media.cx;
         if (media.cy !== undefined) n.dataset.cy = media.cy;
         if (media.cx !== undefined && media.cy !== undefined) n.dataset.fixed = 'true';

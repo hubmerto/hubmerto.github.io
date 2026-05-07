@@ -720,3 +720,9 @@ body {
         display: none;
     }
 }
+
+/* iPhone-like rounded corners for media flagged as mobile-format. */
+.node.mobile-frame {
+    border-radius: 12% / 6%;
+    /* Slightly tighter than the device so it reads as a phone frame. */
+}
