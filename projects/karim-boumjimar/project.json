@@ -27,6 +27,13 @@
             "cy": 220
         },
         {
+            "type": "video",
+            "src": "media/mobile-2.mp4",
+            "format": "mobile",
+            "cx": -880,
+            "cy": 220
+        },
+        {
             "type": "image",
             "src": "media/vase.png",
             "spin": "fast",
