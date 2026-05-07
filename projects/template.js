@@ -1200,6 +1200,8 @@
                 document.title = 'hubmerto.' + (project.slug || project.title || '').toLowerCase();
                 var hud = document.getElementById('hud');
                 if (hud) hud.textContent = (project.hudIndex ? project.hudIndex + ' · ' : '') + (project.title || '').toUpperCase();
+                var crumb = document.getElementById('crumb-current');
+                if (crumb) crumb.textContent = project.title || '';
                 renderCanvas(project);
                 renderLeftSidebar(project);
                 initWorkspace();

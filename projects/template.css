@@ -57,7 +57,71 @@ body {
     font-weight: 300;
     -webkit-user-select: none;
     user-select: none;
+    display: flex;
+    flex-direction: column;
 }
+
+/* Top bar — breadcrumb + nav, present on every project page */
+.topbar {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    z-index: 30;
+    gap: 16px;
+}
+
+.crumbs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    min-width: 0;
+}
+
+.crumb-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--fg-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.crumb-back:hover { color: var(--fg-strong); }
+.crumb-back svg { display: block; }
+
+.crumb-sep {
+    color: var(--fg-fainter);
+    user-select: none;
+}
+
+.crumb-current {
+    color: var(--fg-strong);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.topbar-nav {
+    display: flex;
+    gap: 22px;
+    align-items: center;
+}
+.topbar-nav a {
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    transition: color 0.2s ease;
+}
+.topbar-nav a:hover { color: var(--fg-strong); }
 
 .content {
     opacity: 0;
@@ -65,7 +129,8 @@ body {
     display: grid;
     grid-template-columns: 340px 1fr 0px;
     grid-template-rows: 100%;
-    height: 100%;
+    flex: 1;
+    min-height: 0;
     transition: opacity 0.5s ease, grid-template-columns 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -284,6 +349,15 @@ body {
     body {
         min-height: 100dvh;
     }
+    .topbar {
+        position: sticky;
+        top: 0;
+        padding: 12px 18px;
+        gap: 12px;
+    }
+    .topbar-nav { gap: 16px; }
+    .topbar-nav a { font-size: 12px; }
+    .crumb-current { font-size: 11px; }
     .content {
         display: flex;
         flex-direction: column;
@@ -323,7 +397,7 @@ body {
     }
 }
 
-nav {
+.workspace > nav {
     position: absolute;
     top: 0;
     right: 0;
@@ -333,7 +407,7 @@ nav {
     z-index: 20;
 }
 
-nav a {
+.workspace > nav a {
     color: var(--fg);
     text-decoration: none;
     font-size: 13px;
@@ -341,8 +415,8 @@ nav a {
     transition: color 0.3s ease;
 }
 
-nav a:hover { color: var(--fg-strong); }
-nav a.disabled { color: var(--fg-faint); pointer-events: none; }
+.workspace > nav a:hover { color: var(--fg-strong); }
+.workspace > nav a.disabled { color: var(--fg-faint); pointer-events: none; }
 
 .workspace {
     flex: 1;
