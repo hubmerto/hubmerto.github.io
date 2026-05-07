@@ -629,3 +629,17 @@ nav a.disabled { color: var(--fg-faint); pointer-events: none; }
     filter: none;
 }
 .node.invert-on-dark { background: transparent; box-shadow: none; }
+
+/* Zoom percentage indicator (bottom-left of the canvas) */
+.zoom-hud {
+    position: absolute;
+    bottom: 16px;
+    left: 24px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--fg-faint);
+    z-index: 15;
+    font-variant-numeric: tabular-nums;
+    pointer-events: none;
+    user-select: none;
+}

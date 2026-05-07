@@ -671,12 +671,52 @@
             });
         }
 
+        function clampPan() {
+            // Keep at least PAD pixels of the blob in view on each side so
+            // the user can't pan into infinity.
+            var vw = workspace.offsetWidth;
+            var vh = workspace.offsetHeight;
+            if (!nodes.length || !vw || !vh) return;
+            var box = bbox();
+            var bw = box.w * scale;
+            var bh = box.h * scale;
+            var padX = Math.min(vw * 0.5, 200);
+            var padY = Math.min(vh * 0.5, 200);
+            // Screen-space extents of the blob: [tx + minX*scale, tx + maxX*scale]
+            var minXs = box.cx * scale - bw / 2;
+            var maxXs = box.cx * scale + bw / 2;
+            var minYs = box.cy * scale - bh / 2;
+            var maxYs = box.cy * scale + bh / 2;
+            // Allowed tx range so blob keeps at least padX visible on each side.
+            var txMin = padX - maxXs;
+            var txMax = vw - padX - minXs;
+            var tyMin = padY - maxYs;
+            var tyMax = vh - padY - minYs;
+            if (txMin > txMax) { var c = (txMin + txMax) / 2; txMin = txMax = c; }
+            if (tyMin > tyMax) { var c2 = (tyMin + tyMax) / 2; tyMin = tyMax = c2; }
+            tx = Math.min(txMax, Math.max(txMin, tx));
+            ty = Math.min(tyMax, Math.max(tyMin, ty));
+        }
+
+        function updateZoomHud() {
+            var hud = document.getElementById('zoom-hud');
+            if (!hud) {
+                hud = document.createElement('div');
+                hud.id = 'zoom-hud';
+                hud.className = 'zoom-hud';
+                workspace.appendChild(hud);
+            }
+            hud.textContent = Math.round(scale * 100) + '%';
+        }
+
         function applyTransform() {
+            clampPan();
             canvas.style.transform = 'translate(' + tx + 'px, ' + ty + 'px) scale(' + scale + ')';
             var gridSize = 40 * scale;
             gridBg.style.backgroundSize = gridSize + 'px ' + gridSize + 'px';
             gridBg.style.backgroundPosition = tx + 'px ' + ty + 'px';
             updateMagnification();
+            updateZoomHud();
         }
 
         function updateMagnification() {
