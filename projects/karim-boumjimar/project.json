@@ -4,7 +4,8 @@
     "hudIndex": "04",
     "media": [
         { "type": "video", "src": "media/navigation-1.mp4" },
-        { "type": "video", "src": "media/navigation-2.mp4" }
+        { "type": "video", "src": "media/navigation-2.mp4" },
+        { "type": "video", "src": "media/mobile.mp4" }
     ],
     "columns": [
         {
