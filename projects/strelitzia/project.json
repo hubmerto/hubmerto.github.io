@@ -12,10 +12,13 @@
     "columns": [
         {
             "title": "Strelitzia",
-            "tags": "3d, blender · 2026",
+            "tags": "3d · blender · 2026",
             "meta": [
                 { "label": "Client", "value": "Self-initiated" },
                 { "label": "Year", "value": "2026" },
+                { "label": "Department", "value": "3D" },
+                { "label": "Typology", "value": "Spec project, material study" },
+                { "label": "Program", "value": "Material and lighting study" },
                 { "label": "Scope", "value": "3D, material design" }
             ]
         },

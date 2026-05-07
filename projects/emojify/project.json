@@ -7,26 +7,28 @@
         { "type": "video", "src": "media/diablo_running.mp4" },
         {
             "type": "image",
-            "src": "media/susanne_daubner.webp",
+            "src": "media/susanne_daubner.png",
             "caption": "ARD Tagesschau anchor, broadcast still. The composed face of public-service news, reconstructed in a vocabulary that contains no profession."
         },
         {
             "type": "image",
-            "src": "media/musik_plastikman.webp",
+            "src": "media/musik_plastikman.png",
             "caption": "Plastikman, Musik. NovaMute, 1994."
         },
         {
             "type": "image",
-            "src": "media/ri_hun_hi.webp",
+            "src": "media/ri_hun_hi.png",
             "caption": "KCTV anchor, broadcast still. State address through a glyph set built for casual messaging."
         },
-        { "type": "image", "src": "media/monday.webp" }
+        { "type": "image", "src": "media/monday.png" }
     ],
     "columns": [
         {
             "title": "Emojify",
             "tags": "digital · 2025",
             "meta": [
+                { "label": "Client", "value": "Self-initiated" },
+                { "label": "Location", "value": "Berlin" },
                 { "label": "Year", "value": "2025" },
                 { "label": "Department", "value": "Digital" },
                 { "label": "Typology", "value": "Spec project, tool" },
