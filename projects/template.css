@@ -305,10 +305,43 @@ body {
     .workspace {
         order: 2;
         flex: none;
-        height: 65vh;
-        min-height: 380px;
-        touch-action: pan-y; /* let vertical scroll pass through */
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+        touch-action: auto;
+        background: transparent;
     }
+    /* Stack the canvas children as a regular flex column */
+    .canvas-layer {
+        position: static;
+        transform: none !important;
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        padding: 24px 20px;
+    }
+    .node {
+        position: static !important;
+        transform: none !important;
+        width: 100% !important;
+        height: auto !important;
+        cursor: default;
+        outline: none !important;
+    }
+    .node img,
+    .node video,
+    .node iframe {
+        width: 100%;
+        height: auto;
+        max-height: 80vh;
+        object-fit: contain;
+        pointer-events: auto;
+    }
+    /* Hide canvas chrome that doesn't apply in stacked mode */
+    .grid-bg, .hud, .hud-hint, .workspace-tools, .zoom-hud,
+    .node .handle { display: none !important; }
     .sidebar-left .sidebar-section:not(:first-of-type) {
         order: 3;
     }
