@@ -1134,10 +1134,24 @@
         document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
     }
 
+    function resolveMediaPaths(project, jsonPath) {
+        // Derive base URL from the JSON path (strip filename) so relative
+        // media srcs resolve correctly regardless of trailing slash.
+        var base = jsonPath.replace(/[^/]*$/, '');
+        if (!project.media) return;
+        project.media.forEach(function(m) {
+            if (!m || !m.src) return;
+            // Only rewrite truly relative paths (no scheme, no leading slash)
+            if (/^([a-z]+:|\/)/i.test(m.src)) return;
+            m.src = base + m.src;
+        });
+    }
+
     window.loadProject = function(jsonPath) {
         fetch(jsonPath)
             .then(function(r) { return r.json(); })
             .then(function(project) {
+                resolveMediaPaths(project, jsonPath);
                 document.title = 'hubmerto.' + (project.slug || project.title || '').toLowerCase();
                 var hud = document.getElementById('hud');
                 if (hud) hud.textContent = (project.hudIndex ? project.hudIndex + ' · ' : '') + (project.title || '').toUpperCase();
