@@ -696,12 +696,14 @@ body {
     .sidebar-left .sidebar-section:first-of-type {
         order: 1;
     }
-    /* Canvas occupies the full mobile viewport. */
+    /* Canvas takes ~65vh; vertical swipes scroll past it to the rest of the page. */
     .workspace {
         order: 2;
         flex: none;
-        height: 100dvh;
-        min-height: 480px;
+        height: 65dvh;
+        min-height: 380px;
+        max-height: 620px;
+        touch-action: pan-y;
     }
     /* Inspector slides in right below the canvas when a node is selected. */
     .inspector {
