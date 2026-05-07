@@ -271,8 +271,44 @@ body {
 .tool-btn:hover .kbd { color: var(--fg-faint); opacity: 1; }
 
 @media (max-width: 900px) {
-    .content { grid-template-columns: 0 1fr 0; }
-    .sidebar-left, .sidebar-right { display: none; }
+    /* Stack: canvas first, then text rail, then inspector below it */
+    html, body {
+        overflow: auto;
+        height: auto;
+    }
+    body {
+        min-height: 100dvh;
+    }
+    .content {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        min-height: 100dvh;
+    }
+    .workspace {
+        flex: none;
+        height: 65vh;
+        min-height: 380px;
+        order: 1;
+        touch-action: pan-y; /* let vertical scroll pass through */
+    }
+    .sidebar-left {
+        order: 2;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        max-height: none;
+    }
+    .inspector {
+        order: 3;
+        width: 100%;
+        border-left: none;
+        border-bottom: 1px solid var(--border);
+    }
+    /* Inspector sits inline in the document flow on mobile.
+       It's always visible — empty state shows "Select an item". */
+    .content:not(.inspector-open) .inspector {
+        display: block;
+    }
 }
 
 nav {
