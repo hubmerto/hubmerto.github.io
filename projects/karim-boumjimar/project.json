@@ -1,0 +1,27 @@
+{
+    "slug": "karim-boumjimar",
+    "title": "Karim Boumjimar",
+    "hudIndex": "04",
+    "media": [
+        { "type": "video", "src": "media/navigation-1.mp4" },
+        { "type": "video", "src": "media/navigation-2.mp4" }
+    ],
+    "columns": [
+        {
+            "title": "Karim Boumjimar",
+            "tags": "web, creative direction · 2026",
+            "meta": [
+                { "label": "Client", "value": "Karim Boumjimar" },
+                { "label": "Year", "value": "2026" },
+                { "label": "Scope", "value": "Web design, creative direction" },
+                { "label": "Status", "value": "In progress" }
+            ]
+        },
+        {
+            "text": "Description coming soon."
+        },
+        {
+            "text": "Process notes coming soon."
+        }
+    ]
+}
