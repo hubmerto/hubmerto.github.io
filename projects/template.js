@@ -769,8 +769,8 @@
             var nw = parseFloat(n.dataset.w);
             var nh = parseFloat(n.dataset.h);
 
-            // Zoom so the node fills ~85% of the smaller viewport dimension
-            var fillRatio = 0.85;
+            // Zoom so the node fills ~50% of the smaller viewport dimension
+            var fillRatio = 0.50;
             var targetScale = Math.min(vw * fillRatio / nw, vh * fillRatio / nh);
             targetScale = Math.max(minScale, Math.min(maxScale, targetScale));
 

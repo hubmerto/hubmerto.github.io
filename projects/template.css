@@ -549,6 +549,13 @@ nav a.disabled { color: var(--fg-faint); pointer-events: none; }
 /* Continuous rotation for nodes flagged with `.spin`.
    Rotation is applied to the inner media so it doesn't fight the
    magnification scale set on the node wrapper. */
+.node.spin {
+    overflow: visible;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+}
+
 .node.spin img,
 .node.spin video,
 .node.spin iframe {
