@@ -143,6 +143,11 @@ body {
     margin-top: 14px;
 }
 
+/* Breathing room when a meta row follows a body paragraph */
+.sidebar-text + .meta-row {
+    margin-top: 18px;
+}
+
 .sidebar .meta-row {
     display: grid;
     grid-template-columns: 80px 1fr;
