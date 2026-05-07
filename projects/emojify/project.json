@@ -5,9 +5,17 @@
     "media": [
         { "type": "video", "src": "media/emojisaic.mp4" },
         { "type": "video", "src": "media/diablo_running.mp4" },
-        { "type": "image", "src": "media/susanne_daubner.png" },
+        {
+            "type": "image",
+            "src": "media/susanne_daubner.png",
+            "caption": "ARD Tagesschau anchor, broadcast still. The composed face of public-service news, reconstructed in a vocabulary that contains no profession."
+        },
         { "type": "image", "src": "media/musik_plastikman.png" },
-        { "type": "image", "src": "media/ri_hun_hi.png" },
+        {
+            "type": "image",
+            "src": "media/ri_hun_hi.png",
+            "caption": "KCTV anchor, broadcast still. State address through a glyph set built for casual messaging."
+        },
         { "type": "image", "src": "media/monday.png" }
     ],
     "columns": [
