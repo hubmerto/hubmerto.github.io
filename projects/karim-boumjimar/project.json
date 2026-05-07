@@ -20,6 +20,12 @@
         },
         {
             "type": "video",
+            "src": "media/showcase.mp4",
+            "cx": 920,
+            "cy": -320
+        },
+        {
+            "type": "video",
             "src": "media/mobile.mp4",
             "format": "mobile",
             "caption": "Mobile rendering path. The catalog enters as a curated set of representative tiles, fading in along a staggered timing to hold within the browser's memory budget. The same dispersion logic carries the canvas; selection opens a vertical reading strip with a slide-up sheet for title, venue, dates, and statement.",
