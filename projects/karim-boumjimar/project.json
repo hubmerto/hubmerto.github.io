@@ -53,16 +53,17 @@
                 { "label": "Program", "value": "Portfolio, SPA" },
                 { "label": "Scope", "value": "Concept, Interaction, Engineering, Deployment" },
                 { "label": "Catalog", "value": "122 photographs · 13 exhibitions" },
-                { "label": "Design", "value": "Humberto Gesser" },
-                { "label": "Live", "value": "karimboumjimar.com", "href": "https://karimboumjimar.com" },
-                { "label": "Mirror", "value": "hubmerto.com/karim-boumjimar", "href": "https://hubmerto.com/karim-boumjimar" }
+                { "label": "Design", "value": "Humberto Gesser" }
             ]
         },
         {
             "text": "The portfolio organizes one hundred and twenty-two photographs from thirteen exhibitions onto a single navigable canvas, structured around physical scale and proximity (the conditions under which the work earns weight) rather than as a paginated archive."
         },
         {
-            "text": "On arrival, the catalog is packed into a tapered diamond, a self-balancing column distribution that rebuilds its silhouette as the catalog grows or contracts. Past a defined zoom threshold, the formation disperses: tiles redistribute into per-project clusters, each marked by a hairline outline and a metadata title. Selecting a cluster opens a horizontal reading strip in which each photograph animates from its tile slot to its full-resolution position, a transition handled through paired rect captures rather than a view swap. The canvas runs through two parallel rendering paths, DOM on desktop and WebGL on mobile, sharing a single store and dispersion model, with image loading staggered along the entry sequence to stay within mobile memory budgets."
+            "text": "On arrival, the catalog is packed into a tapered diamond, a self-balancing column distribution that rebuilds its silhouette as the catalog grows or contracts. Past a defined zoom threshold, the formation disperses: tiles redistribute into per-project clusters, each marked by a hairline outline and a metadata title. Selecting a cluster opens a horizontal reading strip in which each photograph animates from its tile slot to its full-resolution position, a transition handled through paired rect captures rather than a view swap. The canvas runs through two parallel rendering paths, DOM on desktop and WebGL on mobile, sharing a single store and dispersion model, with image loading staggered along the entry sequence to stay within mobile memory budgets.",
+            "meta": [
+                { "label": "Live at", "value": "karimboumjimar.com", "href": "https://karimboumjimar.com" }
+            ]
         }
     ]
 }
