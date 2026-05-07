@@ -1,3 +1,6 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "redirects": [
+    { "source": "/karim-boumjimar", "destination": "/projects/karim-boumjimar", "permanent": false }
+  ]
 }
