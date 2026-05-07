@@ -1,6 +1,6 @@
 {
     "slug": "karim-boumjimar",
-    "title": "Karim Boumjimar Portfolio",
+    "title": "Karim Boumjimar",
     "hudIndex": "04",
     "media": [
         { "type": "video", "src": "media/navigation-1.mp4" },
@@ -8,7 +8,7 @@
     ],
     "columns": [
         {
-            "title": "Karim Boumjimar Portfolio",
+            "title": "Karim Boumjimar",
             "tags": "digital · 2026",
             "meta": [
                 { "label": "Client", "value": "Karim Boumjimar" },
