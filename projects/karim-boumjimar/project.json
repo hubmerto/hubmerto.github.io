@@ -4,6 +4,11 @@
     "hudIndex": "04",
     "media": [
         {
+            "type": "image",
+            "src": "media/logo.svg",
+            "invertOnDark": true
+        },
+        {
             "type": "video",
             "src": "media/navigation-1.mp4",
             "caption": "Index mode. A parallel list-based reading of the same catalog. The left sidebar carries all thirteen exhibitions in chronological order, the centre column displays each exhibition's photographs in a fixed grid, and the right column holds the metadata block and statement. Selection moves between exhibitions without leaving the page."

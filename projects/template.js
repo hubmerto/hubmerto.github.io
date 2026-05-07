@@ -321,6 +321,7 @@
         if (media.w) n.dataset.w = media.w;
         if (media.h) n.dataset.h = media.h;
         if (media.size) n.dataset.size = media.size;
+        if (media.invertOnDark) n.classList.add('invert-on-dark');
         if (media.code) {
             n._code = media.code;
             n._codeLang = media.codeLang || 'js';

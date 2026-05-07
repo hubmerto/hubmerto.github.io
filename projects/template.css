@@ -568,3 +568,16 @@ nav a.disabled { color: var(--fg-faint); pointer-events: none; }
     from { transform: rotate(0deg); }
     to   { transform: rotate(360deg); }
 }
+
+/* Theme-aware media: black source SVG inverts on dark backgrounds. */
+.node.invert-on-dark img,
+.node.invert-on-dark video,
+.node.invert-on-dark iframe {
+    filter: invert(1);
+}
+[data-theme="light"] .node.invert-on-dark img,
+[data-theme="light"] .node.invert-on-dark video,
+[data-theme="light"] .node.invert-on-dark iframe {
+    filter: none;
+}
+.node.invert-on-dark { background: transparent; box-shadow: none; }
