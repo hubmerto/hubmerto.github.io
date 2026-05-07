@@ -3,9 +3,26 @@
     "title": "Karim Boumjimar",
     "hudIndex": "04",
     "media": [
-        { "type": "video", "src": "media/navigation-1.mp4" },
-        { "type": "video", "src": "media/navigation-2.mp4" },
-        { "type": "video", "src": "media/mobile.mp4" }
+        {
+            "type": "video",
+            "src": "media/navigation-1.mp4",
+            "caption": "Index mode. A parallel list-based reading of the same catalog. The left sidebar carries all thirteen exhibitions in chronological order, the centre column displays each exhibition's photographs in a fixed grid, and the right column holds the metadata block and statement. Selection moves between exhibitions without leaving the page."
+        },
+        {
+            "type": "video",
+            "src": "media/navigation-2.mp4",
+            "caption": "Canvas mode, full state sequence. Arrival logo, the tapered diamond holding all one hundred and twenty-two photographs, dispersion into per-project clusters as the camera crosses the zoom threshold, gallery view, a single photograph opened at full resolution, and the reverse path back into the diamond. Every transition shares one dispersion model."
+        },
+        {
+            "type": "video",
+            "src": "media/mobile.mp4",
+            "caption": "Mobile rendering path. The catalog enters as a curated set of representative tiles, fading in along a staggered timing to hold within mobile Safari's memory budget. The same dispersion logic carries the canvas; selection opens a vertical reading strip with a slide-up sheet for title, venue, dates, and statement."
+        },
+        {
+            "type": "image",
+            "src": "media/vase.png",
+            "spin": "fast"
+        }
     ],
     "columns": [
         {

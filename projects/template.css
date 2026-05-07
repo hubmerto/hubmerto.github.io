@@ -545,3 +545,19 @@ nav a.disabled { color: var(--fg-faint); pointer-events: none; }
 [data-theme="light"] .code-block .tok-fn { color: #1f6feb; }
 [data-theme="light"] .code-block .tok-num { color: #b25000; }
 [data-theme="light"] .code-block .tok-str { color: #2e7d32; }
+
+/* Continuous rotation for nodes flagged with `.spin`.
+   Rotation is applied to the inner media so it doesn't fight the
+   magnification scale set on the node wrapper. */
+.node.spin img,
+.node.spin video,
+.node.spin iframe {
+    animation: spin-cw var(--spin-duration, 8s) linear infinite;
+    transform-origin: 50% 50%;
+    will-change: transform;
+}
+
+@keyframes spin-cw {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}

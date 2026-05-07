@@ -250,6 +250,21 @@
             pane.appendChild(prev);
         }
 
+        // Caption (if the media has descriptive text)
+        if (node._caption) {
+            var capSec = document.createElement('div');
+            capSec.className = 'sidebar-section';
+            var capLabel = document.createElement('div');
+            capLabel.className = 'sidebar-label';
+            capLabel.textContent = 'Description';
+            capSec.appendChild(capLabel);
+            var capText = document.createElement('div');
+            capText.className = 'sidebar-text';
+            capText.textContent = node._caption;
+            capSec.appendChild(capText);
+            pane.appendChild(capSec);
+        }
+
         // Code block (if the media has an attached snippet)
         if (node._code) {
             var codeSec = document.createElement('div');
@@ -309,6 +324,18 @@
             n._code = media.code;
             n._codeLang = media.codeLang || 'js';
             n._codeTitle = media.codeTitle || '';
+        }
+        if (media.caption) {
+            n._caption = media.caption;
+        }
+        // Spin: 'slow' | 'medium' | 'fast' (or any duration string e.g. '5s')
+        if (media.spin) {
+            var dur = media.spin === 'fast' ? '3s'
+                    : media.spin === 'slow' ? '20s'
+                    : media.spin === 'medium' ? '8s'
+                    : media.spin;
+            n.classList.add('spin');
+            n.style.setProperty('--spin-duration', dur);
         }
         return n;
     }
@@ -735,19 +762,30 @@
 
         function centerOnNode(n) {
             cancelAnim();
-            var w = workspace.offsetWidth;
-            var h = workspace.offsetHeight;
+            var vw = workspace.offsetWidth;
+            var vh = workspace.offsetHeight;
             var cx = parseFloat(n.dataset.cx) || 0;
             var cy = parseFloat(n.dataset.cy) || 0;
-            var targetTx = w / 2 - cx * scale;
-            var targetTy = h / 2 - cy * scale;
+            var nw = parseFloat(n.dataset.w);
+            var nh = parseFloat(n.dataset.h);
+
+            // Zoom so the node fills ~85% of the smaller viewport dimension
+            var fillRatio = 0.85;
+            var targetScale = Math.min(vw * fillRatio / nw, vh * fillRatio / nh);
+            targetScale = Math.max(minScale, Math.min(maxScale, targetScale));
+
+            var targetTx = vw / 2 - cx * targetScale;
+            var targetTy = vh / 2 - cy * targetScale;
+
             var startTxA = tx;
             var startTyA = ty;
+            var startScale = scale;
             var dtx = targetTx - startTxA;
             var dty = targetTy - startTyA;
-            var duration = 650;
-            var startTime = performance.now();
+            var dscale = targetScale - startScale;
 
+            var duration = 700;
+            var startTime = performance.now();
             function ease(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2; }
 
             function step(now) {
@@ -755,6 +793,7 @@
                 var e = ease(t);
                 tx = startTxA + dtx * e;
                 ty = startTyA + dty * e;
+                scale = startScale + dscale * e;
                 applyTransform();
                 if (t < 1) animHandle = requestAnimationFrame(step);
                 else animHandle = null;
