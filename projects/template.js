@@ -293,15 +293,15 @@
             el.muted = true;
             el.loop = true;
             el.playsInline = true;
+            el.preload = 'none';
             el.setAttribute('playsinline', '');
-            var src = document.createElement('source');
-            src.src = media.src;
-            src.type = media.mime || (media.src.endsWith('.webm') ? 'video/webm' : 'video/mp4');
-            el.appendChild(src);
+            // Defer source attachment until node is near viewport
+            el.dataset.src = media.src;
+            el.dataset.mime = media.mime || (media.src.endsWith('.webm') ? 'video/webm' : 'video/mp4');
         } else if (media.type === 'iframe') {
             el = document.createElement('iframe');
             el.src = media.src;
-            el.loading = 'eager';
+            el.loading = 'lazy';
             el.setAttribute('allow', 'autoplay');
             el.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
             if (media.title) el.title = media.title;
@@ -381,6 +381,38 @@
         (project.media || []).forEach(function(m) {
             canvas.appendChild(createNode(m));
         });
+        // Lazy-attach video sources when node enters viewport
+        var lazyVideos = canvas.querySelectorAll('video[data-src]');
+        if (lazyVideos.length && 'IntersectionObserver' in window) {
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (!entry.isIntersecting) return;
+                    var v = entry.target;
+                    if (v.dataset.src) {
+                        var src = document.createElement('source');
+                        src.src = v.dataset.src;
+                        src.type = v.dataset.mime || 'video/mp4';
+                        v.appendChild(src);
+                        v.load();
+                        v.preload = 'auto';
+                        delete v.dataset.src;
+                    }
+                    io.unobserve(v);
+                });
+            }, { rootMargin: '400px' });
+            lazyVideos.forEach(function(v) { io.observe(v); });
+        } else {
+            // Fallback: attach immediately
+            lazyVideos.forEach(function(v) {
+                if (!v.dataset.src) return;
+                var src = document.createElement('source');
+                src.src = v.dataset.src;
+                src.type = v.dataset.mime || 'video/mp4';
+                v.appendChild(src);
+                v.load();
+                delete v.dataset.src;
+            });
+        }
     }
 
     function initWorkspace() {
@@ -1177,7 +1209,6 @@
             });
         });
 
-        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
     }
 
     function resolveMediaPaths(project, jsonPath) {

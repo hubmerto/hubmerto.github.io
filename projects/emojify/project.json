@@ -7,20 +7,20 @@
         { "type": "video", "src": "media/diablo_running.mp4" },
         {
             "type": "image",
-            "src": "media/susanne_daubner.png",
+            "src": "media/susanne_daubner.webp",
             "caption": "ARD Tagesschau anchor, broadcast still. The composed face of public-service news, reconstructed in a vocabulary that contains no profession."
         },
         {
             "type": "image",
-            "src": "media/musik_plastikman.png",
+            "src": "media/musik_plastikman.webp",
             "caption": "Plastikman, Musik. NovaMute, 1994."
         },
         {
             "type": "image",
-            "src": "media/ri_hun_hi.png",
+            "src": "media/ri_hun_hi.webp",
             "caption": "KCTV anchor, broadcast still. State address through a glyph set built for casual messaging."
         },
-        { "type": "image", "src": "media/monday.png" }
+        { "type": "image", "src": "media/monday.webp" }
     ],
     "columns": [
         {

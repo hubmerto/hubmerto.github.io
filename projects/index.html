@@ -20,8 +20,10 @@
     <meta name="twitter:description" content="Selected work. Creative direction across web, code, and real-time worlds.">
     <meta name="twitter:image" content="https://hubmerto.com/og.png">
     <meta name="theme-color" content="#0a0a0a">
+    <link rel="canonical" href="https://hubmerto.com/projects">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" as="style">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"></noscript>
     <style>
         :root {
             --bg: #0a0a0a;
@@ -276,7 +278,7 @@
 
         <span class="card locked">
             <div class="card-cover">
-                <video autoplay muted loop playsinline preload="metadata">
+                <video muted loop playsinline preload="none" data-lazy>
                     <source src="/projects/anonymous-empire/media/pile.webm" type="video/webm">
                 </video>
                 <div class="card-status">Locked</div>
@@ -292,7 +294,7 @@
 
         <span class="card locked">
             <div class="card-cover">
-                <video autoplay muted loop playsinline preload="metadata">
+                <video muted loop playsinline preload="none" data-lazy>
                     <source src="/projects/strelitzia/media/VTR_06.mp4" type="video/mp4">
                 </video>
                 <div class="card-status">Locked</div>
@@ -308,7 +310,7 @@
 
         <a class="card" href="/projects/emojify">
             <div class="card-cover">
-                <video autoplay muted loop playsinline preload="metadata">
+                <video muted loop playsinline preload="none" data-lazy>
                     <source src="/projects/emojify/media/emojisaic.mp4" type="video/mp4">
                 </video>
             </div>
@@ -331,9 +333,22 @@
     main.offsetHeight;
     main.classList.add('loaded');
 
-    document.querySelectorAll('.card video').forEach(function(v) {
-        v.addEventListener('canplay', function() { v.play().catch(function(){}); });
-    });
+    var lazyVids = document.querySelectorAll('.card video[data-lazy]');
+    if (lazyVids.length && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (!entry.isIntersecting) return;
+                var v = entry.target;
+                v.preload = 'auto';
+                v.load();
+                v.addEventListener('canplay', function() { v.play().catch(function(){}); }, { once: true });
+                io.unobserve(v);
+            });
+        }, { rootMargin: '300px' });
+        lazyVids.forEach(function(v) { io.observe(v); });
+    } else {
+        lazyVids.forEach(function(v) { v.preload = 'auto'; v.load(); v.play().catch(function(){}); });
+    }
 
     document.querySelectorAll('a[href]').forEach(function(a) {
         a.addEventListener('click', function(e) {

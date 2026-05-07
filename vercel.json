@@ -1,6 +1,14 @@
 {
   "cleanUrls": true,
   "redirects": [
-    { "source": "/karim-boumjimar", "destination": "/projects/karim-boumjimar", "permanent": false }
+    { "source": "/karim-boumjimar", "destination": "/projects/karim-boumjimar", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/projects/(.*)/media/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
   ]
 }
