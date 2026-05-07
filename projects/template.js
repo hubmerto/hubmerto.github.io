@@ -322,6 +322,9 @@
         if (media.h) n.dataset.h = media.h;
         if (media.size) n.dataset.size = media.size;
         if (media.invertOnDark) n.classList.add('invert-on-dark');
+        if (media.cx !== undefined) n.dataset.cx = media.cx;
+        if (media.cy !== undefined) n.dataset.cy = media.cy;
+        if (media.cx !== undefined && media.cy !== undefined) n.dataset.fixed = 'true';
         if (media.code) {
             n._code = media.code;
             n._codeLang = media.codeLang || 'js';
@@ -444,6 +447,7 @@
             }
 
             nodes.forEach(function(n, i) {
+                if (n.dataset.fixed === 'true') return; // explicit position from JSON
                 var col = i % cols;
                 var row = Math.floor(i / cols);
                 var cx = (col - (cols - 1) / 2) * cellW + rand(i * 2) * 40;
