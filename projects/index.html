@@ -35,16 +35,18 @@
             --fg-faint: #555;
             --hover-bg: #2b2b2b;
         }
+        /* /projects is dark-only */
         [data-theme="light"] {
-            --bg: #f5f5f3;
-            --bg-elev: #ffffff;
-            --bg-soft: #ececea;
-            --fg: #1a1a1a;
-            --fg-strong: #000000;
-            --fg-muted: #555;
-            --fg-faint: #888;
-            --hover-bg: #1a1a1a;
+            --bg: #000000;
+            --bg-elev: #131313;
+            --bg-soft: #1a1a1a;
+            --fg: #e0e0e0;
+            --fg-strong: #ffffff;
+            --fg-muted: #888;
+            --fg-faint: #555;
+            --hover-bg: #2b2b2b;
         }
+        .theme-toggle { display: none !important; }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -155,9 +157,6 @@
             z-index: 3;
         }
         .piece:hover::after { opacity: 1; }
-        [data-theme="light"] .piece::after { outline-color: #000000; }
-        [data-theme="light"] .piece-overlay { background: rgba(0, 0, 0, 0.20); }
-        [data-theme="light"] .piece-title { color: #ffffff; }
 
         .piece-title {
             font-family: 'Space Grotesk', sans-serif;
