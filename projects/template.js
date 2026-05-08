@@ -32,6 +32,24 @@
                 tx.textContent = col.text;
                 section.appendChild(tx);
             }
+            if (col.pairs && col.pairs.length) {
+                var pairsWrap = document.createElement('div');
+                pairsWrap.className = 'sidebar-pairs';
+                col.pairs.forEach(function(pair) {
+                    var p = document.createElement('div');
+                    p.className = 'pair';
+                    var pl = document.createElement('div');
+                    pl.className = 'pair-label';
+                    pl.textContent = pair.label;
+                    var pn = document.createElement('div');
+                    pn.className = 'pair-name';
+                    pn.textContent = pair.name;
+                    p.appendChild(pl);
+                    p.appendChild(pn);
+                    pairsWrap.appendChild(p);
+                });
+                section.appendChild(pairsWrap);
+            }
             if (col.meta && col.meta.length) {
                 col.meta.forEach(function(row) {
                     var r = document.createElement('div');

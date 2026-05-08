@@ -232,6 +232,29 @@ body {
 
 .sidebar .meta-row a:hover { color: var(--fg-strong); border-bottom-color: var(--fg-strong); }
 
+/* Lineage / credit pairs: small label, larger name, gap between pairs */
+.sidebar-pairs {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+.sidebar-pairs .pair {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+.sidebar-pairs .pair-label {
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    color: var(--fg-fainter);
+    text-transform: uppercase;
+}
+.sidebar-pairs .pair-name {
+    font-size: 13.5px;
+    color: var(--fg-strong);
+    line-height: 1.35;
+}
+
 /* Inspector (right) */
 .inspector {
     width: 340px;

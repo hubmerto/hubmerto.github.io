@@ -24,7 +24,13 @@
         },
         {
             "title": "Lineage",
-            "text": "Patricio Gonzalez Vivo · The Book of Shaders, threshold + dither pedagogy\nEtienne Jacob · Boiling-threshold idiom in creative coding\nChar Stiles · Live-coded 1-bit performance practice\nInigo Quilez · Domain warping and fbm noise (iquilezles.org/articles/warp)\n@XorDev · Golden-ratio frame offset for low-discrepancy reseeding"
+            "pairs": [
+                { "label": "Threshold and dither", "name": "Patricio Gonzalez Vivo" },
+                { "label": "Boiling threshold", "name": "Etienne Jacob" },
+                { "label": "1-bit performance", "name": "Char Stiles" },
+                { "label": "Domain warping", "name": "Inigo Quilez" },
+                { "label": "Golden-ratio offset", "name": "@XorDev" }
+            ]
         }
     ]
 }
