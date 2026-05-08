@@ -122,6 +122,29 @@
             display: block;
             transition: opacity 0.35s ease, filter 0.35s ease;
         }
+
+        /* Loader spinner: shown until media is ready */
+        .piece-loader {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 22px; height: 22px;
+            margin: -11px 0 0 -11px;
+            border: 2px solid var(--fg-faint);
+            border-top-color: var(--fg-strong);
+            border-radius: 50%;
+            animation: piece-spin 0.9s linear infinite;
+            opacity: 1;
+            transition: opacity 0.25s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .piece.media-ready .piece-loader { opacity: 0; }
+        .piece-media { opacity: 0; }
+        .piece.media-ready .piece-media { opacity: 1; }
+        @keyframes piece-spin {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
         .piece-media video, .piece-media img {
             width: 100%; height: 100%;
             object-fit: contain;
@@ -302,6 +325,13 @@
         var media = document.createElement('div');
         media.className = 'piece-media';
 
+        var loader = document.createElement('div');
+        loader.className = 'piece-loader';
+        loader.setAttribute('aria-hidden', 'true');
+        el.appendChild(loader);
+
+        function markReady() { el.classList.add('media-ready'); }
+
         var inner;
         if (item.type === 'video') {
             inner = document.createElement('video');
@@ -312,12 +342,19 @@
             inner.preload = 'none';
             inner.dataset.src = item.src;
             inner.dataset.mime = item.mime || 'video/mp4';
+            inner.addEventListener('loadeddata', markReady, { once: true });
         } else {
             inner = document.createElement('img');
             inner.loading = 'lazy';
             inner.decoding = 'async';
             inner.src = item.src;
             inner.alt = item.project;
+            if (inner.complete && inner.naturalWidth) {
+                markReady();
+            } else {
+                inner.addEventListener('load', markReady, { once: true });
+                inner.addEventListener('error', markReady, { once: true });
+            }
         }
         media.appendChild(inner);
         el.appendChild(media);
