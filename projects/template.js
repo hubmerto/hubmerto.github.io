@@ -41,7 +41,15 @@
                     var pl = document.createElement('div');
                     pl.className = 'pair-label';
                     pl.textContent = pair.label;
-                    var pn = document.createElement('div');
+                    var pn;
+                    if (pair.href) {
+                        pn = document.createElement('a');
+                        pn.href = pair.href;
+                        pn.target = '_blank';
+                        pn.rel = 'noopener';
+                    } else {
+                        pn = document.createElement('div');
+                    }
                     pn.className = 'pair-name';
                     pn.textContent = pair.name;
                     p.appendChild(pl);

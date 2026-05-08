@@ -28,11 +28,11 @@
         {
             "title": "Lineage",
             "pairs": [
-                { "label": "Threshold and dither", "name": "Patricio Gonzalez Vivo" },
-                { "label": "Boiling threshold", "name": "Etienne Jacob" },
-                { "label": "1-bit performance", "name": "Char Stiles" },
-                { "label": "Domain warping", "name": "Inigo Quilez" },
-                { "label": "Golden-ratio offset", "name": "@XorDev" }
+                { "label": "Threshold and dither", "name": "Patricio Gonzalez Vivo", "href": "https://patriciogonzalezvivo.com" },
+                { "label": "Boiling threshold", "name": "Etienne Jacob", "href": "https://www.bleuje.com" },
+                { "label": "1-bit performance", "name": "Char Stiles", "href": "https://charstiles.com" },
+                { "label": "Domain warping", "name": "Inigo Quilez", "href": "https://iquilezles.org" },
+                { "label": "Golden-ratio offset", "name": "@XorDev", "href": "https://x.com/XorDev" }
             ]
         }
     ]
