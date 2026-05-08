@@ -187,8 +187,14 @@
         .span-4 { grid-column: span 4; }
         .span-5 { grid-column: span 5; }
 
-        /* Every tile is a 700×820 frame */
+        /* Every tile is a 700×820 frame by default */
         .piece { aspect-ratio: 700 / 820; }
+        /* Horizontal variant: 820×700 frame, image inset matched */
+        .piece.horizontal { aspect-ratio: 820 / 700; }
+        .piece.horizontal .piece-media {
+            top: 22%; bottom: 22%;
+            left: 18.11%; right: 18.11%;
+        }
 
         /* Sentinel for infinite scroll */
         .sentinel { grid-column: 1 / -1; height: 1px; }
@@ -230,7 +236,7 @@
         { project: 'Karim Boumjimar', href: '/projects/karim-boumjimar', type: 'image', src: '/projects/karim-boumjimar/media/vase.png', ar: 'tall' },
         { project: 'Emojify', href: '/projects/emojify', type: 'video', src: '/projects/emojify/media/emojisaic.mp4', mime: 'video/mp4', ar: 'landscape' },
         { project: 'Anonymous Empire', href: '/projects/anonymous-empire', type: 'video', src: '/projects/anonymous-empire/media/pile.webm', mime: 'video/webm', ar: 'square', locked: true },
-        { project: 'Strelitzia', href: '/projects/strelitzia', type: 'image', src: '/projects/strelitzia/media/strelitzia-1.png', locked: true }
+        { project: 'Strelitzia', href: '/projects/strelitzia', type: 'image', src: '/projects/strelitzia/media/strelitzia-1.png', locked: true, horizontal: true }
     ];
 
     // Span pool — bias toward medium-large pieces, occasional small/large
@@ -264,7 +270,7 @@
             el = document.createElement('a');
             el.href = item.href;
         }
-        el.className = 'piece span-' + pickSpan(indexInPage) + (item.locked ? ' locked' : '');
+        el.className = 'piece span-' + pickSpan(indexInPage) + (item.locked ? ' locked' : '') + (item.horizontal ? ' horizontal' : '');
 
         var media = document.createElement('div');
         media.className = 'piece-media';
