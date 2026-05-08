@@ -20,7 +20,10 @@
             "text": "Image fidelity stopped being scarce around 2015. Phone sensors got better than human eyes; cloud storage became free; AI now generates photographic detail on demand. The interesting work moved in the opposite direction. Risograph, photocopy zines, club flyers, lo-fi photography came back, not as nostalgia but as positions. To reduce an image to two ink states in 2026 is to refuse what the camera now gives you and keep the part that survives the refusal. BOILER EGGS does this in motion. The look became a vernacular of music video and club visual culture because it treats footage as something pressed through ink rather than something captured."
         },
         {
-            "text": "What separates a living 1-bit effect from a static filter is time. The tool composes four time scales simultaneously per pixel per frame: per-pixel blue-noise dither reseeded at golden-ratio offset, a fast frame-to-frame boil, a medium sinusoidal breath, and a slow domain-warped fractal field that drifts the image with itself through UV displacement. Eight composited sub-systems in ninety-two effective lines of GLSL ES 300. An optional modulation layer routes Web Audio FFT bands through an asymmetric envelope follower and webcam motion additively into chosen uniforms, so kicks punch the warp and hi-hats add ripple. No backend, no upload, no account."
+            "text": "What separates a living 1-bit effect from a static filter is time. The tool composes four time scales simultaneously per pixel per frame: per-pixel blue-noise dither reseeded at golden-ratio offset, a fast frame-to-frame boil, a medium sinusoidal breath, and a slow domain-warped fractal field that drifts the image with itself through UV displacement. Eight composited sub-systems in ninety-two effective lines of GLSL ES 300. An optional modulation layer routes Web Audio FFT bands through an asymmetric envelope follower and webcam motion additively into chosen uniforms, so kicks punch the warp and hi-hats add ripple. No backend, no upload, no account.",
+            "meta": [
+                { "label": "Live at", "value": "hubmerto.com/boiler-eggs", "href": "/boiler-eggs" }
+            ]
         },
         {
             "title": "Lineage",
