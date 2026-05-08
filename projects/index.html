@@ -143,7 +143,7 @@
         }
         .piece:hover .piece-overlay { opacity: 1; }
 
-        /* 20px stroke centered on the tile edge (10px outside / 10px inside) */
+        /* 10px stroke centered on the tile edge (5px outside / 5px inside) */
         .piece::after {
             content: '';
             position: absolute; inset: 0;
@@ -155,6 +155,9 @@
             z-index: 3;
         }
         .piece:hover::after { opacity: 1; }
+        [data-theme="light"] .piece::after { outline-color: #000000; }
+        [data-theme="light"] .piece-overlay { background: rgba(0, 0, 0, 0.20); }
+        [data-theme="light"] .piece-title { color: #ffffff; }
 
         .piece-title {
             font-family: 'Space Grotesk', sans-serif;
