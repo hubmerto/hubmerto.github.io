@@ -114,15 +114,18 @@
             isolation: isolate;
         }
 
+        /* Inner box mirrors the Figma frame:
+           frame 700×820, image 392×523 → ~22% horizontal / ~18% vertical inset */
         .piece-media {
-            width: 100%; height: 100%;
+            position: absolute;
+            top: 18.11%; bottom: 18.11%;
+            left: 22%; right: 22%;
             display: block;
-            position: absolute; inset: 0;
             transition: opacity 0.35s ease, filter 0.35s ease;
         }
         .piece-media video, .piece-media img {
             width: 100%; height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             display: block;
         }
 
@@ -184,12 +187,8 @@
         .span-4 { grid-column: span 4; }
         .span-5 { grid-column: span 5; }
 
-        /* Aspect ratio variants */
-        .ar-portrait    { aspect-ratio: 4 / 5; }
-        .ar-tall        { aspect-ratio: 3 / 4; }
-        .ar-square      { aspect-ratio: 1 / 1; }
-        .ar-landscape   { aspect-ratio: 16 / 10; }
-        .ar-wide        { aspect-ratio: 16 / 9; }
+        /* Every tile is a 700×820 frame */
+        .piece { aspect-ratio: 700 / 820; }
 
         /* Sentinel for infinite scroll */
         .sentinel { grid-column: 1 / -1; height: 1px; }
@@ -265,7 +264,7 @@
             el = document.createElement('a');
             el.href = item.href;
         }
-        el.className = 'piece span-' + pickSpan(indexInPage) + ' ar-' + item.ar + (item.locked ? ' locked' : '');
+        el.className = 'piece span-' + pickSpan(indexInPage) + (item.locked ? ' locked' : '');
 
         var media = document.createElement('div');
         media.className = 'piece-media';
