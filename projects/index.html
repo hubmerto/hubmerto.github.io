@@ -147,8 +147,8 @@
         .piece::after {
             content: '';
             position: absolute; inset: 0;
-            outline: 20px solid #ffffff;
-            outline-offset: -10px;
+            outline: 10px solid #ffffff;
+            outline-offset: -5px;
             opacity: 0;
             transition: opacity 0.25s ease;
             pointer-events: none;
@@ -204,7 +204,7 @@
             .span-4, .span-5 { grid-column: span 4; }
             main { padding: 32px 6vw 80px; }
             .page-header { padding: 18px 16px; }
-            .piece::after { outline-width: 12px; outline-offset: -6px; }
+            .piece::after { outline-width: 6px; outline-offset: -3px; }
         }
         @media (max-width: 520px) {
             .grid { grid-template-columns: repeat(2, 1fr); gap: 40px 16px; }
