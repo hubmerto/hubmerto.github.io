@@ -197,6 +197,7 @@
         .span-4 { grid-column: span 4; }
         .span-5 { grid-column: span 5; }
         .span-6 { grid-column: span 6; }
+        .span-8 { grid-column: span 8; }
 
         /* Every tile is an 820×700 horizontal frame */
         .piece { aspect-ratio: 820 / 700; }
@@ -217,14 +218,14 @@
         @media (max-width: 900px) {
             .grid { grid-template-columns: repeat(6, 1fr); gap: 56px 32px; }
             .span-3 { grid-column: span 3; }
-            .span-4, .span-5, .span-6 { grid-column: span 6; }
+            .span-4, .span-5, .span-6, .span-8 { grid-column: span 6; }
             main { padding: 32px 6vw 80px; }
             .page-header { padding: 18px 16px; }
             .piece::after { outline-width: 6px; outline-offset: -3px; }
         }
         @media (max-width: 520px) {
             .grid { grid-template-columns: repeat(2, 1fr); gap: 40px 16px; }
-            .span-3, .span-4, .span-5, .span-6 { grid-column: span 2; }
+            .span-3, .span-4, .span-5, .span-6, .span-8 { grid-column: span 2; }
             main { padding: 24px 16px 60px; }
         }
     </style>
@@ -251,7 +252,7 @@
         { project: 'Karim Boumjimar', tag: 'WEB', href: '/projects/karim-boumjimar', type: 'image', src: '/projects/karim-boumjimar/media/vase.png', span: 6 },
         { project: 'Strelitzia', tag: '3D', href: '/projects/strelitzia', type: 'image', src: '/projects/strelitzia/media/strelitzia-1.png', locked: true, span: 6 },
         { project: 'Emojify', tag: 'TOOL', href: '/projects/emojify', type: 'image', src: '/projects/emojify/media/musik_plastikman.png', span: 4 },
-        { project: 'Boiler Eggs', tag: 'TOOL', href: '/projects/boiler-eggs', type: 'video', src: '/projects/boiler-eggs/media/boiler-eggs.mp4', mime: 'video/mp4', span: 4 },
+        { project: 'Boiler Eggs', tag: 'TOOL', href: '/projects/boiler-eggs', type: 'video', src: '/projects/boiler-eggs/media/boiler-eggs.mp4', mime: 'video/mp4', span: 8, vertical: true },
         { project: 'Anonymous Empire', tag: 'ARCHIVE', href: '/projects/anonymous-empire', type: 'video', src: '/projects/anonymous-empire/media/pile.webm', mime: 'video/webm', locked: true, span: 4 }
     ];
 
@@ -325,7 +326,11 @@
         stack.className = 'piece-stack';
         var title = document.createElement('div');
         title.className = 'piece-title';
-        title.textContent = item.project;
+        // Each word on its own line (e.g. BOILER \n EGGS)
+        item.project.split(' ').forEach(function(word, i) {
+            if (i > 0) title.appendChild(document.createElement('br'));
+            title.appendChild(document.createTextNode(word));
+        });
         stack.appendChild(title);
         if (item.tag) {
             var tag = document.createElement('div');
