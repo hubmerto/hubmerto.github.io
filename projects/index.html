@@ -211,6 +211,15 @@
             top: 18.11%; bottom: 18.11%;
             left: 22%; right: 22%;
         }
+        /* Tight frame: reduce margin around image (frame hugs the image) */
+        .piece.tight.vertical .piece-media {
+            top: 8%; bottom: 8%;
+            left: 10%; right: 10%;
+        }
+        .piece.tight:not(.vertical) .piece-media {
+            top: 10%; bottom: 10%;
+            left: 8%; right: 8%;
+        }
 
         /* Sentinel for infinite scroll */
         .sentinel { grid-column: 1 / -1; height: 1px; }
@@ -252,7 +261,7 @@
         { project: 'Karim Boumjimar', tag: 'WEB', href: '/projects/karim-boumjimar', type: 'image', src: '/projects/karim-boumjimar/media/vase.png', span: 6 },
         { project: 'Strelitzia', tag: '3D', href: '/projects/strelitzia', type: 'image', src: '/projects/strelitzia/media/strelitzia-1.png', locked: true, span: 6 },
         { project: 'Emojify', tag: 'TOOL', href: '/projects/emojify', type: 'image', src: '/projects/emojify/media/musik_plastikman.png', span: 4 },
-        { project: 'Boiler Eggs', tag: 'TOOL', href: '/projects/boiler-eggs', type: 'video', src: '/projects/boiler-eggs/media/boiler-eggs.mp4', mime: 'video/mp4', span: 5, vertical: true },
+        { project: 'Boiler Eggs', tag: 'TOOL', href: '/projects/boiler-eggs', type: 'video', src: '/projects/boiler-eggs/media/boiler-eggs.mp4', mime: 'video/mp4', span: 5, vertical: true, tight: true },
         { project: 'Anonymous Empire', tag: 'ARCHIVE', href: '/projects/anonymous-empire', type: 'video', src: '/projects/anonymous-empire/media/pile.webm', mime: 'video/webm', locked: true, span: 4 }
     ];
 
@@ -288,7 +297,7 @@
             el.href = item.href;
         }
         var spanCls = item.span ? ('span-' + item.span) : ('span-' + pickSpan(indexInPage));
-        el.className = 'piece ' + spanCls + (item.locked ? ' locked' : '') + (item.vertical ? ' vertical' : '');
+        el.className = 'piece ' + spanCls + (item.locked ? ' locked' : '') + (item.vertical ? ' vertical' : '') + (item.tight ? ' tight' : '');
 
         var media = document.createElement('div');
         media.className = 'piece-media';
