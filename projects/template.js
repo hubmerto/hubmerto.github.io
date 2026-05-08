@@ -320,7 +320,10 @@
             el.loop = true;
             el.playsInline = true;
             el.preload = 'none';
+            el.setAttribute('loop', '');
+            el.setAttribute('muted', '');
             el.setAttribute('playsinline', '');
+            el.addEventListener('ended', function() { el.currentTime = 0; el.play().catch(function(){}); });
             // Defer source attachment until node is near viewport
             el.dataset.src = media.src;
             el.dataset.mime = media.mime || (media.src.endsWith('.webm') ? 'video/webm' : 'video/mp4');

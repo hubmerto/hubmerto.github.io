@@ -338,8 +338,11 @@
             inner.muted = true;
             inner.loop = true;
             inner.playsInline = true;
+            inner.setAttribute('loop', '');
+            inner.setAttribute('muted', '');
             inner.setAttribute('playsinline', '');
             inner.preload = 'none';
+            inner.addEventListener('ended', function() { inner.currentTime = 0; inner.play().catch(function(){}); });
             inner.dataset.src = item.src;
             inner.dataset.mime = item.mime || 'video/mp4';
             inner.addEventListener('loadeddata', markReady, { once: true });
