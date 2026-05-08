@@ -1,0 +1,36 @@
+{
+    "slug": "boiler-eggs",
+    "title": "Boiler Eggs",
+    "hudIndex": "05",
+    "media": [
+        { "type": "video", "src": "media/boiler-eggs.mp4" }
+    ],
+    "columns": [
+        {
+            "title": "Boiler Eggs",
+            "tags": "digital · 2026",
+            "meta": [
+                { "label": "Project", "value": "Boiler Eggs" },
+                { "label": "Year", "value": "2026" },
+                { "label": "Department", "value": "Digital" },
+                { "label": "Typology", "value": "Tool, real-time visual processor" },
+                { "label": "Program", "value": "Browser-based 1-bit duotone for video, image, and webcam input, with audio and motion modulation" },
+                { "label": "Scope", "value": "Concept, GLSL, Engineering, Audio analysis, Recording pipeline" },
+                { "label": "Status", "value": "Live" },
+                { "label": "Stack", "value": "WebGL2, GLSL ES 300, Vite, Tweakpane, Web Audio API, WebCodecs / mp4-muxer, MediaRecorder" },
+                { "label": "Bundle", "value": "51 KB gzipped · 2 production dependencies" },
+                { "label": "Shader", "value": "92 effective lines · 18 uniforms · single-pass fragment" }
+            ]
+        },
+        {
+            "text": "Image fidelity stopped being scarce around 2015. Phone sensors got better than human eyes; cloud storage became free; AI now generates photographic detail on demand. The interesting work moved in the opposite direction. Risograph, photocopy zines, club flyers, lo-fi photography came back, not as nostalgia but as positions. To reduce an image to two ink states in 2026 is to refuse what the camera now gives you and keep the part that survives the refusal. BOILER EGGS does this in motion. The look became a vernacular of music video and club visual culture because it treats footage as something pressed through ink rather than something captured."
+        },
+        {
+            "text": "What separates a living 1-bit effect from a static filter is time. The tool composes four time scales simultaneously per pixel per frame: per-pixel blue-noise dither reseeded at golden-ratio offset, a fast frame-to-frame boil, a medium sinusoidal breath, and a slow domain-warped fractal field that drifts the image with itself through UV displacement. Eight composited sub-systems in ninety-two effective lines of GLSL ES 300. An optional modulation layer routes Web Audio FFT bands through an asymmetric envelope follower and webcam motion additively into chosen uniforms, so kicks punch the warp and hi-hats add ripple. No backend, no upload, no account."
+        },
+        {
+            "title": "Credits & lineage",
+            "text": "Patricio Gonzalez Vivo · The Book of Shaders, threshold + dither pedagogy\nEtienne Jacob · Boiling-threshold idiom in creative coding\nChar Stiles · Live-coded 1-bit performance practice\nInigo Quilez · Domain warping and fbm noise (iquilezles.org/articles/warp)\n@XorDev · Golden-ratio frame offset for low-discrepancy reseeding"
+        }
+    ]
+}

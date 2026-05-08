@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <script src="/theme.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hubmerto.boiler-eggs</title>
+    <meta name="description" content="Browser-based 1-bit duotone for video, image, and webcam input, with audio and motion modulation.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="hubmerto">
+    <meta property="og:title" content="hubmerto · boiler-eggs">
+    <meta property="og:description" content="Browser-based 1-bit duotone for video, image, and webcam input, with audio and motion modulation.">
+    <meta property="og:url" content="https://hubmerto.com/projects/boiler-eggs">
+    <meta property="og:image" content="https://hubmerto.com/projects/boiler-eggs/og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="hubmerto · boiler-eggs">
+    <meta name="twitter:description" content="Browser-based 1-bit duotone for video, image, and webcam input, with audio and motion modulation.">
+    <meta name="twitter:image" content="https://hubmerto.com/projects/boiler-eggs/og.jpg">
+    <meta name="theme-color" content="#000000">
+    <link rel="canonical" href="https://hubmerto.com/projects/boiler-eggs">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"></noscript>
+    <link rel="stylesheet" href="/projects/template.css">
+    <script defer src="/_vercel/speed-insights/script.js"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CreativeWork",
+        "name": "Boiler Eggs",
+        "creator": { "@type": "Person", "name": "Humberto Gesser", "url": "https://hubmerto.com/" },
+        "url": "https://hubmerto.com/projects/boiler-eggs",
+        "description": "Browser-based 1-bit duotone for video, image, and webcam input, with audio and motion modulation.",
+        "image": "https://hubmerto.com/projects/boiler-eggs/og.jpg",
+        "dateCreated": "2026"
+    }
+    </script>
+</head>
+<body>
+    <header class="topbar" id="topbar">
+        <div class="crumbs">
+            <a href="/projects" class="crumb-back" aria-label="Back to projects">
+                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                    <path d="M10 3 L5 8 L10 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Projects</span>
+            </a>
+            <span class="crumb-sep">/</span>
+            <span class="crumb-current" id="crumb-current"></span>
+        </div>
+        <nav class="topbar-nav">
+            <a href="/">home</a>
+            <a href="/projects">projects</a>
+            <a href="/contact">contact</a>
+        </nav>
+    </header>
+    <div class="content" id="content">
+
+        <aside class="sidebar sidebar-left" id="sidebar-left"></aside>
+
+        <div class="workspace" id="workspace">
+            <div class="grid-bg" id="grid-bg"></div>
+            <div class="hud-hint">drag to explore</div>
+            <div class="canvas-layer" id="canvas"></div>
+        </div>
+
+        <aside class="sidebar sidebar-right inspector" id="inspector">
+            <div class="inspector-empty">Select an item</div>
+        </aside>
+
+    </div>
+
+    <script src="/projects/template.js"></script>
+    <script>loadProject('/projects/boiler-eggs/project.json');</script>
+</body>
+</html>
