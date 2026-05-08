@@ -181,10 +181,11 @@
         }
         [data-theme="light"] .piece-status { background: rgba(255,255,255,0.7); color: var(--fg-strong); }
 
-        /* Span variants — kept narrow so pieces stay small with breathing room */
+        /* Span variants */
         .span-3 { grid-column: span 3; }
         .span-4 { grid-column: span 4; }
         .span-5 { grid-column: span 5; }
+        .span-6 { grid-column: span 6; }
 
         /* Every tile is a 700×820 frame by default */
         .piece { aspect-ratio: 700 / 820; }
@@ -201,14 +202,14 @@
         @media (max-width: 900px) {
             .grid { grid-template-columns: repeat(6, 1fr); gap: 56px 32px; }
             .span-3 { grid-column: span 3; }
-            .span-4, .span-5 { grid-column: span 4; }
+            .span-4, .span-5, .span-6 { grid-column: span 6; }
             main { padding: 32px 6vw 80px; }
             .page-header { padding: 18px 16px; }
             .piece::after { outline-width: 6px; outline-offset: -3px; }
         }
         @media (max-width: 520px) {
             .grid { grid-template-columns: repeat(2, 1fr); gap: 40px 16px; }
-            .span-3, .span-4, .span-5 { grid-column: span 2; }
+            .span-3, .span-4, .span-5, .span-6 { grid-column: span 2; }
             main { padding: 24px 16px 60px; }
         }
     </style>
@@ -232,10 +233,10 @@
 (function() {
     // Catalog: each piece = one tile. Multiple pieces per project (uses existing media).
     var catalog = [
-        { project: 'Karim Boumjimar', href: '/projects/karim-boumjimar', type: 'image', src: '/projects/karim-boumjimar/media/vase.png', ar: 'tall' },
-        { project: 'Emojify', href: '/projects/emojify', type: 'image', src: '/projects/emojify/media/musik_plastikman.png' },
-        { project: 'Anonymous Empire', href: '/projects/anonymous-empire', type: 'video', src: '/projects/anonymous-empire/media/pile.webm', mime: 'video/webm', ar: 'square', locked: true },
-        { project: 'Strelitzia', href: '/projects/strelitzia', type: 'image', src: '/projects/strelitzia/media/strelitzia-1.png', locked: true, horizontal: true }
+        { project: 'Karim Boumjimar', href: '/projects/karim-boumjimar', type: 'image', src: '/projects/karim-boumjimar/media/vase.png', span: 6 },
+        { project: 'Strelitzia', href: '/projects/strelitzia', type: 'image', src: '/projects/strelitzia/media/strelitzia-1.png', locked: true, horizontal: true, span: 6 },
+        { project: 'Emojify', href: '/projects/emojify', type: 'image', src: '/projects/emojify/media/musik_plastikman.png', span: 4 },
+        { project: 'Anonymous Empire', href: '/projects/anonymous-empire', type: 'video', src: '/projects/anonymous-empire/media/pile.webm', mime: 'video/webm', locked: true, span: 4 }
     ];
 
     // Span pool — bias toward medium-large pieces, occasional small/large
@@ -269,7 +270,8 @@
             el = document.createElement('a');
             el.href = item.href;
         }
-        el.className = 'piece span-' + pickSpan(indexInPage) + (item.locked ? ' locked' : '') + (item.horizontal ? ' horizontal' : '');
+        var spanCls = item.span ? ('span-' + item.span) : ('span-' + pickSpan(indexInPage));
+        el.className = 'piece ' + spanCls + (item.locked ? ' locked' : '') + (item.horizontal ? ' horizontal' : '');
 
         var media = document.createElement('div');
         media.className = 'piece-media';
@@ -314,7 +316,7 @@
 
     function appendPage() {
         var seed = ++pageCount;
-        var items = shuffled(catalog, seed);
+        var items = catalog;
         var frag = document.createDocumentFragment();
         items.forEach(function(item, i) {
             frag.appendChild(buildPiece(item, i + (seed - 1) * catalog.length));
