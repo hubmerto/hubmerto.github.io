@@ -12,14 +12,8 @@
             "meta": [
                 { "label": "Project", "value": "Boiler Eggs" },
                 { "label": "Year", "value": "2026" },
-                { "label": "Department", "value": "Digital" },
                 { "label": "Typology", "value": "Tool, real-time visual processor" },
-                { "label": "Program", "value": "Browser-based 1-bit duotone for video, image, and webcam input, with audio and motion modulation" },
-                { "label": "Scope", "value": "Concept, GLSL, Engineering, Audio analysis, Recording pipeline" },
-                { "label": "Status", "value": "Live" },
-                { "label": "Stack", "value": "WebGL2, GLSL ES 300, Vite, Tweakpane, Web Audio API, WebCodecs / mp4-muxer, MediaRecorder" },
-                { "label": "Bundle", "value": "51 KB gzipped · 2 production dependencies" },
-                { "label": "Shader", "value": "92 effective lines · 18 uniforms · single-pass fragment" }
+                { "label": "Stack", "value": "WebGL2, Vite, Tweakpane, Web Audio API, WebCodecs" }
             ]
         },
         {
@@ -29,7 +23,7 @@
             "text": "What separates a living 1-bit effect from a static filter is time. The tool composes four time scales simultaneously per pixel per frame: per-pixel blue-noise dither reseeded at golden-ratio offset, a fast frame-to-frame boil, a medium sinusoidal breath, and a slow domain-warped fractal field that drifts the image with itself through UV displacement. Eight composited sub-systems in ninety-two effective lines of GLSL ES 300. An optional modulation layer routes Web Audio FFT bands through an asymmetric envelope follower and webcam motion additively into chosen uniforms, so kicks punch the warp and hi-hats add ripple. No backend, no upload, no account."
         },
         {
-            "title": "Credits & lineage",
+            "title": "Lineage",
             "text": "Patricio Gonzalez Vivo · The Book of Shaders, threshold + dither pedagogy\nEtienne Jacob · Boiling-threshold idiom in creative coding\nChar Stiles · Live-coded 1-bit performance practice\nInigo Quilez · Domain warping and fbm noise (iquilezles.org/articles/warp)\n@XorDev · Golden-ratio frame offset for low-discrepancy reseeding"
         }
     ]
