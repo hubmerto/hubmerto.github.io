@@ -116,12 +116,9 @@
             isolation: isolate;
         }
 
-        /* Inner box mirrors the Figma frame:
-           frame 700×820, image 392×523 → ~22% horizontal / ~18% vertical inset */
+        /* Inner box mirrors the Figma frame margins (392 / 523 inside 700×820) */
         .piece-media {
             position: absolute;
-            top: 18.11%; bottom: 18.11%;
-            left: 22%; right: 22%;
             display: block;
             transition: opacity 0.35s ease, filter 0.35s ease;
         }
@@ -189,13 +186,17 @@
         .span-5 { grid-column: span 5; }
         .span-6 { grid-column: span 6; }
 
-        /* Every tile is a 700×820 frame by default */
-        .piece { aspect-ratio: 700 / 820; }
-        /* Horizontal variant: 820×700 frame, image inset matched */
-        .piece.horizontal { aspect-ratio: 820 / 700; }
-        .piece.horizontal .piece-media {
+        /* Every tile is an 820×700 horizontal frame */
+        .piece { aspect-ratio: 820 / 700; }
+        .piece-media {
             top: 22%; bottom: 22%;
             left: 18.11%; right: 18.11%;
+        }
+        /* Vertical opt-in (700×820) for any future piece */
+        .piece.vertical { aspect-ratio: 700 / 820; }
+        .piece.vertical .piece-media {
+            top: 18.11%; bottom: 18.11%;
+            left: 22%; right: 22%;
         }
 
         /* Sentinel for infinite scroll */
@@ -236,7 +237,7 @@
     // Catalog: each piece = one tile. Multiple pieces per project (uses existing media).
     var catalog = [
         { project: 'Karim Boumjimar', href: '/projects/karim-boumjimar', type: 'image', src: '/projects/karim-boumjimar/media/vase.png', span: 6 },
-        { project: 'Strelitzia', href: '/projects/strelitzia', type: 'image', src: '/projects/strelitzia/media/strelitzia-1.png', locked: true, horizontal: true, span: 6 },
+        { project: 'Strelitzia', href: '/projects/strelitzia', type: 'image', src: '/projects/strelitzia/media/strelitzia-1.png', locked: true, span: 6 },
         { project: 'Emojify', href: '/projects/emojify', type: 'image', src: '/projects/emojify/media/musik_plastikman.png', span: 4 },
         { project: 'Anonymous Empire', href: '/projects/anonymous-empire', type: 'video', src: '/projects/anonymous-empire/media/pile.webm', mime: 'video/webm', locked: true, span: 4 }
     ];
@@ -273,7 +274,7 @@
             el.href = item.href;
         }
         var spanCls = item.span ? ('span-' + item.span) : ('span-' + pickSpan(indexInPage));
-        el.className = 'piece ' + spanCls + (item.locked ? ' locked' : '') + (item.horizontal ? ' horizontal' : '');
+        el.className = 'piece ' + spanCls + (item.locked ? ' locked' : '') + (item.vertical ? ' vertical' : '');
 
         var media = document.createElement('div');
         media.className = 'piece-media';
