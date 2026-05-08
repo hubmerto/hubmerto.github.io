@@ -3,7 +3,8 @@
     "title": "Boiler Eggs",
     "hudIndex": "05",
     "media": [
-        { "type": "video", "src": "media/boiler-eggs.mp4" }
+        { "type": "video", "src": "media/boiler-eggs.mp4" },
+        { "type": "video", "src": "media/duotone-2.mp4" }
     ],
     "columns": [
         {
