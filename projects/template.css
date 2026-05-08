@@ -1,7 +1,7 @@
 /* Theme tokens */
 :root {
-    --bg: #0a0a0a;
-    --bg-elev: #0a0a0a;
+    --bg: #000000;
+    --bg-elev: #000000;
     --bg-soft: #050505;
     --fg: #e0e0e0;
     --fg-strong: #ffffff;
@@ -17,7 +17,7 @@
     --selection-outline: #ffffff;
     --workspace-glow: rgba(255, 255, 255, 0.015);
     --tool-hover-bg: #ffffff;
-    --tool-hover-fg: #0a0a0a;
+    --tool-hover-fg: #000000;
 }
 
 [data-theme="light"] {
