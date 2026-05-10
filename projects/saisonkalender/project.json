@@ -3,7 +3,7 @@
     "title": "Saisonkalender",
     "hudIndex": "06",
     "media": [
-        { "type": "image", "src": "media/placeholder.png" }
+        { "type": "video", "src": "media/saisonkalender.mp4" }
     ],
     "columns": [
         {
