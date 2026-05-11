@@ -340,6 +340,23 @@
             if (media.alt) el.alt = media.alt;
         }
         n.appendChild(el);
+        // Loader spinner — fades out when media is ready
+        var loader = document.createElement('div');
+        loader.className = 'node-loader';
+        loader.setAttribute('aria-hidden', 'true');
+        n.appendChild(loader);
+        function markReady() { n.classList.add('media-ready'); }
+        if (media.type === 'video') {
+            el.addEventListener('loadeddata', markReady, { once: true });
+        } else if (media.type === 'iframe') {
+            el.addEventListener('load', markReady, { once: true });
+        } else {
+            if (el.complete && el.naturalWidth) markReady();
+            else {
+                el.addEventListener('load', markReady, { once: true });
+                el.addEventListener('error', markReady, { once: true });
+            }
+        }
         // Corner handles for resize (shown only when selected)
         ['tl', 'tr', 'bl', 'br'].forEach(function(pos) {
             var h = document.createElement('div');

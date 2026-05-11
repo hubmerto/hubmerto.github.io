@@ -261,6 +261,33 @@ body {
     color: var(--fg-strong);
 }
 
+/* Loader spinner per node on the project canvas */
+.node-loader {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 22px; height: 22px;
+    margin: -11px 0 0 -11px;
+    border: 2px solid var(--fg-faint);
+    border-top-color: var(--fg-strong);
+    border-radius: 50%;
+    animation: node-spin 0.9s linear infinite;
+    opacity: 1;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+.node.media-ready .node-loader { opacity: 0; }
+.node > video,
+.node > img,
+.node > iframe { transition: opacity 0.3s ease; opacity: 0; }
+.node.media-ready > video,
+.node.media-ready > img,
+.node.media-ready > iframe { opacity: 1; }
+@keyframes node-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
 /* Inspector (right) */
 .inspector {
     width: 340px;
