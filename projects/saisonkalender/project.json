@@ -3,12 +3,7 @@
     "title": "Saisonkalender",
     "hudIndex": "06",
     "media": [
-        { "type": "video", "src": "media/saisonkalender.mp4" },
-        {
-            "type": "image",
-            "src": "media/chord-plot.png",
-            "caption": "Chord plot. Origin-flow read as textile: each ribbon a daily exchange between a calendar month (top arc) and an origin tier (bottom arc), from Brandenburg open-field to non-EU import."
-        }
+        { "type": "video", "src": "media/saisonkalender.mp4" }
     ],
     "columns": [
         {
