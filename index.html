@@ -239,11 +239,33 @@
         }
     }
 
+    function isPortraitMobile() {
+        return window.innerWidth < 700 && window.innerHeight > window.innerWidth;
+    }
+
     function setupCanvas() {
         var dpr = window.devicePixelRatio || 1;
-        canvas.width = window.innerWidth * dpr;
-        canvas.height = window.innerHeight * dpr;
-        ctx.scale(dpr, dpr);
+        var rotate = isPortraitMobile();
+        var logicalW = rotate ? window.innerHeight : window.innerWidth;
+        var logicalH = rotate ? window.innerWidth : window.innerHeight;
+        canvas.width = logicalW * dpr;
+        canvas.height = logicalH * dpr;
+        canvas.style.width = logicalW + 'px';
+        canvas.style.height = logicalH + 'px';
+        if (rotate) {
+            canvas.style.position = 'fixed';
+            canvas.style.top = '50%';
+            canvas.style.left = '50%';
+            canvas.style.transform = 'translate(-50%, -50%) rotate(90deg)';
+            canvas.style.transformOrigin = 'center center';
+        } else {
+            canvas.style.position = '';
+            canvas.style.top = '';
+            canvas.style.left = '';
+            canvas.style.transform = '';
+            canvas.style.transformOrigin = '';
+        }
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
     // Measure monospace char aspect ratio once
@@ -344,8 +366,8 @@
 
     function drawFrame(idx) {
         if (!frameData) return;
-        var w = window.innerWidth;
-        var h = window.innerHeight;
+        var w = canvas.clientWidth || window.innerWidth;
+        var h = canvas.clientHeight || window.innerHeight;
         var dataCols = frameData.cols;
         var dataRows = frameData.rows;
 
