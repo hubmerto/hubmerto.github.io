@@ -16,8 +16,7 @@
                 { "label": "Design & Dev", "value": "Humberto Gesser" },
                 { "label": "Stack", "value": "Next.js, TypeScript, vanilla CSS" },
                 { "label": "Typeface", "value": "Lucifer" },
-                { "label": "Status", "value": "Live" },
-                { "label": "Live at", "value": "mariematusz.com", "href": "https://mariematusz.com" }
+                { "label": "Status", "value": "In development" }
             ]
         },
         {
