@@ -4,7 +4,8 @@
     "hudIndex": "05",
     "media": [
         { "type": "video", "src": "media/boiler-eggs.mp4" },
-        { "type": "video", "src": "media/duotone-3.mp4" }
+        { "type": "video", "src": "media/duotone-3.mp4" },
+        { "type": "video", "src": "media/duotone-4.mp4" }
     ],
     "columns": [
         {
