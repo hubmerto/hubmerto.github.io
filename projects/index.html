@@ -261,23 +261,8 @@
             main { padding: 24px 16px 60px; }
         }
 
-        /* Touch devices have no hover: surface a persistent label so every
-           tile is identifiable. Pinned to the tile's bottom over a gradient
-           scrim so it never obscures the artwork. */
+        /* Touch: keep tiles clean (no persistent label); just enlarge tap area. */
         @media (hover: none) {
-            .piece-overlay {
-                opacity: 1;
-                background: linear-gradient(to top,
-                    rgba(0,0,0,0.74) 0%, rgba(0,0,0,0.34) 30%, transparent 58%);
-                align-items: flex-end;
-                justify-content: flex-start;
-                padding: 14px 16px;
-            }
-            .piece::after { opacity: 0 !important; }
-            .piece-stack { align-items: flex-start; text-align: left; gap: 4px; }
-            .piece-title { font-size: clamp(15px, 4.6vw, 24px); }
-            .piece-tag { font-size: 10px; opacity: 0.82; }
-            /* Bigger tap area for the header nav on touch. */
             nav a { min-height: 44px; display: inline-flex; align-items: center; }
             .theme-toggle { width: 44px; height: 44px; }
         }
