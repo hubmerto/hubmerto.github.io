@@ -1371,29 +1371,7 @@
         }
         view.appendChild(header);
 
-        // Statement text on top, above the media.
-        var textCols = cols.filter(function(c) { return c.text; });
-        if (textCols.length) {
-            var bsec = document.createElement('div');
-            bsec.className = 'mv-section mv-intro';
-            textCols.forEach(function(c) {
-                var p = document.createElement('p');
-                p.className = 'sidebar-text';
-                p.textContent = c.text;
-                bsec.appendChild(p);
-            });
-            view.appendChild(bsec);
-        }
-
-        // Media — full-width, in JSON order.
-        var media = document.createElement('div');
-        media.className = 'mv-media';
-        (project.media || []).forEach(function(m) {
-            if (m && m.src) media.appendChild(buildMobileItem(m));
-        });
-        view.appendChild(media);
-
-        // Quick facts (meta)
+        // Quick facts (meta) on top.
         if (head.meta && head.meta.length) {
             var msec = document.createElement('div');
             msec.className = 'mv-section';
@@ -1417,6 +1395,28 @@
             });
             view.appendChild(msec);
         }
+
+        // Statement text, above the media.
+        var textCols = cols.filter(function(c) { return c.text; });
+        if (textCols.length) {
+            var bsec = document.createElement('div');
+            bsec.className = 'mv-section mv-intro';
+            textCols.forEach(function(c) {
+                var p = document.createElement('p');
+                p.className = 'sidebar-text';
+                p.textContent = c.text;
+                bsec.appendChild(p);
+            });
+            view.appendChild(bsec);
+        }
+
+        // Media — full-width, in JSON order.
+        var media = document.createElement('div');
+        media.className = 'mv-media';
+        (project.media || []).forEach(function(m) {
+            if (m && m.src) media.appendChild(buildMobileItem(m));
+        });
+        view.appendChild(media);
 
         // Lineage / credit pairs
         cols.forEach(function(c) {
