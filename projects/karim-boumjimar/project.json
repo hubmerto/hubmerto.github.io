@@ -8,7 +8,15 @@
             "src": "media/logo.svg",
             "invertOnDark": true,
             "caption": "The wordmark, drawn by hand by Karim Boumjimar, was vectorized without smoothing or correction and used unchanged across the site.",
-            "cx": -300,
+            "cx": -480,
+            "cy": 0
+        },
+        {
+            "type": "video",
+            "src": "media/mobile-1.mp4",
+            "format": "mobile",
+            "caption": "Mobile rendering path. The catalog enters as a curated set of representative tiles; selecting one opens a vertical reading strip with a slide-up sheet for title, venue, dates, and statement.",
+            "cx": 0,
             "cy": 0
         },
         {
@@ -16,7 +24,7 @@
             "src": "media/vase.png",
             "spin": "fast",
             "size": 0.5,
-            "cx": 300,
+            "cx": 480,
             "cy": 0
         }
     ],
