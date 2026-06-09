@@ -782,3 +782,136 @@ body {
     border-radius: 12% / 6%;
     /* Slightly tighter than the device so it reads as a phone frame. */
 }
+
+/* --- Mobile tap-target hygiene (≥44px) + touch cleanups --- */
+@media (max-width: 900px) {
+    .topbar-nav a,
+    .crumb-back {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+    }
+    .theme-toggle { width: 44px; height: 44px; }
+    /* Lineage + meta links get a full-height tap area. */
+    .sidebar-pairs a.pair-name,
+    .sidebar .meta-row a {
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+    }
+    /* Tool dock: larger hit area; keyboard hints are meaningless on touch. */
+    .tool-btn { min-height: 44px; padding: 8px 14px; }
+    .tool-btn .kbd { display: none; }
+}
+@media (hover: none) {
+    /* Don't strand a permanent :hover state on tapped links/buttons. */
+    .topbar-nav a:hover,
+    .crumb-back:hover,
+    .tool-btn:active { color: var(--fg-strong); }
+}
+
+/* ============================================================
+   Mobile single-column viewer (≤900px). The canvas does not
+   render on mobile; project media is presented as a vertical
+   reading sequence — viewing first, text after.
+   ============================================================ */
+@media (max-width: 900px) {
+    .content.mobile {
+        display: block;
+        height: auto;
+        min-height: 0;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+    /* Hide the desktop canvas regions entirely on mobile. */
+    .content.mobile .sidebar-left,
+    .content.mobile .workspace,
+    .content.mobile .inspector { display: none !important; }
+
+    .mobile-view {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .mv-header { padding: 24px 18px 4px; }
+    .mv-label {
+        font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+        color: var(--fg-fainter); margin-bottom: 10px;
+    }
+    .mv-title {
+        font-size: clamp(24px, 7.5vw, 36px);
+        font-weight: 400; letter-spacing: 0.02em; text-transform: uppercase;
+        color: var(--fg-strong); line-height: 1.02; text-wrap: balance;
+    }
+    .mv-tags {
+        font-size: 11px; color: var(--fg-faint);
+        letter-spacing: 0.05em; margin-top: 10px;
+    }
+
+    /* Media stack — the priority */
+    .mv-media {
+        display: flex; flex-direction: column;
+        gap: 12px; padding: 20px 0 8px;
+    }
+    .mv-item { margin: 0; }
+    .mv-frame {
+        position: relative;
+        width: 100%;
+        background: var(--bg-soft);
+        overflow: hidden;
+        border-radius: 10px;
+    }
+    .mv-item video,
+    .mv-item img,
+    .mv-item iframe {
+        display: block; width: 100%; height: auto; border: 0;
+        opacity: 0; transition: opacity 0.35s ease;
+    }
+    .mv-item.ready video,
+    .mv-item.ready img,
+    .mv-item.ready iframe { opacity: 1; }
+    /* Phone-format recordings read as a phone, not full-bleed. */
+    .mv-item.mobile-fmt .mv-frame {
+        width: 66%;
+        margin: 0 auto;
+        border-radius: 14% / 6.5%;
+    }
+    .mv-item.invert-on-dark img,
+    .mv-item.invert-on-dark video { filter: invert(1); }
+    [data-theme="light"] .mv-item.invert-on-dark img,
+    [data-theme="light"] .mv-item.invert-on-dark video { filter: none; }
+
+    .mv-loader {
+        position: absolute; top: 50%; left: 50%;
+        width: 20px; height: 20px; margin: -10px 0 0 -10px;
+        border: 2px solid var(--fg-faint); border-top-color: var(--fg-strong);
+        border-radius: 50%; animation: node-spin 0.9s linear infinite;
+        opacity: 1; transition: opacity 0.25s ease; pointer-events: none;
+    }
+    .mv-item.ready .mv-loader { opacity: 0; }
+
+    .mv-cap {
+        font-size: 12px; color: var(--fg-muted); line-height: 1.5;
+        padding: 9px 18px 0; text-wrap: pretty;
+    }
+    .mv-item .code-block { margin: 10px 18px 0; }
+
+    /* Text sections — quieter, after the work */
+    .mv-section {
+        padding: 18px;
+        border-top: 1px solid var(--border);
+        margin-top: 6px;
+    }
+    .mv-section:first-of-type { border-top: none; }
+    .mv-section .sidebar-text { font-size: 13.5px; }
+    .mv-section .sidebar-text + .sidebar-text { margin-top: 14px; }
+    .mv-section .meta-row {
+        display: grid; grid-template-columns: 92px 1fr; gap: 12px;
+        font-size: 12px; line-height: 1.7;
+    }
+    .mv-section .meta-row span:first-child { color: var(--fg-fainter); letter-spacing: 0.05em; }
+    .mv-section .meta-row span:last-child { color: var(--fg-muted); overflow-wrap: break-word; min-width: 0; }
+    .mv-section .meta-row a { color: var(--fg-muted); text-decoration: none; border-bottom: 1px solid var(--fg-fading); }
+    .mv-section:last-child { padding-bottom: 40px; }
+}
