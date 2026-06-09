@@ -731,9 +731,14 @@ body {
         padding: 12px 18px;
         gap: 12px;
     }
-    .topbar-nav { gap: 16px; }
-    .topbar-nav a { font-size: 12px; }
-    .crumb-current { font-size: 11px; }
+    .topbar-nav { gap: 20px; }
+    .topbar-nav a { font-size: 13px; }
+    /* The big project title is in the body right below, and the back chevron
+       already points to Projects — drop the breadcrumb title and the
+       duplicate "projects" link so the bar reads as two clean zones. */
+    .crumb-sep,
+    .crumb-current { display: none; }
+    .topbar-nav a[href="/projects"] { display: none; }
     .content {
         display: flex;
         flex-direction: column;
