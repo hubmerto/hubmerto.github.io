@@ -784,7 +784,7 @@ body {
 
 /* iPhone-like rounded corners for media flagged as mobile-format. */
 .node.mobile-frame {
-    border-radius: 12% / 6%;
+    border-radius: 6% / 3%;
     /* Slightly tighter than the device so it reads as a phone frame. */
 }
 
@@ -880,7 +880,7 @@ body {
     .mv-item.mobile-fmt .mv-frame {
         width: 66%;
         margin: 0 auto;
-        border-radius: 14% / 6.5%;
+        border-radius: 7% / 3.2%;
     }
     .mv-item.invert-on-dark img,
     .mv-item.invert-on-dark video { filter: invert(1); }
