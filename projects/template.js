@@ -1371,7 +1371,21 @@
         }
         view.appendChild(header);
 
-        // Media — the priority. Full-width, in JSON order.
+        // Statement text on top, above the media.
+        var textCols = cols.filter(function(c) { return c.text; });
+        if (textCols.length) {
+            var bsec = document.createElement('div');
+            bsec.className = 'mv-section mv-intro';
+            textCols.forEach(function(c) {
+                var p = document.createElement('p');
+                p.className = 'sidebar-text';
+                p.textContent = c.text;
+                bsec.appendChild(p);
+            });
+            view.appendChild(bsec);
+        }
+
+        // Media — full-width, in JSON order.
         var media = document.createElement('div');
         media.className = 'mv-media';
         (project.media || []).forEach(function(m) {
@@ -1402,20 +1416,6 @@
                 msec.appendChild(r);
             });
             view.appendChild(msec);
-        }
-
-        // Statement paragraphs
-        var textCols = cols.filter(function(c) { return c.text; });
-        if (textCols.length) {
-            var bsec = document.createElement('div');
-            bsec.className = 'mv-section';
-            textCols.forEach(function(c) {
-                var p = document.createElement('p');
-                p.className = 'sidebar-text';
-                p.textContent = c.text;
-                bsec.appendChild(p);
-            });
-            view.appendChild(bsec);
         }
 
         // Lineage / credit pairs
