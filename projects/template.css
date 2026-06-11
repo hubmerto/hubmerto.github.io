@@ -608,15 +608,6 @@ body {
     border-bottom-color: var(--fg-strong);
 }
 
-@media (max-width: 768px) {
-    nav { padding: 16px 20px; gap: 16px; }
-    .col { padding: 12px 16px; }
-    .hud { left: 20px; top: 16px; }
-    .bottom-bar { grid-template-columns: 1fr; }
-    .col { border-right: none; border-bottom: 1px solid var(--border-strong); }
-    .col:last-child { border-bottom: none; }
-}
-
 /* Theme toggle button */
 .theme-toggle {
     appearance: none;
@@ -717,7 +708,7 @@ body {
 }
 
 @media (max-width: 900px) {
-    /* Stack: meta → canvas → body paragraphs → inspector */
+    /* Mobile pages scroll (desktop locks html/body to the viewport). */
     html, body {
         overflow: auto;
         height: auto;
@@ -739,47 +730,6 @@ body {
     .crumb-sep,
     .crumb-current { display: none; }
     .topbar-nav a[href="/projects"] { display: none; }
-    .content {
-        display: flex;
-        flex-direction: column;
-        height: auto;
-        min-height: 100dvh;
-    }
-    /* Promote the left rail's children up into the .content flex layout
-       so they can be reordered around the canvas. */
-    .sidebar-left {
-        display: contents;
-    }
-    .sidebar-left .sidebar-section {
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-    }
-    .sidebar-left .sidebar-section:first-of-type {
-        order: 1;
-    }
-    /* Canvas takes ~65vh; vertical swipes scroll past it to the rest of the page. */
-    .workspace {
-        order: 2;
-        flex: none;
-        height: 65dvh;
-        min-height: 380px;
-        max-height: 620px;
-        touch-action: pan-y;
-    }
-    /* Inspector slides in right below the canvas when a node is selected. */
-    .inspector {
-        order: 3;
-        width: 100%;
-        border-left: none;
-        border-bottom: 1px solid var(--border);
-    }
-    .sidebar-left .sidebar-section:not(:first-of-type) {
-        order: 4;
-    }
-    /* Hide the inspector entirely when nothing is selected on mobile. */
-    .content:not(.inspector-open) .inspector {
-        display: none;
-    }
 }
 
 /* iPhone-like rounded corners for media flagged as mobile-format. */

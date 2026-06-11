@@ -642,19 +642,6 @@
             }
         }
 
-        function overlapsAny(cx, cy, w, h, placed) {
-            var pad = 140;
-            for (var i = 0; i < placed.length; i++) {
-                var p = placed[i];
-                var dx = Math.abs(cx - p.cx);
-                var dy = Math.abs(cy - p.cy);
-                var minX = (w + p.w) / 2 + pad;
-                var minY = (h + p.h) / 2 + pad;
-                if (dx < minX && dy < minY) return true;
-            }
-            return false;
-        }
-
         // Push nodes out of the way of the active node (with soft halo field)
         function resolveCollisions(active, iterations) {
             iterations = iterations || 3;

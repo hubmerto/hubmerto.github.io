@@ -298,29 +298,10 @@
         { project: 'Saisonkalender', tag: 'ATLAS', href: '/projects/saisonkalender', type: 'video', src: '/projects/saisonkalender/media/saisonkalender.mp4', mime: 'video/mp4', span: 5, tight: true }
     ];
 
-    // Span pool — bias toward medium-large pieces, occasional small/large
-    var spanPool = [3, 3, 4, 4, 5];
-
-    function pickSpan(seedIdx) {
-        // Deterministic-ish per index for consistent reflows on resize
-        return spanPool[(seedIdx * 7 + 3) % spanPool.length];
-    }
-
-    function shuffled(arr, seed) {
-        var a = arr.slice();
-        var s = seed || 0;
-        for (var i = a.length - 1; i > 0; i--) {
-            s = (s * 9301 + 49297) % 233280;
-            var j = Math.floor((s / 233280) * (i + 1));
-            var t = a[i]; a[i] = a[j]; a[j] = t;
-        }
-        return a;
-    }
-
     var grid = document.getElementById('grid');
     var pageCount = 0;
 
-    function buildPiece(item, indexInPage) {
+    function buildPiece(item) {
         var el;
         if (item.locked) {
             el = document.createElement('span');
@@ -329,8 +310,7 @@
             el = document.createElement('a');
             el.href = item.href;
         }
-        var spanCls = item.span ? ('span-' + item.span) : ('span-' + pickSpan(indexInPage));
-        el.className = 'piece ' + spanCls + (item.locked ? ' locked' : '') + (item.vertical ? ' vertical' : '') + (item.tight ? ' tight' : '');
+        el.className = 'piece span-' + (item.span || 4) + (item.locked ? ' locked' : '') + (item.vertical ? ' vertical' : '') + (item.tight ? ' tight' : '');
 
         var media = document.createElement('div');
         media.className = 'piece-media';
@@ -404,11 +384,10 @@
     }
 
     function appendPage() {
-        var seed = ++pageCount;
-        var items = catalog;
+        pageCount++;
         var frag = document.createDocumentFragment();
-        items.forEach(function(item, i) {
-            frag.appendChild(buildPiece(item, i + (seed - 1) * catalog.length));
+        catalog.forEach(function(item) {
+            frag.appendChild(buildPiece(item));
         });
         // Re-insert sentinel at end
         var oldSentinel = document.getElementById('sentinel');
