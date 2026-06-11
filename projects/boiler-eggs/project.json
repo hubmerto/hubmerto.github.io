@@ -12,7 +12,7 @@
             "title": "Boiler Eggs",
             "tags": "digital · 2026",
             "meta": [
-                { "label": "Project", "value": "Boiler Eggs" },
+                { "label": "Client", "value": "Self-initiated" },
                 { "label": "Year", "value": "2026" },
                 { "label": "Typology", "value": "Tool, real-time visual processor" },
                 { "label": "Stack", "value": "WebGL2, Vite, Tweakpane, Web Audio API, WebCodecs" }

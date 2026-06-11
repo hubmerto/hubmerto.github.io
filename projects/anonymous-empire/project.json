@@ -56,7 +56,7 @@
     "columns": [
         {
             "title": "Anonymous Empire",
-            "tags": "research \u00b7 design \u00b7 code \u00b7 2026",
+            "tags": "research · design · code · 2026",
             "meta": [
                 { "label": "Client", "value": "Self-initiated" },
                 { "label": "Location", "value": "Berlin" },
@@ -65,7 +65,7 @@
                 { "label": "Typology", "value": "Editorial web archive" },
                 { "label": "Program", "value": "Editorial web archive" },
                 { "label": "Status", "value": "Live" },
-                { "label": "Scale", "value": "~800 records \u00b7 20 scenes \u00b7 90 labels" },
+                { "label": "Scale", "value": "~800 records · 20 scenes · 90 labels" },
                 { "label": "Domain", "value": "anonymousempire.art", "href": "https://anonymousempire.art" }
             ]
         },

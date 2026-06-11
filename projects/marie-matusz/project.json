@@ -12,7 +12,7 @@
             "meta": [
                 { "label": "Year", "value": "2026" },
                 { "label": "Format", "value": "Website, spatial index" },
-                { "label": "For", "value": "Marie Matusz, artist (Basel)" },
+                { "label": "Client", "value": "Marie Matusz, artist (Basel)" },
                 { "label": "Design & Dev", "value": "Humberto Gesser" },
                 { "label": "Stack", "value": "Next.js, TypeScript, vanilla CSS" },
                 { "label": "Typeface", "value": "Lucifer" },
