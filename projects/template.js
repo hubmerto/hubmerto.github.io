@@ -336,6 +336,8 @@
             if (media.title) el.title = media.title;
         } else {
             el = document.createElement('img');
+            el.loading = 'lazy';
+            el.decoding = 'async';
             el.src = media.src;
             if (media.alt) el.alt = media.alt;
         }
