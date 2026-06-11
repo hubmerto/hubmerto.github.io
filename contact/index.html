@@ -68,8 +68,6 @@
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 300;
             overflow-x: hidden;
-            -webkit-user-select: none;
-            user-select: none;
         }
 
         .content {
@@ -294,8 +292,8 @@
 
         <div class="contact-item" id="email-item">
             <div class="contact-label">mail <span class="copy-tooltip" id="copy-tooltip">— copy to clipboard</span></div>
-            <a class="contact-link" id="email-link" onclick="copyEmail(event)">
-                design[at]hubmerto.com
+            <a class="contact-link" id="email-link" href="mailto:design@hubmerto.com" onclick="copyEmail()">
+                design@hubmerto.com
             </a>
         </div>
 
@@ -343,10 +341,11 @@
     setTimeout(function() { clearInterval(check); }, 10000);
 })();
 
-function copyEmail(e) {
-    e.preventDefault();
-    const email = 'design@hubmerto.com';
-    navigator.clipboard.writeText(email).then(function() {
+// Copies the address as a convenience; the mailto href still navigates,
+// so touch and keyboard users get a working mail link regardless.
+function copyEmail() {
+    if (!navigator.clipboard || !navigator.clipboard.writeText) return;
+    navigator.clipboard.writeText('design@hubmerto.com').then(function() {
         const link = document.getElementById('email-link');
         const item = document.getElementById('email-item');
         const tooltip = document.getElementById('copy-tooltip');
@@ -360,10 +359,8 @@ function copyEmail(e) {
             item.classList.remove('copied');
             tooltip.textContent = '— copy to clipboard';
         }, 2000);
-    });
+    }).catch(function() {});
 }
-document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
-document.addEventListener('dblclick', function(e) { e.preventDefault(); });
 var content = document.getElementById('content');
 content.offsetHeight;
 content.style.opacity = '1';
