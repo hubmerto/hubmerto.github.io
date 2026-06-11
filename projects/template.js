@@ -1481,6 +1481,7 @@
     }
 
     window.loadProject = function(jsonPath) {
+        var mql = window.matchMedia('(max-width: 900px)');
         fetch(jsonPath)
             .then(function(r) { return r.json(); })
             .then(function(project) {
@@ -1488,7 +1489,8 @@
                 document.title = 'hubmerto.' + (project.slug || project.title || '').toLowerCase();
                 var crumb = document.getElementById('crumb-current');
                 if (crumb) crumb.textContent = project.title || '';
-                if (window.matchMedia('(max-width: 900px)').matches) {
+                var renderedMobile = mql.matches;
+                if (renderedMobile) {
                     // Mobile: single-column viewing stack, no canvas.
                     renderMobile(project);
                 } else {
@@ -1496,6 +1498,19 @@
                     renderLeftSidebar(project);
                     initWorkspace();
                 }
+                // The two render paths build entirely different DOM; if the
+                // viewport crosses the breakpoint after load (window resize,
+                // tablet rotate), reload so the right renderer runs.
+                // Debounced + re-checked so a quick flip-and-back is a no-op.
+                var reloadTimer = null;
+                var onBreakpointChange = function() {
+                    clearTimeout(reloadTimer);
+                    reloadTimer = setTimeout(function() {
+                        if (mql.matches !== renderedMobile) window.location.reload();
+                    }, 250);
+                };
+                if (mql.addEventListener) mql.addEventListener('change', onBreakpointChange);
+                else if (mql.addListener) mql.addListener(onBreakpointChange); // older Safari
             })
             .catch(function(err) {
                 console.error('Failed to load project:', err);
