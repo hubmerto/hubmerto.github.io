@@ -26,7 +26,7 @@
   .lab{ font-size:10px; letter-spacing:.2em; color:rgba(var(--pale),.45); text-transform:uppercase; display:flex; justify-content:space-between; }
   .lab b{ color:rgba(var(--accent),.85); font-weight:500; letter-spacing:.12em; }
 
-  .seg{ display:flex; gap:6px; }
+  .seg{ display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
   .seg button{ flex:1; padding:8px 0; font:inherit; font-size:11px; letter-spacing:.16em; text-transform:uppercase;
                background:rgba(18,26,32,.5); color:rgba(var(--pale),.6); border:.5px solid rgba(var(--steel),.25);
                border-radius:3px; cursor:pointer; transition:.12s; }
@@ -75,7 +75,14 @@
       <div class="lab">Light mode</div>
       <div class="seg" id="seg">
         <button data-m="beams" class="on">Beams</button>
+        <button data-m="single">Single</button>
+        <button data-m="pulse">Pulse</button>
         <button data-m="curtain">Curtain</button>
+        <button data-m="spots">Spots</button>
+        <button data-m="sweep">Sweep</button>
+        <button data-m="shimmer">Shimmer</button>
+        <button data-m="drift">Drift</button>
+        <button data-m="spray">Spray</button>
       </div>
     </div>
 
@@ -102,11 +109,6 @@
       <input type="range" id="speed" min="0.15" max="2.2" step="0.05" value="1">
     </div>
 
-    <div class="blk">
-      <div class="lab">Body <b id="bval">0.40</b></div>
-      <input type="range" id="body" min="0.08" max="0.5" step="0.01" value="0.2">
-    </div>
-
     <div class="foot">
       drag to orbit<br>space to pause scan<br>single file · open anywhere
     </div>
@@ -125,11 +127,12 @@
     {n:'ice',   b:[214,228,240], c:[255,255,255]},
     {n:'acid',  b:[150,255,150], c:[226,255,226]},
     {n:'mag',   b:[255,120,220], c:[255,205,245]},
+    {n:'red',   b:[255,52,52],   c:[255,176,168]},
     {n:'haz',   b:[255,120,55],  c:[255,205,160]},
     {n:'uv',    b:[168,128,255], c:[226,210,255]}
   ];
 
-  var st={ phi:0, auto:true, speed:1, a:0.2, mode:'beams', col:0, intensity:1, spin:0.62, pit:0.95, tk:0 };
+  var st={ phi:0, auto:true, speed:1, a:0.08, mode:'beams', col:0, intensity:1, spin:0.62, pit:0.95, tk:0 };
 
   // geometry constants
   var R=1.1, Nur=64, Bx=2.4, By=2.4, zf=-1.9, zc=1.9;
@@ -197,21 +200,54 @@
 
     // ---- emitted light ----
     ctx.globalCompositeOperation='lighter';
-    if(st.mode==='beams'){
-      var Nray=120, Sray=3; ctx.lineWidth=0.9*DPR;
-      for(var ti=0;ti<Nray;ti++){ var u=ti/Nray*6.28319,ct=Math.cos(u),stt=Math.sin(u);
+
+    // cast a ray from origin (ox,oy,oz) along unit dir (n0,n1,n2):
+    // optional beam line + optional wall glint, all scaled by alpha `al`.
+    function cast(ox,oy,oz,n0,n1,n2,al,lw,line,glow){
+      var Hh=isect(ox,oy,oz,n0,n1,n2); if(!Hh)return;
+      var A=P(ox,oy,oz),Bb=P(Hh[0],Hh[1],Hh[2]);
+      if(line){ ctx.lineWidth=lw*DPR; ctx.strokeStyle=rgba(B,(0.20*pulse*al).toFixed(3));
+        ctx.beginPath(); ctx.moveTo(A[0],A[1]); ctx.lineTo(Bb[0],Bb[1]); ctx.stroke(); }
+      if(glow && vis[Hh[3]]){ var fn=FN[Hh[3]]; var ci=Math.abs(n0*fn[0]+n1*fn[1]+n2*fn[2]); var rad=(4+7*ci)*DPR;
+        var gr=ctx.createRadialGradient(Bb[0],Bb[1],0,Bb[0],Bb[1],rad);
+        gr.addColorStop(0,rgba(C,((0.30+0.5*ci)*pulse*Math.min(1,al)).toFixed(3))); gr.addColorStop(1,rgba(B,0));
+        ctx.fillStyle=gr; ctx.beginPath(); ctx.arc(Bb[0],Bb[1],rad,0,6.2832); ctx.fill(); }
+    }
+    // poloidal beam from toroidal angle u (cross-section offset s).
+    function shoot(u,s,al,lw,line,glow){
+      var ct=Math.cos(u),stt=Math.sin(u);
+      var n0=sphi*ct,n1=sphi*stt,n2=-cphi, t0=cphi*ct,t1=cphi*stt,t2=sphi;
+      cast(R*ct+a*n0+s*t0, R*stt+a*n1+s*t1, a*n2+s*t2, n0,n1,n2, al,lw,line,glow);
+    }
+
+    ctx.lineCap='round';
+    if(st.mode==='beams'){            // dense — many beams per segment
+      var Sray=3;
+      for(var ti=0;ti<120;ti++){ var u=ti/120*6.28319;
+        for(var sj=0;sj<Sray;sj++){ shoot(u,(-a)+(2*a)*(sj/(Sray-1)),1,0.9,true,sj===1); } }
+    } else if(st.mode==='single'){     // one beam per ring segment
+      for(var ti=0;ti<Nur;ti++){ shoot((ti+0.5)/Nur*6.28319,0,1.2,1.15,true,true); }
+    } else if(st.mode==='pulse'){      // single beams, a brightness wave travelling around
+      var headp=st.tk*0.045;
+      for(var ti=0;ti<Nur;ti++){ var u=(ti+0.5)/Nur*6.28319; var w=0.5+0.5*Math.cos(u-headp); w*=w;
+        shoot(u,0,0.22+1.25*w,1.15,true,w>0.5); }
+    } else if(st.mode==='spots'){      // no beam lines — only the glints where light lands
+      for(var ti=0;ti<Nur*2;ti++){ shoot((ti+0.5)/(Nur*2)*6.28319,0,1.3,1,false,true); }
+    } else if(st.mode==='sweep'){      // a single beam-blade sweeping around with a comet trail
+      var head=(st.tk*0.05)%6.28319;
+      for(var k=0;k<22;k++){ var al=1-k/22; al=al*al*2.2; shoot(head-k*0.05,0,al,k<2?2:1.2,true,k<3); }
+    } else if(st.mode==='shimmer'){    // each segment twinkles on its own scattered phase — one rhythm
+      for(var ti=0;ti<Nur;ti++){ var tw=0.5+0.5*Math.sin(st.tk*0.06+ti*2.3998); tw*=tw;
+        shoot((ti+0.5)/Nur*6.28319,0,0.15+1.5*tw,1.1,true,tw>0.45); }
+    } else if(st.mode==='drift'){      // each streak sways around its home angle, phases scattered
+      for(var ti=0;ti<Nur;ti++){ var u=(ti+0.5)/Nur*6.28319+0.11*Math.sin(st.tk*0.05+ti*2.3998);
+        shoot(u,0,1.1,1.1,true,true); }
+    } else if(st.mode==='spray'){      // each streak fans its direction in/out on its own phase
+      for(var ti=0;ti<Nur;ti++){ var u=(ti+0.5)/Nur*6.28319, ct=Math.cos(u), stt=Math.sin(u);
         var n0=sphi*ct,n1=sphi*stt,n2=-cphi, t0=cphi*ct,t1=cphi*stt,t2=sphi;
-        var Fx=R*ct+a*n0,Fy=R*stt+a*n1,Fz=a*n2;
-        for(var sj=0;sj<Sray;sj++){ var s=(-a)+(2*a)*(sj/(Sray-1));
-          var ox=Fx+s*t0,oy=Fy+s*t1,oz=Fz+s*t2; var Hh=isect(ox,oy,oz,n0,n1,n2); if(!Hh)continue;
-          var A=P(ox,oy,oz),Bb=P(Hh[0],Hh[1],Hh[2]);
-          ctx.strokeStyle=rgba(B,(0.19*pulse).toFixed(3)); ctx.beginPath(); ctx.moveTo(A[0],A[1]); ctx.lineTo(Bb[0],Bb[1]); ctx.stroke();
-          if(sj===1 && vis[Hh[3]]){ var fn=FN[Hh[3]]; var ci=Math.abs(n0*fn[0]+n1*fn[1]+n2*fn[2]); var rad=(4+7*ci)*DPR;
-            var gr=ctx.createRadialGradient(Bb[0],Bb[1],0,Bb[0],Bb[1],rad);
-            gr.addColorStop(0,rgba(C,((0.30+0.5*ci)*pulse).toFixed(3))); gr.addColorStop(1,rgba(B,0));
-            ctx.fillStyle=gr; ctx.beginPath(); ctx.arc(Bb[0],Bb[1],rad,0,6.2832); ctx.fill(); }
-        }
-      }
+        var wob=0.4*Math.sin(st.tk*0.05+ti*2.3998);
+        var d0=n0+wob*t0,d1=n1+wob*t1,d2=n2+wob*t2, dl=Math.sqrt(d0*d0+d1*d1+d2*d2);
+        cast(R*ct+a*n0,R*stt+a*n1,a*n2,d0/dl,d1/dl,d2/dl,1.05,1.1,true,true); }
     } else { // curtain
       var NuT=120; ctx.lineWidth=2.0*DPR; ctx.lineCap='round';
       var prev=null,prevH=null;
@@ -265,8 +301,8 @@
   // ----- UI wiring -----
   var seg=document.getElementById('seg'), sw=document.getElementById('sw');
   var scan=document.getElementById('scan'), play=document.getElementById('play'), speed=document.getElementById('speed');
-  var body=document.getElementById('body'), intensity=document.getElementById('intensity');
-  var sval=document.getElementById('sval'), bval=document.getElementById('bval'), ival=document.getElementById('ival');
+  var intensity=document.getElementById('intensity');
+  var sval=document.getElementById('sval'), ival=document.getElementById('ival');
 
   function setAccent(){ var b=COLORS[st.col].b; document.documentElement.style.setProperty('--accent', b[0]+','+b[1]+','+b[2]); }
   // build swatches
@@ -283,7 +319,6 @@
   function toggle(){ st.auto=!st.auto; play.textContent=st.auto?'\u25AE\u25AE':'\u25B6'; }
   play.addEventListener('click',toggle);
   speed.addEventListener('input',function(){ st.speed=parseFloat(speed.value); });
-  body.addEventListener('input',function(){ st.a=parseFloat(body.value); bval.textContent=(2*st.a).toFixed(2); });
   intensity.addEventListener('input',function(){ st.intensity=parseFloat(intensity.value); ival.textContent=st.intensity.toFixed(1); });
 
   // orbit
@@ -301,7 +336,6 @@
   document.getElementById('fs').addEventListener('click',function(){ var s=document.querySelector('.stage');
     if(!document.fullscreenElement){ (s.requestFullscreen||s.webkitRequestFullscreen).call(s); } else { document.exitFullscreen(); } });
 
-  bval.textContent=(2*st.a).toFixed(2);
   loop();
 })();
 </script>
