@@ -83,6 +83,8 @@
         <button data-m="shimmer">Shimmer</button>
         <button data-m="drift">Drift</button>
         <button data-m="spray">Spray</button>
+        <button data-m="converge">Converge</button>
+        <button data-m="blades">Blades</button>
       </div>
     </div>
 
@@ -219,6 +221,10 @@
       var n0=sphi*ct,n1=sphi*stt,n2=-cphi, t0=cphi*ct,t1=cphi*stt,t2=sphi;
       cast(R*ct+a*n0+s*t0, R*stt+a*n1+s*t1, a*n2+s*t2, n0,n1,n2, al,lw,line,glow);
     }
+    // soft radial glint at screen point (px,py); al is pre-pulse alpha.
+    function glint(px,py,rad,al){ var gr=ctx.createRadialGradient(px,py,0,px,py,rad);
+      gr.addColorStop(0,rgba(C,(al*pulse).toFixed(3))); gr.addColorStop(1,rgba(B,0));
+      ctx.fillStyle=gr; ctx.beginPath(); ctx.arc(px,py,rad,0,6.2832); ctx.fill(); }
 
     ctx.lineCap='round';
     if(st.mode==='beams'){            // dense — many beams per segment
@@ -248,6 +254,36 @@
         var wob=0.4*Math.sin(st.tk*0.05+ti*2.3998);
         var d0=n0+wob*t0,d1=n1+wob*t1,d2=n2+wob*t2, dl=Math.sqrt(d0*d0+d1*d1+d2*d2);
         cast(R*ct+a*n0,R*stt+a*n1,a*n2,d0/dl,d1/dl,d2/dl,1.05,1.1,true,true); }
+    } else if(st.mode==='converge'){   // inward beams stop where they meet near the axis, blooming a core
+      var inw=Math.max(0,-sphi);       // 0 outward .. 1 fully inward (~270 deg)
+      for(var ti=0;ti<Nur;ti++){ var u=(ti+0.5)/Nur*6.28319, ct=Math.cos(u), stt=Math.sin(u);
+        var n0=sphi*ct,n1=sphi*stt,n2=-cphi;
+        var ox=R*ct+a*n0, oy=R*stt+a*n1, oz=a*n2;
+        var Hh=isect(ox,oy,oz,n0,n1,n2); if(!Hh)continue;
+        var ex=Hh[0],ey=Hh[1],ez=Hh[2], core=false, den=n0*n0+n1*n1;
+        if(den>1e-4){ var ts=-(ox*n0+oy*n1)/den, dw=(Hh[0]-ox)*n0+(Hh[1]-oy)*n1+(Hh[2]-oz)*n2;
+          if(ts>0.02 && ts<dw){ ex=ox+ts*n0; ey=oy+ts*n1; ez=oz+ts*n2; core=true; } }
+        var A=P(ox,oy,oz), Bp=P(ex,ey,ez);
+        ctx.lineWidth=1.1*DPR; ctx.strokeStyle=rgba(B,(0.20*pulse*(1+0.5*inw)).toFixed(3));
+        ctx.beginPath(); ctx.moveTo(A[0],A[1]); ctx.lineTo(Bp[0],Bp[1]); ctx.stroke();
+        if(core){ glint(Bp[0],Bp[1],(5+10*inw)*DPR,0.30+0.55*inw); }
+        else if(vis[Hh[3]]){ var fn=FN[Hh[3]]; var ci=Math.abs(n0*fn[0]+n1*fn[1]+n2*fn[2]); glint(Bp[0],Bp[1],(4+7*ci)*DPR,0.30+0.5*ci); } }
+    } else if(st.mode==='blades'){      // each streak is a solid depth-sorted ribbon — light can't pass through
+      ctx.globalCompositeOperation='source-over'; var bw=0.10, bl=[];
+      for(var ti=0;ti<Nur;ti++){ var u=(ti+0.5)/Nur*6.28319, ct=Math.cos(u), stt=Math.sin(u);
+        var n0=sphi*ct,n1=sphi*stt,n2=-cphi, t0=cphi*ct,t1=cphi*stt,t2=sphi;
+        var fx=R*ct+a*n0, fy=R*stt+a*n1, fz=a*n2;
+        var o1x=fx-bw*t0,o1y=fy-bw*t1,o1z=fz-bw*t2, o2x=fx+bw*t0,o2y=fy+bw*t1,o2z=fz+bw*t2;
+        var H1=isect(o1x,o1y,o1z,n0,n1,n2), H2=isect(o2x,o2y,o2z,n0,n1,n2); if(!H1||!H2)continue;
+        var p1=P(o1x,o1y,o1z),p2=P(o2x,o2y,o2z),q2=P(H2[0],H2[1],H2[2]),q1=P(H1[0],H1[1],H1[2]);
+        bl.push({d:(p1[2]+p2[2]+q1[2]+q2[2])/4, p:[p1,p2,q2,q1]}); }
+      bl.sort(function(X,Y){return X.d-Y.d;});
+      for(var bi=0;bi<bl.length;bi++){ var pp=bl[bi].p;
+        var grd=ctx.createLinearGradient(pp[0][0],pp[0][1],pp[2][0],pp[2][1]);
+        grd.addColorStop(0,rgba(C,Math.min(1,0.95*pulse).toFixed(3))); grd.addColorStop(1,rgba(B,Math.min(1,0.8*pulse).toFixed(3)));
+        ctx.fillStyle=grd; ctx.beginPath(); ctx.moveTo(pp[0][0],pp[0][1]); ctx.lineTo(pp[1][0],pp[1][1]); ctx.lineTo(pp[2][0],pp[2][1]); ctx.lineTo(pp[3][0],pp[3][1]); ctx.closePath(); ctx.fill();
+        ctx.lineWidth=0.75*DPR; ctx.strokeStyle=rgba(C,Math.min(1,0.5*pulse).toFixed(3)); ctx.stroke(); }
+      ctx.globalCompositeOperation='lighter';
     } else { // curtain
       var NuT=120; ctx.lineWidth=2.0*DPR; ctx.lineCap='round';
       var prev=null,prevH=null;
