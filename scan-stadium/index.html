@@ -359,15 +359,15 @@ function buildRing(){
 
 // ---------- beams / impacts / curtain ----------
 const beamPos=new Float32Array(MAXE*2*3);
-const beamGeo=new TH.BufferGeometry(); beamGeo.setAttribute('position',new TH.Float32BufferAttribute(beamPos,3));
+const beamGeo=new TH.BufferGeometry(); beamGeo.setAttribute('position',new TH.BufferAttribute(beamPos,3));
 const beamMat=new TH.LineBasicMaterial({color:PRESETS[colorKey],transparent:true,opacity:0.85,blending:TH.AdditiveBlending,depthWrite:false});
 const beams=new TH.LineSegments(beamGeo,beamMat); scene.add(beams);
 const impPos=new Float32Array(MAXE*3);
-const impGeo=new TH.BufferGeometry(); impGeo.setAttribute('position',new TH.Float32BufferAttribute(impPos,3));
+const impGeo=new TH.BufferGeometry(); impGeo.setAttribute('position',new TH.BufferAttribute(impPos,3));
 const impMat=new TH.PointsMaterial({size:20,map:GLOW,transparent:true,depthWrite:false,blending:TH.AdditiveBlending,color:PRESETS[colorKey],opacity:0.9,sizeAttenuation:true});
 const impacts=new TH.Points(impGeo,impMat); scene.add(impacts);
 const curtPos=new Float32Array(MAXE*6*3);
-const curtGeo=new TH.BufferGeometry(); curtGeo.setAttribute('position',new TH.Float32BufferAttribute(curtPos,3));
+const curtGeo=new TH.BufferGeometry(); curtGeo.setAttribute('position',new TH.BufferAttribute(curtPos,3));
 const curtMat=new TH.MeshBasicMaterial({color:PRESETS[colorKey],transparent:true,opacity:0.14,blending:TH.AdditiveBlending,depthWrite:false,side:TH.DoubleSide});
 const curtain=new TH.Mesh(curtGeo,curtMat); scene.add(curtain); curtain.visible=false;
 
@@ -381,7 +381,7 @@ for(let i=0;i<MAXE;i++){const o=i*12;
   glowUV[o]=0;glowUV[o+1]=0;glowUV[o+2]=1;glowUV[o+3]=0;glowUV[o+4]=1;glowUV[o+5]=1;
   glowUV[o+6]=0;glowUV[o+7]=0;glowUV[o+8]=1;glowUV[o+9]=1;glowUV[o+10]=0;glowUV[o+11]=1;}
 const glowGeo=new TH.BufferGeometry();
-glowGeo.setAttribute('position',new TH.Float32BufferAttribute(glowPos,3));
+glowGeo.setAttribute('position',new TH.BufferAttribute(glowPos,3));
 glowGeo.setAttribute('uv',new TH.Float32BufferAttribute(glowUV,2));
 const glowMat=new TH.MeshBasicMaterial({map:BEAMTEX,color:PRESETS[colorKey],transparent:true,opacity:0.85,blending:TH.AdditiveBlending,depthWrite:false,side:TH.DoubleSide});
 const glow=new TH.Mesh(glowGeo,glowMat); glow.frustumCulled=false; scene.add(glow);
