@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>memphy × hubmerto — brief</title>
+<meta name="robots" content="noindex">
+<meta property="og:title" content="memphy × hubmerto — brief">
+<meta property="og:description" content="30 questions. no wrong answers.">
+<meta name="theme-color" content="#000000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#000000;
+    --bg-elev:#131313;
+    --bg-soft:#1a1a1a;
+    --fg:#e0e0e0;
+    --fg-strong:#ffffff;
+    --fg-muted:#888;
+    --fg-faint:#555;
+    --hover-bg:#2b2b2b;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+  html,body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:300;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  body{padding-bottom:env(safe-area-inset-bottom)}
+  ::selection{background:var(--fg-strong);color:var(--bg)}
+
+  #meter{
+    position:fixed;bottom:0;left:0;height:2px;width:0;
+    background:var(--fg-strong);z-index:200;
+    transition:width .3s ease;
+  }
+  #meterLabel{
+    position:fixed;top:24px;right:32px;z-index:100;
+    font-size:12px;font-weight:300;letter-spacing:.05em;color:var(--fg-muted);
+  }
+  #meterLabel b{color:var(--fg-strong);font-weight:400}
+  @media (max-width:600px){#meterLabel{top:18px;right:20px}}
+
+  main{max-width:640px;margin:0 auto;padding:0 20px;opacity:0;transition:opacity .5s ease}
+  main.loaded{opacity:1}
+
+  header{padding:96px 0 48px;border-bottom:1px solid var(--bg-soft)}
+  .kicker{
+    font-size:12px;font-weight:300;letter-spacing:.05em;color:var(--fg-muted);
+    margin-bottom:20px;
+  }
+  h1{
+    font-weight:700;
+    font-size:clamp(40px,10vw,72px);
+    line-height:.95;
+    letter-spacing:-.02em;
+    text-transform:uppercase;
+    color:var(--fg-strong);
+    text-wrap:balance;
+  }
+  .intro{margin-top:28px;color:var(--fg-muted);font-size:15px;max-width:52ch}
+  .intro b{color:var(--fg);font-weight:400}
+  .rules{margin-top:22px;display:flex;flex-wrap:wrap;gap:16px}
+  .rules span{font-size:12px;letter-spacing:.05em;color:var(--fg-faint)}
+
+  section{padding:56px 0 8px}
+  .track{display:flex;align-items:baseline;gap:14px;margin-bottom:4px}
+  .tno{font-size:12px;letter-spacing:.05em;color:var(--fg-faint);white-space:nowrap;font-weight:300}
+  h2{
+    font-weight:700;
+    font-size:clamp(20px,5vw,28px);
+    letter-spacing:-.02em;
+    text-transform:uppercase;
+    color:var(--fg-strong);
+    line-height:.95;
+  }
+  .tsub{color:var(--fg-faint);font-size:13px;margin-top:8px}
+
+  .q{padding:24px 0 4px}
+  .q label{display:block;font-weight:400;font-size:15px;margin-bottom:10px;color:var(--fg)}
+  .q label .n{color:var(--fg-faint);font-size:12px;letter-spacing:.05em;margin-right:10px}
+  .q em{font-style:normal;color:var(--fg-strong)}
+  textarea{
+    width:100%;min-height:54px;resize:none;overflow:hidden;
+    background:var(--bg-elev);color:var(--fg-strong);
+    border:1px solid var(--bg-soft);border-radius:0;
+    padding:14px;font:inherit;font-size:16px;font-weight:300;line-height:1.5;
+    transition:border-color .25s ease,background .25s ease;
+  }
+  textarea::placeholder{color:var(--fg-faint)}
+  textarea:hover{background:var(--bg-soft)}
+  textarea:focus-visible,.chip:focus-visible,button:focus-visible{
+    outline:1px solid var(--fg-strong);outline-offset:2px;
+  }
+  textarea:not(:placeholder-shown){border-color:var(--fg-faint)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{
+    font:inherit;font-size:13px;font-weight:300;letter-spacing:.05em;color:var(--fg);
+    background:var(--bg-elev);border:1px solid var(--bg-soft);border-radius:0;
+    padding:10px 16px;cursor:pointer;
+    transition:background .25s ease,color .25s ease,border-color .25s ease;
+  }
+  .chip:hover{background:var(--hover-bg);color:var(--fg-strong)}
+  .chip[aria-pressed="true"]{background:var(--fg-strong);border-color:var(--fg-strong);color:var(--bg);font-weight:500}
+
+  #send{margin:72px 0 32px;border:1px solid var(--bg-soft);background:var(--bg-elev);padding:32px 24px}
+  #send h2{margin-bottom:10px}
+  #send p{color:var(--fg-muted);font-size:14px;margin-bottom:24px;max-width:46ch}
+  .btns{display:flex;flex-wrap:wrap;gap:10px}
+  .btn{
+    font:inherit;font-weight:500;font-size:13px;letter-spacing:.05em;text-transform:uppercase;
+    border-radius:0;padding:14px 22px;cursor:pointer;
+    border:1px solid var(--fg-faint);background:transparent;color:var(--fg);
+    transition:background .25s ease,color .25s ease,border-color .25s ease;
+  }
+  .btn:hover{border-color:var(--fg-strong);color:var(--fg-strong)}
+  .btn.primary{background:var(--fg-strong);border-color:var(--fg-strong);color:var(--bg)}
+  .btn.primary:hover{background:var(--fg);border-color:var(--fg)}
+  #status{margin-top:16px;font-size:13px;color:var(--fg-strong);min-height:20px;font-weight:300;letter-spacing:.02em}
+
+  footer{
+    padding:8px 0 56px;color:var(--fg-faint);font-size:12px;letter-spacing:.05em;
+    display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  }
+</style>
+</head>
+<body>
+
+<div id="meter"></div>
+<div id="meterLabel"><b id="mCount">0</b> / 30</div>
+
+<main id="main">
+  <header>
+    <div class="kicker">creative direction brief</div>
+    <h1>Memphy ×<br>Hubmerto</h1>
+    <p class="intro">This is so we build the right thing, not just a pretty thing. <b>There are no wrong answers</b> and you can skip anything. One-liners, essays, emojis — all valid. If typing is annoying, skip a question and voice-note it to me instead.</p>
+    <div class="rules">
+      <span>~20–30 min</span>
+      <span>saves as you type</span>
+      <span>skip anything</span>
+    </div>
+  </header>
+
+  <section>
+    <div class="track"><span class="tno">01</span><h2>You, right now</h2></div>
+    <div class="q"><label for="q1"><span class="n">1</span>In one sentence, how would you introduce yourself to someone who's never heard of you?</label><textarea id="q1" placeholder="…"></textarea></div>
+    <div class="q"><label for="q2"><span class="n">2</span>When someone calls you a "model-slash-DJ," how does that land — and what would you rather they said?</label><textarea id="q2" placeholder="…"></textarea></div>
+    <div class="q"><label for="q3"><span class="n">3</span>What part of your work are you proudest of that you feel people overlook?</label><textarea id="q3" placeholder="…"></textarea></div>
+  </section>
+
+  <section>
+    <div class="track"><span class="tno">02</span><h2>Where you're going</h2></div>
+    <div class="q"><label for="q4"><span class="n">4</span>It's 2029. What are you known for? Paint the picture.</label><textarea id="q4" placeholder="…"></textarea></div>
+    <div class="q"><label for="q5"><span class="n">5</span>Name 2–3 artists whose <em>career</em> (not just music) you'd love yours to resemble — and why each one?</label><textarea id="q5" placeholder="…"></textarea></div>
+    <div class="q"><label for="q6"><span class="n">6</span>Is there an artist whose path you specifically <em>don't</em> want? Why?</label><textarea id="q6" placeholder="…"></textarea></div>
+    <div class="q"><label for="q7"><span class="n">7</span>What would make you feel truly respected as a producer, not just a personality?</label><textarea id="q7" placeholder="…"></textarea></div>
+  </section>
+
+  <section>
+    <div class="track"><span class="tno">03</span><h2>Your people</h2></div>
+    <div class="q"><label for="q8"><span class="n">8</span>Who do you think your fans are right now? (age, cities, what else they're into)</label><textarea id="q8" placeholder="…"></textarea></div>
+    <div class="q"><label for="q9"><span class="n">9</span>Who do you <em>want</em> in the room in three years — and how are they different?</label><textarea id="q9" placeholder="…"></textarea></div>
+    <div class="q"><label for="q10"><span class="n">10</span>Describe one real fan interaction that made you feel you're doing the right thing.</label><textarea id="q10" placeholder="…"></textarea></div>
+  </section>
+
+  <section>
+    <div class="track"><span class="tno">04</span><h2>Your visual world</h2></div>
+    <div class="q"><label for="q11"><span class="n">11</span>Drop 3–5 links / handles / images that feel like <em>you</em> — a film still, a font, a club flyer, a fit, anything.</label><textarea id="q11" placeholder="paste links or names…"></textarea></div>
+    <div class="q"><label for="q12"><span class="n">12</span>Three words for how your world should <em>feel</em>. (e.g. "sweaty, expensive, holy")</label><textarea id="q12" placeholder="…"></textarea></div>
+    <div class="q"><label for="q13"><span class="n">13</span>Colors you love / colors you never want to see near your name?</label><textarea id="q13" placeholder="love: …  never: …"></textarea></div>
+    <div class="q">
+      <label id="l14"><span class="n">14</span>Type / logo feeling — pick what pulls you (one or more):</label>
+      <div class="chips" role="group" aria-labelledby="l14" data-multi="true" data-q="q14">
+        <button type="button" class="chip" aria-pressed="false">sharp &amp; techno</button>
+        <button type="button" class="chip" aria-pressed="false">glam &amp; serif</button>
+        <button type="button" class="chip" aria-pressed="false">raw &amp; DIY</button>
+        <button type="button" class="chip" aria-pressed="false">something else (say below)</button>
+      </div>
+      <textarea id="q14x" style="margin-top:10px" placeholder="optional: describe it…"></textarea>
+    </div>
+    <div class="q"><label for="q15"><span class="n">15</span>Something in club / artist branding you genuinely <em>hate</em> and want us to avoid?</label><textarea id="q15" placeholder="…"></textarea></div>
+  </section>
+
+  <section>
+    <div class="track"><span class="tno">05</span><h2>Music direction</h2></div>
+    <div class="q"><label for="q16"><span class="n">16</span>In your own words: what does a Memphy <em>track</em> sound like — and how is that different from a Memphy <em>set</em>?</label><textarea id="q16" placeholder="…"></textarea></div>
+    <div class="q"><label for="q17"><span class="n">17</span>Release ambitions for the next 12 months (singles? an EP? remixes?) — be honest about pace.</label><textarea id="q17" placeholder="…"></textarea></div>
+    <div class="q"><label for="q18"><span class="n">18</span>Independent, or would you sign to the right label? What would make a label "right"?</label><textarea id="q18" placeholder="…"></textarea></div>
+    <div class="q"><label for="q19"><span class="n">19</span>Which recorded-set stage would mean the most to you? (Boiler Room, HÖR, dweller, other)</label><textarea id="q19" placeholder="…"></textarea></div>
+  </section>
+
+  <section>
+    <div class="track"><span class="tno">06</span><h2>Commercial appetite</h2></div>
+    <div class="q"><label for="q20"><span class="n">20</span>How do you feel about selling merch — excited, neutral, or "only if it's cool"?</label><textarea id="q20" placeholder="…"></textarea></div>
+    <div class="q">
+      <label id="l21"><span class="n">21</span>Which is more <em>you</em>? (pick one or both)</label>
+      <div class="chips" role="group" aria-labelledby="l21" data-multi="true" data-q="q21">
+        <button type="button" class="chip" aria-pressed="false">small always-on line of basics</button>
+        <button type="button" class="chip" aria-pressed="false">rare limited drops / capsules</button>
+      </div>
+    </div>
+    <div class="q"><label for="q22"><span class="n">22</span>A dream collaborator or brand for a capsule — and one brand you'd <em>never</em> work with?</label><textarea id="q22" placeholder="dream: …  never: …"></textarea></div>
+    <div class="q"><label for="q23"><span class="n">23</span>Anything commercial you'd flat-out refuse to do, no matter the money?</label><textarea id="q23" placeholder="…"></textarea></div>
+  </section>
+
+  <section>
+    <div class="track"><span class="tno">07</span><h2>Content &amp; image</h2></div>
+    <div class="q"><label for="q24"><span class="n">24</span>What are you genuinely happy to film / post (studio, fits, tutorials, day-in-life)? What's off-limits?</label><textarea id="q24" placeholder="yes: …  off-limits: …"></textarea></div>
+    <div class="q"><label for="q25"><span class="n">25</span>Where are your boundaries around your image and your trans visibility — what feels empowering vs. what feels like a box?</label><textarea id="q25" placeholder="…"></textarea></div>
+    <div class="q">
+      <label id="l26"><span class="n">26</span>Rough posting energy you can actually sustain:</label>
+      <div class="chips" role="group" aria-labelledby="l26" data-multi="false" data-q="q26">
+        <button type="button" class="chip" aria-pressed="false">a few times a week</button>
+        <button type="button" class="chip" aria-pressed="false">in bursts around drops</button>
+        <button type="button" class="chip" aria-pressed="false">I need help / a system</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="track"><span class="tno">08</span><h2>Shop ideas</h2></div>
+    <div class="q"><label for="q27"><span class="n">27</span>If you could sell one object that isn't a t-shirt and <em>screams</em> you — what is it?</label><textarea id="q27" placeholder="…"></textarea></div>
+  </section>
+
+  <section>
+    <div class="track"><span class="tno">09</span><h2>The practical stuff</h2></div>
+    <p class="tsub">less fun, still matters.</p>
+    <div class="q"><label for="q28"><span class="n">28</span>Budget range you're comfortable with for launch, and who pays for what? (you / management / brand partners)</label><textarea id="q28" placeholder="…"></textarea></div>
+    <div class="q"><label for="q29"><span class="n">29</span>What already exists that we can use (logos, photos, fonts, domain, mixes) — and who approves things before they go live? (you alone? management? both?)</label><textarea id="q29" placeholder="…"></textarea></div>
+    <div class="q"><label for="q30"><span class="n">30</span>Twelve months from now, what one outcome would make you say "this worked"?</label><textarea id="q30" placeholder="…"></textarea></div>
+  </section>
+
+  <div id="send">
+    <h2>Send it back</h2>
+    <p>This compiles everything you wrote into one message. Share it straight to WhatsApp / email, or copy it and paste wherever's easiest.</p>
+    <div class="btns">
+      <button type="button" class="btn primary" id="shareBtn">Share answers</button>
+      <button type="button" class="btn" id="copyBtn">Copy answers</button>
+    </div>
+    <div id="status" role="status"></div>
+  </div>
+
+  <footer>
+    <span>memphy × hubmerto — 2026</span>
+    <span>answers save on this phone only until you send them.</span>
+  </footer>
+</main>
+
+<script>
+(function(){
+  var KEY='memphy-brief-v1';
+  var state={};
+  try{state=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){state={}}
+
+  var QUESTIONS=[
+    ['q1','Intro in one sentence'],['q2','"Model-slash-DJ" — how it lands'],['q3','Proudest overlooked work'],
+    ['q4','2029 picture'],['q5','Career role models'],['q6','Path to avoid'],['q7','Respect as a producer'],
+    ['q8','Fans now'],['q9','Fans in 3 years'],['q10','Fan moment'],
+    ['q11','Visual references'],['q12','Three feeling words'],['q13','Colors love/never'],['q14','Type/logo feeling'],['q15','Branding hates'],
+    ['q16','Track vs set'],['q17','Release ambitions 12mo'],['q18','Independent vs label'],['q19','Dream recorded set'],
+    ['q20','Merch feeling'],['q21','Basics vs drops'],['q22','Dream collab / never-brand'],['q23','Commercial refusals'],
+    ['q24','Happy to post / off-limits'],['q25','Image & visibility boundaries'],['q26','Posting energy'],
+    ['q27','One object, not a t-shirt'],
+    ['q28','Budget & who pays'],['q29','Existing assets & approvals'],['q30','12-month success']
+  ];
+
+  function save(){ try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){} }
+  function grow(t){ t.style.height='auto'; t.style.height=(t.scrollHeight)+'px'; }
+
+  document.querySelectorAll('textarea').forEach(function(t){
+    if(state[t.id]) t.value=state[t.id];
+    grow(t);
+    t.addEventListener('input',function(){ state[t.id]=t.value; save(); grow(t); meter(); });
+  });
+
+  document.querySelectorAll('.chips').forEach(function(g){
+    var q=g.dataset.q, multi=g.dataset.multi==='true';
+    var sel=state[q]?state[q].split(' | '):[];
+    var chips=g.querySelectorAll('.chip');
+    chips.forEach(function(c){
+      if(sel.indexOf(c.textContent)>-1) c.setAttribute('aria-pressed','true');
+      c.addEventListener('click',function(){
+        var on=c.getAttribute('aria-pressed')==='true';
+        if(!multi) chips.forEach(function(o){o.setAttribute('aria-pressed','false')});
+        c.setAttribute('aria-pressed', on&&multi?'false':'true');
+        if(!multi&&on) c.setAttribute('aria-pressed','false');
+        var picked=[].filter.call(chips,function(o){return o.getAttribute('aria-pressed')==='true'})
+                     .map(function(o){return o.textContent});
+        state[q]=picked.join(' | '); save(); meter();
+      });
+    });
+  });
+
+  function answered(id){
+    if(id==='q14'){ return !!((state.q14&&state.q14.trim())||(state.q14x&&state.q14x.trim())); }
+    return !!(state[id]&&String(state[id]).trim());
+  }
+
+  function meter(){
+    var n=QUESTIONS.reduce(function(a,q){return a+(answered(q[0])?1:0)},0);
+    document.getElementById('meter').style.width=(n/30*100)+'%';
+    document.getElementById('mCount').textContent=n;
+  }
+  meter();
+
+  function compile(){
+    var out='MEMPHY × HUBMERTO — BRIEF ANSWERS\n'+new Date().toISOString().slice(0,10)+'\n\n';
+    QUESTIONS.forEach(function(q,i){
+      var v=state[q[0]]?String(state[q[0]]).trim():'';
+      if(q[0]==='q14'&&state.q14x&&state.q14x.trim()) v=(v?v+' — ':'')+state.q14x.trim();
+      out+=(i+1)+'. '+q[1]+'\n'+(v||'(skipped)')+'\n\n';
+    });
+    return out;
+  }
+
+  var status=document.getElementById('status');
+  function flash(msg){ status.textContent=msg; setTimeout(function(){status.textContent=''},4000); }
+
+  document.getElementById('copyBtn').addEventListener('click',function(){
+    var text=compile();
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){flash('copied — paste it to Humberto anywhere.')},
+        function(){fallbackCopy(text)});
+    } else fallbackCopy(text);
+  });
+
+  function fallbackCopy(text){
+    var ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta);
+    ta.select(); try{document.execCommand('copy'); flash('copied — paste it to Humberto anywhere.')}catch(e){flash('select-all and copy manually — sorry!')}
+    document.body.removeChild(ta);
+  }
+
+  document.getElementById('shareBtn').addEventListener('click',function(){
+    var text=compile();
+    if(navigator.share){
+      navigator.share({title:'Memphy × Hubmerto — brief answers',text:text}).catch(function(){});
+    } else {
+      window.location.href='mailto:?subject='+encodeURIComponent('Memphy brief answers')+'&body='+encodeURIComponent(text);
+    }
+  });
+
+  document.getElementById('main').classList.add('loaded');
+})();
+</script>
+</body>
+</html>
+<script async data-explicit-opt-in="true" data-deployment-id="dpl_6492Sk4WG1enCAqi7snzavxHzjbm" src="https://vercel.live/_next-live/feedback/feedback.js"></script>
