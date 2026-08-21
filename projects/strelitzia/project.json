@@ -7,13 +7,15 @@
             "type": "image",
             "src": "media/strelitzia_hero_01_final-display.png",
             "cx": 0,
-            "cy": -330
+            "cy": -320,
+            "size": 0.95
         },
         {
             "type": "image",
             "src": "media/strelitzia_hero_02_detail-backlit.png",
             "cx": 0,
-            "cy": 330
+            "cy": 320,
+            "size": 0.95
         },
         {
             "type": "video",
