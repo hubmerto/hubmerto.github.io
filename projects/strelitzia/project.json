@@ -5,23 +5,11 @@
     "media": [
         {
             "type": "video",
-            "src": "media/VTR_02.mp4"
+            "src": "media/strelitzia_01_wireframe.mp4"
         },
         {
             "type": "video",
-            "src": "media/VTR_04.mp4"
-        },
-        {
-            "type": "video",
-            "src": "media/VTR_06.mp4"
-        },
-        {
-            "type": "video",
-            "src": "media/VTR_10.mp4"
-        },
-        {
-            "type": "video",
-            "src": "media/VTR_unnamed.mp4"
+            "src": "media/strelitzia_02_orbit.mp4"
         }
     ],
     "columns": [
