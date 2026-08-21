@@ -10,6 +10,18 @@
         {
             "type": "video",
             "src": "media/strelitzia_02_orbit.mp4"
+        },
+        {
+            "type": "image",
+            "src": "media/strelitzia_render_01_three-quarter-front.png"
+        },
+        {
+            "type": "image",
+            "src": "media/strelitzia_render_02_back-three-quarter.png"
+        },
+        {
+            "type": "image",
+            "src": "media/strelitzia_render_03_front-on.png"
         }
     ],
     "columns": [
