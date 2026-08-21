@@ -3,7 +3,9 @@
     "title": "Marie Matusz",
     "hudIndex": "07",
     "media": [
-        { "type": "video", "src": "media/marie-matusz.mp4" }
+        { "type": "video", "src": "media/marie-matusz.mp4" },
+        { "type": "image", "src": "media/logo.png", "alt": "Marie Matusz monogram", "caption": "Monogram — the MM ligature drawn as intersecting planes of glass, transparent where they cross." },
+        { "type": "image", "src": "media/work-1.webp", "alt": "Marie Matusz — catalogue work", "caption": "A catalogue work, held at depth in the dark field of the index." }
     ],
     "columns": [
         {
