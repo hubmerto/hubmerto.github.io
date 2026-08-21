@@ -77,10 +77,16 @@
             ]
         },
         {
-            "text": "Anonymous Empire is a web archive of techno's visual language, documenting roughly 800 releases across 20 geographic scenes and 90 labels, from Metroplex's first Detroit pressing in 1985 to records pressing this month. The archive treats the sleeve, the logo, and the catalogue number as primary documents rather than illustration, reading each scene against the material conditions that produced it."
+            "text": "A web archive of techno's visual language: roughly 800 releases across 20 scenes and 90 labels, from Metroplex's first Detroit pressing in 1985 to records pressing this month. Sleeve, logo and catalogue number are treated as primary documents, not illustration."
         },
         {
-            "text": "The site enacts the thesis it documents. No portraits, no artist images, no nostalgia framing. A single display face against monochrome body type, a locked #0a0a0a ground, and typography carrying the full expressive load. Vanilla JavaScript, no framework, no build step, hosted on GitHub Pages behind a custom .art domain."
+            "text": "The thesis runs in three parts, poverty, politics, post-industry: this graphic language was never designed, it was produced by the conditions the music was made under. Twenty written scene texts, Detroit to Tbilisi, read each city's label output against its economics."
+        },
+        {
+            "text": "The corpus was assembled through the Discogs database, vinyl pressings only, each sleeve keyed to its release record. One dataset drives four orderings of the archive: grid, chronological timeline, geographic map, and a resort by dominant sleeve colour."
+        },
+        {
+            "text": "The site enacts what it documents. No portraits, no nostalgia framing. One display face, justified monochrome columns, a locked #0a0a0a ground. Vanilla JavaScript, no framework, no build step, static hosting. An archive of no-budget records, built like one."
         }
     ]
 }
