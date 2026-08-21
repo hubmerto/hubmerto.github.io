@@ -3,30 +3,69 @@
     "title": "Strelitzia",
     "hudIndex": "01",
     "media": [
-        { "type": "video", "src": "media/VTR_02.mp4" },
-        { "type": "video", "src": "media/VTR_04.mp4" },
-        { "type": "video", "src": "media/VTR_06.mp4" },
-        { "type": "video", "src": "media/VTR_10.mp4" },
-        { "type": "video", "src": "media/VTR_unnamed.mp4" }
+        {
+            "type": "video",
+            "src": "media/VTR_02.mp4"
+        },
+        {
+            "type": "video",
+            "src": "media/VTR_04.mp4"
+        },
+        {
+            "type": "video",
+            "src": "media/VTR_06.mp4"
+        },
+        {
+            "type": "video",
+            "src": "media/VTR_10.mp4"
+        },
+        {
+            "type": "video",
+            "src": "media/VTR_unnamed.mp4"
+        }
     ],
     "columns": [
         {
             "title": "Strelitzia",
-            "tags": "3d · blender · 2026",
+            "tags": "3d · blender · 2023",
             "meta": [
-                { "label": "Client", "value": "Self-initiated" },
-                { "label": "Year", "value": "2026" },
-                { "label": "Department", "value": "3D" },
-                { "label": "Typology", "value": "Spec project, material study" },
-                { "label": "Program", "value": "Material and lighting study" },
-                { "label": "Scope", "value": "3D, material design" }
+                {
+                    "label": "Client",
+                    "value": "Self-initiated"
+                },
+                {
+                    "label": "Year",
+                    "value": "2023"
+                },
+                {
+                    "label": "Department",
+                    "value": "3D"
+                },
+                {
+                    "label": "Typology",
+                    "value": "Spec project, material study"
+                },
+                {
+                    "label": "Software",
+                    "value": "Blender"
+                },
+                {
+                    "label": "Output",
+                    "value": "Turntable video loops"
+                }
             ]
         },
         {
-            "text": "A 3D study built around a single botanical subject, the bird of paradise, stripped of its tropical palette and pushed into something darker. Black lacquer on the outer petals, deep gold on the inner ones, surface condensation catching light like something kept behind glass."
+            "text": "A 3D study built around a single botanical subject, the bird of paradise, stripped of its natural palette and rebuilt as an object under museum conditions. Black lacquer on the outer sepals, deep gold on the inner petals, condensation held on the surface as if the flower were kept behind glass at the wrong temperature."
         },
         {
-            "text": "An exercise in learning Blender, using the flower's complex geometry to test surface detail, lighting, and material behavior. The strelitzia was chosen for its structure. Asymmetric, angular, already aggressive in its natural form."
+            "text": "The species was chosen for its geometry, not its color. Asymmetric, angular, already aggressive in its natural form: a hard spathe, blade-like sepals, a fused petal structure that reads as apparatus rather than ornament. The flower supplies exactly the surface conditions the study needed, sharp creases, long curvature, thin edges where light breaks."
+        },
+        {
+            "text": "Each material is tuned against that geometry. The lacquer runs near-mirror on the ridges and falls off fast into the creases, so form is read through reflection rather than shading. The gold sits warmer and softer, separating the inner structure from the shell. Condensation gathers dense in the crevices and thins out across the exposed faces, giving the gloss a scale reference."
+        },
+        {
+            "text": "Lit as product photography: controlled key against a black surround, so the lacquer returns the light source as a readable shape rather than a glow. Rendered as seamless turntable loops, the rotation doing the work a caption would otherwise do, every face of the material shown in sequence."
         }
     ]
 }
