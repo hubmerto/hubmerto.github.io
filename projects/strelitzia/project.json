@@ -4,24 +4,51 @@
     "hudIndex": "01",
     "media": [
         {
+            "type": "image",
+            "src": "media/strelitzia_hero_01_final-display.png",
+            "size": 1.4,
+            "cx": 0,
+            "cy": -450
+        },
+        {
+            "type": "image",
+            "src": "media/strelitzia_hero_02_detail-backlit.png",
+            "size": 1.4,
+            "cx": 0,
+            "cy": 450
+        },
+        {
             "type": "video",
-            "src": "media/strelitzia_01_wireframe.mp4"
+            "src": "media/strelitzia_01_wireframe.mp4",
+            "cx": -1300,
+            "cy": -400
         },
         {
             "type": "video",
-            "src": "media/strelitzia_02_orbit.mp4"
+            "src": "media/strelitzia_02_orbit.mp4",
+            "cx": -1300,
+            "cy": 400
         },
         {
             "type": "image",
-            "src": "media/strelitzia_render_01_three-quarter-front.png"
+            "src": "media/strelitzia_render_01_three-quarter-front.png",
+            "size": 0.8,
+            "cx": 1150,
+            "cy": -730
         },
         {
             "type": "image",
-            "src": "media/strelitzia_render_02_back-three-quarter.png"
+            "src": "media/strelitzia_render_02_back-three-quarter.png",
+            "size": 0.8,
+            "cx": 1150,
+            "cy": 0
         },
         {
             "type": "image",
-            "src": "media/strelitzia_render_03_front-on.png"
+            "src": "media/strelitzia_render_03_front-on.png",
+            "size": 0.8,
+            "cx": 1150,
+            "cy": 730
         }
     ],
     "columns": [
