@@ -77,16 +77,10 @@
             ]
         },
         {
-            "text": "A web archive of techno's visual language: roughly 800 releases across 20 scenes and 90 labels, from Metroplex's first Detroit pressing in 1985 to records pressing this month. Sleeve, logo and catalogue number are treated as primary documents, not illustration."
+            "text": "A web archive of techno visual language, roughly 800 releases across 20 scenes and 90 labels, from Metroplex first Detroit pressing in 1985 to records pressing this month, treating the sleeve, the logo and the catalogue number as primary documents rather than illustration."
         },
         {
-            "text": "The thesis runs in three parts, poverty, politics, post-industry: this graphic language was never designed, it was produced by the conditions the music was made under. Twenty written scene texts, Detroit to Tbilisi, read each city's label output against its economics."
-        },
-        {
-            "text": "The corpus was assembled through the Discogs database, vinyl pressings only, each sleeve keyed to its release record. One dataset drives four orderings of the archive: grid, chronological timeline, geographic map, and a resort by dominant sleeve colour."
-        },
-        {
-            "text": "The site enacts what it documents. No portraits, no nostalgia framing. One display face, justified monochrome columns, a locked #0a0a0a ground. Vanilla JavaScript, no framework, no build step, static hosting. An archive of no-budget records, built like one."
+            "text": "The thesis runs in three parts, poverty, politics, post-industry: this graphic language was never designed, it was produced by the conditions the music was made under. Twenty written scene texts, Detroit to Tbilisi, read each city label output against its economics, which logos were drawn with a ruler for lack of a designer, which sleeves stayed near-blank after money arrived, which faces were withheld on purpose. The corpus itself was assembled through the Discogs database, vinyl pressings only, each sleeve keyed to its release record, and that one dataset drives four orderings of the archive: a grid, a chronological timeline, a geographic map, and a resort by dominant sleeve colour. The site then enacts what it documents. No portraits, no nostalgia framing, a single display face against a locked #0a0a0a ground with typography carrying the full load, built in vanilla JavaScript with no framework and no build step, on the cheapest static hosting: an archive of no-budget records built like one."
         }
     ]
 }
