@@ -5,52 +5,31 @@
     "media": [
         {
             "type": "iframe",
-            "src": "https://anonymousempire.art/animations/window/?section=hero",
-            "title": "Hero",
+            "src": "https://anonymousempire.art/animations/window/?section=grid",
+            "title": "Archive — Grid",
             "w": 1440,
             "h": 900
         },
         {
             "type": "iframe",
-            "src": "https://anonymousempire.art/animations/window/?section=library",
-            "title": "Library grid",
+            "src": "https://anonymousempire.art/animations/window/?section=timeline",
+            "title": "Archive — Timeline",
             "w": 1440,
             "h": 900
         },
         {
             "type": "iframe",
-            "src": "https://anonymousempire.art/animations/window/?section=scenes",
-            "title": "Scenes",
-            "w": 1600,
-            "h": 1200
-        },
-        {
-            "type": "iframe",
-            "src": "https://anonymousempire.art/animations/window/?section=ppi",
-            "title": "PPI",
+            "src": "https://anonymousempire.art/animations/window/?section=map",
+            "title": "Archive — Map",
             "w": 1440,
             "h": 900
         },
         {
             "type": "iframe",
-            "src": "https://anonymousempire.art/animations/scope-pile/",
-            "title": "Scope pile",
-            "w": 900,
+            "src": "https://anonymousempire.art/animations/window/?section=colour",
+            "title": "Archive — Colour",
+            "w": 1440,
             "h": 900
-        },
-        {
-            "type": "iframe",
-            "src": "https://anonymousempire.art/animations/vectorscope/",
-            "title": "Vectorscope",
-            "w": 900,
-            "h": 900,
-            "codeTitle": "analyze(release)",
-            "codeLang": "js",
-            "code": "function analyze(release) {\n  let sumX = 0, sumY = 0, totalChroma = 0;\n  for (const swatch of release.palette) {\n    const w = swatch.chroma * swatch.fraction;   // weight\n    const θ = swatch.hue * Math.PI / 180;\n    sumX += Math.cos(θ) * w;                     // polar → cartesian\n    sumY += Math.sin(θ) * w;                     // (chroma-weighted)\n    totalChroma += swatch.chroma * swatch.fraction;\n  }\n  const hue    = Math.atan2(sumY, sumX) * 180 / Math.PI;\n  const chroma = totalChroma;\n  return { hue, chroma };                        // → polar dot\n}"
-        },
-        {
-            "type": "video",
-            "src": "media/pile.webm"
         }
     ],
     "columns": [
@@ -58,15 +37,43 @@
             "title": "Anonymous Empire",
             "tags": "research · design · code · 2026",
             "meta": [
-                { "label": "Client", "value": "Self-initiated" },
-                { "label": "Location", "value": "Berlin" },
-                { "label": "Year", "value": "2026" },
-                { "label": "Department", "value": "Research, Design, Code" },
-                { "label": "Typology", "value": "Editorial web archive" },
-                { "label": "Program", "value": "Editorial web archive" },
-                { "label": "Status", "value": "Live" },
-                { "label": "Scale", "value": "~800 records · 20 scenes · 90 labels" },
-                { "label": "Domain", "value": "anonymousempire.art", "href": "https://anonymousempire.art" }
+                {
+                    "label": "Client",
+                    "value": "Self-initiated"
+                },
+                {
+                    "label": "Location",
+                    "value": "Berlin"
+                },
+                {
+                    "label": "Year",
+                    "value": "2026"
+                },
+                {
+                    "label": "Department",
+                    "value": "Research, Design, Code"
+                },
+                {
+                    "label": "Typology",
+                    "value": "Editorial web archive"
+                },
+                {
+                    "label": "Program",
+                    "value": "Editorial web archive"
+                },
+                {
+                    "label": "Status",
+                    "value": "Live"
+                },
+                {
+                    "label": "Scale",
+                    "value": "~800 records · 20 scenes · 90 labels"
+                },
+                {
+                    "label": "Domain",
+                    "value": "anonymousempire.art",
+                    "href": "https://anonymousempire.art"
+                }
             ]
         },
         {
