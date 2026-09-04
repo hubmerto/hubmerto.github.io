@@ -251,9 +251,10 @@ const CONFIG = {
     ],
     threshMin: 0.35, threshMax: 0.6,
   },
-  renderScale: 1,        // composite + mosaic buffer scale (1 = full res)
-  shotScale: 0.5,        // the raymarched shots render at this fraction of the composite (they get thresholded anyway)
-  shotEvery: 2,          // shots + composite refresh every N frames; the mosaic zoom runs every frame
+  maxDPR: 1,             // cap device-pixel-ratio (1 = render at CSS px; the mosaic/dither look hides the lower res)
+  renderScale: 0.85,     // composite + mosaic buffer scale (1 = full res)
+  shotScale: 0.4,        // the raymarched shots render at this fraction of the composite (they get thresholded anyway)
+  shotEvery: 3,          // shots + composite refresh every N frames; the mosaic zoom runs every frame
   square: false,         // false: source keeps the screen's aspect, every mosaic cell is a miniature of the screen (desktop wide, mobile tall)
                          // true: square buffer + cover crop, cells are squares
   mosaic: {
@@ -497,8 +498,9 @@ let texShotA,texShotB,fbShotA,fbShotB,outA,outB,fbOutA,fbOutB;
 let hist=[],histFb=[],histHead=0,histTick=0;
 let mGrid=(typeof CONFIG.mosaic.grid==='number')?CONFIG.mosaic.grid:95;
 function alloc(){
-  W=canvas.width=innerWidth*devicePixelRatio;
-  H=canvas.height=innerHeight*devicePixelRatio;
+  var _dpr=Math.min(window.devicePixelRatio||1, CONFIG.maxDPR||1);
+  W=canvas.width=Math.round(innerWidth*_dpr);
+  H=canvas.height=Math.round(innerHeight*_dpr);
   if(CONFIG.square){ const side=Math.max(1,Math.round(Math.max(W,H)*CONFIG.renderScale)); RW=RH=side; }
   else { RW=Math.max(1,Math.round(W*CONFIG.renderScale)); RH=Math.max(1,Math.round(H*CONFIG.renderScale)); }
   SW=Math.max(1,Math.round(RW*CONFIG.shotScale)); SH=Math.max(1,Math.round(RH*CONFIG.shotScale));
