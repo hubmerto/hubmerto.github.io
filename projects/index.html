@@ -290,6 +290,7 @@
     // Catalog: each piece = one tile. Multiple pieces per project (uses existing media).
     var catalog = [
         { project: 'Memphy', tag: 'WEB', href: '/projects/memphy', type: 'video', src: '/projects/memphy/media/memphy-logo.mp4', mime: 'video/mp4' },
+        { project: 'Emilio Tamez', tag: 'WEB', href: '/projects/emilio-tamez', type: 'video', src: '/projects/emilio-tamez/media/rail.mp4', mime: 'video/mp4', tight: true },
         { project: 'Karim Boumjimar', tag: 'WEB', href: '/projects/karim-boumjimar', type: 'image', src: '/projects/karim-boumjimar/media/vase.png' },
         { project: 'Marie Matusz', tag: 'WEB', href: '/projects/marie-matusz', type: 'video', src: '/projects/marie-matusz/media/marie-matusz.mp4', mime: 'video/mp4', tight: true },
         { project: 'Strelitzia', tag: '3D', href: '/projects/strelitzia', type: 'image', src: '/projects/strelitzia/media/strelitzia-1.png' },
@@ -389,12 +390,23 @@
     function appendPage() {
         pageCount++;
         var frag = document.createDocumentFragment();
-        // Rows alternate 2 and 3 tiles: span 6 / span 4 on the 12-col grid.
-        var rows = [2, 3], row = 0, left = rows[0];
+        // Rows alternate 2 and 3 tiles (span 6 / span 4 on the 12-col grid);
+        // a lone tile at the end is absorbed into the row before it.
+        var rows = [];
+        for (var n = catalog.length, r = 0; n > 0; r++) {
+            var take = Math.min(r % 2 ? 3 : 2, n);
+            rows.push(take);
+            n -= take;
+        }
+        if (rows.length > 1 && rows[rows.length - 1] === 1) {
+            if (rows[rows.length - 2] === 2) { rows.pop(); rows[rows.length - 1] = 3; }
+            else { rows[rows.length - 2] = 2; rows[rows.length - 1] = 2; }
+        }
+        var row = 0, left = rows[0];
         catalog.forEach(function(item) {
-            item.span = 12 / rows[row % rows.length];
+            item.span = 12 / rows[row];
             frag.appendChild(buildPiece(item));
-            if (--left === 0) { row++; left = rows[row % rows.length]; }
+            if (--left === 0) { row++; left = rows[row]; }
         });
         // Re-insert sentinel at end
         var oldSentinel = document.getElementById('sentinel');

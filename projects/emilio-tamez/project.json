@@ -1,0 +1,99 @@
+{
+    "slug": "emilio-tamez",
+    "title": "Emilio Tamez",
+    "hudIndex": "09",
+    "media": [
+        {
+            "type": "video",
+            "src": "media/rail.mp4",
+            "caption": "The numbering rail: a flick charges a flywheel, and the numbers coast to a stop.",
+            "cx": 0,
+            "cy": -330,
+            "size": 0.9
+        },
+        {
+            "type": "image",
+            "src": "media/project2.webp",
+            "alt": "Emilio Tamez — Assumpta & Luminoso",
+            "caption": "Inside a project: long air between photographs, credits in a belt along the foot.",
+            "cx": 0,
+            "cy": 330,
+            "size": 0.9
+        },
+        {
+            "type": "image",
+            "src": "media/project.webp",
+            "alt": "Emilio Tamez — Potions",
+            "caption": "The clicked cover flies into place and leads the gallery.",
+            "cx": -1050,
+            "cy": -330,
+            "size": 0.75
+        },
+        {
+            "type": "image",
+            "src": "media/editions.webp",
+            "alt": "Emilio Tamez — Editions",
+            "caption": "Editions: eight works on one field, inquiry only.",
+            "cx": 1050,
+            "cy": -330,
+            "size": 0.75
+        },
+        {
+            "type": "image",
+            "src": "media/about.webp",
+            "alt": "Emilio Tamez — About",
+            "caption": "About: the statement set in columns, the page locked to the viewport.",
+            "cx": -1050,
+            "cy": 330,
+            "size": 0.75
+        },
+        {
+            "type": "image",
+            "src": "media/phone.webp",
+            "alt": "Emilio Tamez on a phone",
+            "caption": "On a phone, one photograph at a time beside a lane of numbers you drag like a strip.",
+            "cx": 1000,
+            "cy": 330,
+            "size": 0.85
+        }
+    ],
+    "columns": [
+        {
+            "title": "Emilio Tamez",
+            "tags": "digital · 2026",
+            "meta": [
+                {
+                    "label": "Year",
+                    "value": "2026"
+                },
+                {
+                    "label": "Format",
+                    "value": "Portfolio website, editor"
+                },
+                {
+                    "label": "Client",
+                    "value": "Emilio Tamez, photographer (New York)"
+                },
+                {
+                    "label": "Design & Dev",
+                    "value": "Humberto Gesser"
+                },
+                {
+                    "label": "Stack",
+                    "value": "Next.js, React, CSS Modules, Vercel"
+                },
+                {
+                    "label": "Site",
+                    "value": "emilio-tamez-site.vercel.app",
+                    "href": "https://emilio-tamez-site.vercel.app"
+                }
+            ]
+        },
+        {
+            "text": "An art-first portfolio for Emilio Tamez, a photographer in New York, where the photographs are the only spectacle and the site behaves like a printed object. Twenty-four works sit behind a single rolling column of numbers with no first or last; a flick sets it coasting like a flywheel. Opening a project doesn't feel like navigation: the photograph you click flies into place and the page rearranges around it. Fashion commissions live apart, in a darker register of the same system."
+        },
+        {
+            "text": "There is no database. An editor built into the site lets Emilio reorder, write and publish in three languages, each change a single Git commit; within a day of handover she had published more than thirty times."
+        }
+    ]
+}
