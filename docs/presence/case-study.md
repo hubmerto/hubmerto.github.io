@@ -216,9 +216,9 @@ nodes were built at runtime, so the served HTML carried no `<img>` at all.
 
 | Change | Evidence |
 | --- | --- |
-| 19 alt strings written into the `project.json` files. Drafted by opening every image (and a first frame of every video), reviewed by Humberto | commit `PENDING` |
-| `prerender-projects.mjs` now writes the canvas nodes as well, exactly as `createNode()` builds them. 23 static `<img>` across the 8 project pages, 22 of them with alt | commit `PENDING` |
-| `renderCanvas()` hydrates pre-rendered nodes instead of rebuilding them, re-attaching `_caption` and `_code` (JS-only expandos the inspector reads) and the ready-state listeners. Falls back to building when the node count does not match the media count | commit `PENDING` |
+| 19 alt strings written into the `project.json` files. Drafted by opening every image (and a first frame of every video), reviewed by Humberto | commit `5a11c94` |
+| `prerender-projects.mjs` now writes the canvas nodes as well, exactly as `createNode()` builds them. 23 static `<img>` across the 8 project pages, 22 of them with alt | commit `5a11c94` |
+| `renderCanvas()` hydrates pre-rendered nodes instead of rebuilding them, re-attaching `_caption` and `_code` (JS-only expandos the inspector reads) and the ready-state listeners. Falls back to building when the node count does not match the media count | commit `5a11c94` |
 | **Bug found and fixed in review.** A pre-rendered `loading="lazy"` image inside the canvas is never requested: at parse time the canvas has no transform, so the browser rules it out of view, and the transform that later brings it into view does not re-trigger the load. Strelitzia rendered blank locally while the live page was fine. `hydrateNode` now flips a not-yet-loaded image to `loading="eager"`, which is what the runtime-built version did anyway | browser check against live, this session |
 | Verified every project page against the live site: node counts, ready counts, media requests and image states match; inspector still shows captions; mobile view unchanged | browser check, this session |
 
