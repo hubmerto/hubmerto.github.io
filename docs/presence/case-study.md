@@ -246,7 +246,7 @@ available to Google" and indexing has been requested.
 
 | Change | Evidence |
 | --- | --- |
-| Redirects added for `/work` → `/projects`, `/de/work` → `/projects`, `/de` and `/de/:path*` → `/` — the only four old URLs whose subject still exists here | commit `5091b35` |
+| Redirects added for `/work` → `/projects`, `/de/work` → `/projects`, `/de` and `/de/:path*` → `/` — the only four old URLs whose subject still exists here | commit `bcb4873` |
 | The six client-name slugs left as clean 404s. That work is not on this site, so a redirect to `/projects` would be a soft 404 Google drops anyway; `/ev-chargin-app` is a typo in an inbound link, and redirecting it would teach Google the typo is real | deliberate |
 | Sitemap resubmitted at the apex, 11 URLs, Success. The old `www` sitemap entry is still registered in Search Console and should be removed so there is one canonical sitemap | Humberto, Search Console |
 
