@@ -212,15 +212,16 @@ contribution, not a promised outcome.
 ### 2026-09-17 — crawlability pass
 | Change | Evidence |
 | --- | --- |
-| `/projects` tiles pre-rendered as real anchors; all 8 project pages now linked from the served HTML (was 0) | commit `PENDING`, `grep -o 'href="/projects/[a-z-]*"' projects/index.html` → 8 |
-| Memphy and Emilio Tamez tiles unlocked to `<a>` — both pages previously had no link from anywhere | commit `PENDING` |
-| Project sidebars pre-rendered from `project.json`; served HTML 12 → 180–315 words, each page gains an `<h1>` | commit `PENDING` |
-| Outbound live-site links now in served HTML on 6 project pages | commit `PENDING`, table in §5 |
-| `template.js` cache-stamped so a stale copy can't double-render the sidebar | commit `PENDING` |
-| `sitemap.xml` regenerated: `/imprint` and `/privacy` dropped (both noindex), `<lastmod>` added, 13 → 11 URLs | commit `PENDING` |
-| `/projects/saisonkalender` → `/projects` 301 added | commit `PENDING` |
-| `CollectionPage` + `ItemList` JSON-LD added to `/projects` | commit `PENDING` |
+| `/projects` tiles pre-rendered as real anchors; all 8 project pages now linked from the served HTML (was 0) | commit `8653429`, `grep -o 'href="/projects/[a-z-]*"' projects/index.html` → 8 |
+| Memphy and Emilio Tamez tiles unlocked to `<a>` — both pages previously had no link from anywhere | commit `8653429` |
+| Project sidebars pre-rendered from `project.json`; served HTML 12 → 180–315 words, each page gains an `<h1>` | commit `8653429` |
+| Outbound live-site links now in served HTML on 6 project pages | commit `8653429`, table in §5 |
+| `template.js` cache-stamped so a stale copy can't double-render the sidebar | commit `8653429` |
+| `sitemap.xml` regenerated: `/imprint` and `/privacy` dropped (both noindex), `<lastmod>` added, 13 → 11 URLs | commit `8653429` |
+| `/projects/saisonkalender` → `/projects` 301 added | commit `8653429` |
+| `CollectionPage` + `ItemList` JSON-LD added to `/projects` | commit `8653429` |
 | Verified rendered output unchanged at 1024px and 375px; span classes match the live site tile for tile | browser check, this session |
+| Deployed and verified live 2026-09-17 20:53Z: 8 static project links on `/projects`, 180–315 words per project page, `memphy.co` in served HTML, sitemap 11 URLs, `/projects/saisonkalender` → 308 → `/projects` | `curl` checks, this session |
 
 ---
 
