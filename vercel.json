@@ -1,5 +1,6 @@
 {
   "cleanUrls": true,
+  "trailingSlash": false,
   "redirects": [
     { "source": "/karim-boumjimar", "destination": "/projects/karim-boumjimar", "permanent": true },
     { "source": "/projects/saisonkalender", "destination": "/projects", "permanent": true },
