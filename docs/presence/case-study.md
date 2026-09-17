@@ -234,7 +234,7 @@ noise in front of the words someone actually types.
 
 | Change | Evidence |
 | --- | --- |
-| `template.js` no longer rewrites `document.title` to `hubmerto.<slug>` at runtime. Without this the static titles would have been undone the moment the page rendered — and Google renders | commit `PENDING` |
+| `template.js` no longer rewrites `document.title` to `hubmerto.<slug>` at runtime. Without this the static titles would have been undone the moment the page rendered — and Google renders | commit `d146257` |
 | Breadcrumb still shows the project name; sidebar, canvas and tool dock unchanged | browser check, this session |
 | `og:title` and `twitter:title` deliberately left as `hubmerto · <slug>`. Those drive the social card, not search; changing them is a separate call | deliberate |
 
