@@ -248,6 +248,9 @@ available to Google" and indexing has been requested.
 | --- | --- |
 | Redirects added for `/work` → `/projects`, `/de/work` → `/projects`, `/de` and `/de/:path*` → `/` — the only four old URLs whose subject still exists here | commit `bcb4873` |
 | The six client-name slugs left as clean 404s. That work is not on this site, so a redirect to `/projects` would be a soft 404 Google drops anyway; `/ev-chargin-app` is a typo in an inbound link, and redirecting it would teach Google the typo is real | deliberate |
+| `trailingSlash: false` added. Every page had been answering 200 at both `/projects` and `/projects/` — two URLs per page, held together only by the canonical tags. Slashed forms now 308 to the canonical one | commit `4049d91`, `curl` sweep |
+| Same setting made `/de/` resolve. `/de/:path*` does not match an empty trailing segment, so the first attempt left the exact URL from the 404 list still 404ing | commit `4049d91` |
+| Verified live: 4 old URLs redirect, 6 client-name slugs 404 as intended, all 11 sitemap URLs 200, assets and media unaffected | `curl` sweep, this session |
 | Sitemap resubmitted at the apex, 11 URLs, Success. The old `www` sitemap entry is still registered in Search Console and should be removed so there is one canonical sitemap | Humberto, Search Console |
 
 ### 2026-09-17 — apex made canonical (Humberto)
