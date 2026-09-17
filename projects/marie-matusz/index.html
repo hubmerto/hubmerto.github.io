@@ -61,7 +61,7 @@
     </header>
     <div class="content" id="content">
 
-        <aside class="sidebar sidebar-left" id="sidebar-left"></aside>
+        <aside class="sidebar sidebar-left" id="sidebar-left"><!-- prerender:sidebar:start --><div class="sidebar-section"><div class="sidebar-label">07 · Project</div><h1 class="sidebar-title">Marie Matusz</h1><div class="sidebar-tags">digital · 2026</div><div class="meta-row"><span>Year</span><span>2026</span></div><div class="meta-row"><span>Format</span><span>Website, spatial index</span></div><div class="meta-row"><span>Client</span><span>Marie Matusz, artist (Basel)</span></div><div class="meta-row"><span>Design &amp; Dev</span><span>Humberto Gesser</span></div><div class="meta-row"><span>Stack</span><span>Next.js, TypeScript, vanilla CSS</span></div><div class="meta-row"><span>Typeface</span><span>Lucifer</span></div><div class="meta-row"><span>Site</span><span><a href="https://mariematusz.com" target="_blank" rel="noopener">mariematusz.com</a></span></div></div><div class="sidebar-section"><div class="sidebar-text">Marie Matusz works with display and context as her material, and describes her practice as &quot;placing things at a distance that we can get closer to.&quot; The site is built from that sentence: a single continuous space in which her works hang at depth in a dark field, and scrolling is the act of approach. Reaching a work and opening it is one unbroken gesture. The clicked image carries itself into its gallery, its companion images are born from the same vanishing point everything else comes from, and on closing nothing retreats: every image expands past the viewer and exits the frame. The world only moves forward.</div></div><div class="sidebar-section"><div class="sidebar-text">It is a hand-built Next.js application, styled in plain CSS from a single token system, and it never navigates. The tunnel lives in the layout and never unmounts, so every page is a state of one persistent scene rather than a new document. A single critically damped spring is the only thing that moves the camera: scroll, focal snapping, the gallery, and the rush between pages all point at it, so no two animations ever fight. Opening a work is a shared-element transition, the clicked image measured and carried into place rather than swapped, and the catalogue, served as AVIF, is decoded by a background queue that warms each image before it is requested. The interface withholds itself, and the work stays the brightest thing on screen.</div></div><!-- prerender:sidebar:end --></aside>
 
         <div class="workspace" id="workspace">
             <div class="grid-bg" id="grid-bg"></div>
@@ -75,7 +75,7 @@
 
     </div>
 
-    <script src="/projects/template.js"></script>
+    <script src="/projects/template.js?v=e59fc842"></script>
     <script>loadProject('/projects/marie-matusz/project.json');</script>
 </body>
 </html>

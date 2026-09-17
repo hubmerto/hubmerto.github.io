@@ -4,6 +4,9 @@
     function renderLeftSidebar(project) {
         var rail = document.getElementById('sidebar-left');
         if (!rail) return;
+        // The columns are pre-rendered into the HTML by scripts/prerender-projects.mjs
+        // so the text is in the served page. Only build them when they aren't there.
+        if (rail.querySelector('.sidebar-section')) return renderWorkspaceTools();
         (project.columns || []).forEach(function(col, idx) {
             var section = document.createElement('div');
             section.className = 'sidebar-section';
@@ -84,6 +87,10 @@
             rail.appendChild(section);
         });
 
+        renderWorkspaceTools();
+    }
+
+    function renderWorkspaceTools() {
         // Floating tool dock — appended to the workspace (bottom-right).
         var workspace = document.getElementById('workspace');
         if (workspace && !workspace.querySelector('.workspace-tools')) {
