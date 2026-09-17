@@ -289,14 +289,14 @@
 (function() {
     // Catalog: each piece = one tile. Multiple pieces per project (uses existing media).
     var catalog = [
-        { project: 'Memphy', tag: 'WEB', href: '/projects/memphy', type: 'video', src: '/projects/memphy/media/memphy-logo.mp4', mime: 'video/mp4' },
-        { project: 'Emilio Tamez', tag: 'WEB', href: '/projects/emilio-tamez', type: 'video', src: '/projects/emilio-tamez/media/rail.mp4', mime: 'video/mp4', tight: true },
         { project: 'Karim Boumjimar', tag: 'WEB', href: '/projects/karim-boumjimar', type: 'image', src: '/projects/karim-boumjimar/media/vase.png' },
         { project: 'Marie Matusz', tag: 'WEB', href: '/projects/marie-matusz', type: 'video', src: '/projects/marie-matusz/media/marie-matusz.mp4', mime: 'video/mp4', tight: true },
         { project: 'Strelitzia', tag: '3D', href: '/projects/strelitzia', type: 'image', src: '/projects/strelitzia/media/strelitzia-1.png' },
         { project: 'Emojify', tag: 'TOOL', href: '/projects/emojify', type: 'image', src: '/projects/emojify/media/musik_plastikman.png' },
         { project: 'Boiler Eggs', tag: 'TOOL', href: '/projects/boiler-eggs', type: 'video', src: '/projects/boiler-eggs/media/boiler-eggs.mp4', mime: 'video/mp4', vertical: true, tight: true },
-        { project: 'Anonymous Empire', tag: 'ARCHIVE', href: '/projects/anonymous-empire', type: 'video', src: '/projects/anonymous-empire/media/pile.webm', mime: 'video/webm' }
+        { project: 'Anonymous Empire', tag: 'ARCHIVE', href: '/projects/anonymous-empire', type: 'video', src: '/projects/anonymous-empire/media/pile.webm', mime: 'video/webm' },
+        { project: 'Memphy', tag: 'WEB', href: '/projects/memphy', type: 'video', src: '/projects/memphy/media/memphy-logo.mp4', mime: 'video/mp4', locked: true },
+        { project: 'Emilio Tamez', tag: 'WEB', href: '/projects/emilio-tamez', type: 'video', src: '/projects/emilio-tamez/media/rail.mp4', mime: 'video/mp4', tight: true, locked: true }
         // Scan Chamber — hidden for now (lives at /scan-chamber, self-contained piece). Un-comment to surface in the grid.
         // TODO before surfacing: add a poster thumbnail (set `src`, and `type`/`mime` to match) and confirm `tag` (placeholder '3D').
         // { project: 'Scan Chamber', tag: '3D', href: '/scan-chamber', type: 'image', src: '/scan-chamber/media/poster.png' },
