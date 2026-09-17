@@ -209,6 +209,16 @@ contribution, not a promised outcome.
 
 ## 7. Log
 
+### 2026-09-17 — apex made canonical (Humberto)
+**Attribution: Humberto, in the Vercel dashboard — not my change.**
+
+| Change | Evidence |
+| --- | --- |
+| `hubmerto.com` set as the primary domain; `www.hubmerto.com` now **308** (permanent) to the apex, path preserved. Chosen over Vercel's default 307 so the consolidation signal is unambiguous | `curl` sweep, this session |
+| Result: all 11 sitemap URLs return **200 directly**, no redirect hop. Canonical tag, `og:url`, sitemap and serving host now all say `https://hubmerto.com` | `curl` sweep, this session |
+| Repo scanned for hardcoded `www.hubmerto.com` in HTML/XML/TXT/JSON/JS: **none**. The codebase always used the apex — that mismatch is what the flip resolved | `grep -rn`, this session |
+| Redirect hops by entry point: apex https 0 · apex http 1 · www https 1 · www http 2 | `curl -L -w '%{num_redirects}'` |
+
 ### 2026-09-17 — crawlability pass
 | Change | Evidence |
 | --- | --- |
@@ -229,11 +239,9 @@ contribution, not a promised outcome.
 
 **Needs Humberto**
 
-1. **Set `hubmerto.com` as the primary domain in Vercel**, so `www` redirects to
-   the apex instead of the other way round. Until then every canonical tag on
-   the site points at a URL that 307-redirects. Vercel → Project → Settings →
-   Domains → set `hubmerto.com` primary, `www.hubmerto.com` → redirect to it.
-   *(Decision confirmed 2026-09-17: the apex is the real address.)*
+1. ~~**Set `hubmerto.com` as the primary domain in Vercel.**~~ **Done
+   2026-09-17 by Humberto**, with a 308 rather than Vercel's default 307. See
+   the log. The canonical mismatch described in the baseline no longer exists.
 2. **Export the 404 list from Search Console.** Pages → "Not found (404)" →
    Export. Ten URLs is a lot for a 13-page site and only one
    (`/projects/saisonkalender`) can be identified from the repo. The same export
@@ -256,12 +264,16 @@ contribution, not a promised outcome.
 6. **Orphan pages.** `/visualizer`, `/scan-chamber` and `/scan-stadium` are
    indexable, unlinked and absent from the sitemap. Either link and list them,
    or mark them noindex.
-7. **Baseline the other surfaces** — knowledge panel, Wikidata, Wikipedia — none
+7. **Registrar DNS, optional.** Vercel flags the apex with "DNS Change
+   Recommended" and wants the A record on `216.150.1.1`. The current record
+   resolves and serves fine, so nothing is broken and this has no search
+   effect; it lives at the registrar, not in Vercel.
+8. **Baseline the other surfaces** — knowledge panel, Wikidata, Wikipedia — none
    of which were checked in this session.
 
 **Consent / case-study use**
 
-8. Using this as a public case study needs Humberto's written OK. Not requested.
+9. Using this as a public case study needs Humberto's written OK. Not requested.
 
 ---
 
