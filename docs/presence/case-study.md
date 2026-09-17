@@ -209,6 +209,35 @@ contribution, not a promised outcome.
 
 ## 7. Log
 
+### 2026-09-17 — page titles
+
+Approved by Humberto. Searchable words first, byline last. The title is not
+visible on the page, only in the tab and the search result, so nothing about
+the design changed.
+
+| Page | Was | Now |
+| --- | --- | --- |
+| karim-boumjimar | `hubmerto.karim-boumjimar` | Karim Boumjimar — photography portfolio · Humberto Gesser |
+| marie-matusz | `hubmerto.marie-matusz` | Marie Matusz — artist website, spatial index · Humberto Gesser |
+| emilio-tamez | `hubmerto.emilio-tamez` | Emilio Tamez — photography portfolio · Humberto Gesser |
+| memphy | `hubmerto.memphy` | Memphy — memphy.co website and merch shop · Humberto Gesser |
+| anonymous-empire | `hubmerto.anonymous-empire` | Anonymous Empire — techno record sleeve archive · Humberto Gesser |
+| emojify | `hubmerto.emojify` | Emojify — image and webcam to emoji mosaic tool |
+| boiler-eggs | `hubmerto.boiler-eggs` | Boiler Eggs — 1-bit duotone tool for video and webcam |
+| strelitzia | `hubmerto.strelitzia` | Strelitzia — bird of paradise in black lacquer and gold |
+| /projects | `hubmerto.projects` | Projects — selected work by Humberto Gesser |
+| /contact | `hubmerto — contact` | Contact — Humberto Gesser |
+
+The homepage title was already right and is unchanged. The two self-initiated
+tool pages carry no byline: those target non-brand queries, where the name is
+noise in front of the words someone actually types.
+
+| Change | Evidence |
+| --- | --- |
+| `template.js` no longer rewrites `document.title` to `hubmerto.<slug>` at runtime. Without this the static titles would have been undone the moment the page rendered — and Google renders | commit `PENDING` |
+| Breadcrumb still shows the project name; sidebar, canvas and tool dock unchanged | browser check, this session |
+| `og:title` and `twitter:title` deliberately left as `hubmerto · <slug>`. Those drive the social card, not search; changing them is a separate call | deliberate |
+
 ### 2026-09-17 — the 404 list, and the credit links that already existed
 
 **Correction to the baseline.** §2 recorded the 404 URLs as unidentified and

@@ -1482,7 +1482,7 @@
             .then(function(r) { return r.json(); })
             .then(function(project) {
                 resolveMediaPaths(project, jsonPath);
-                document.title = 'hubmerto.' + (project.slug || project.title || '').toLowerCase();
+                // The page's own <title> is the search-facing one; leave it alone.
                 var crumb = document.getElementById('crumb-current');
                 if (crumb) crumb.textContent = project.title || '';
                 var renderedMobile = mql.matches;
