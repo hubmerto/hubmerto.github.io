@@ -2,7 +2,11 @@
   "cleanUrls": true,
   "redirects": [
     { "source": "/karim-boumjimar", "destination": "/projects/karim-boumjimar", "permanent": true },
-    { "source": "/projects/saisonkalender", "destination": "/projects", "permanent": true }
+    { "source": "/projects/saisonkalender", "destination": "/projects", "permanent": true },
+    { "source": "/work", "destination": "/projects", "permanent": true },
+    { "source": "/de/work", "destination": "/projects", "permanent": true },
+    { "source": "/de", "destination": "/", "permanent": true },
+    { "source": "/de/:path*", "destination": "/", "permanent": true }
   ],
   "headers": [
     {

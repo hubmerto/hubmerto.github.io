@@ -209,6 +209,47 @@ contribution, not a promised outcome.
 
 ## 7. Log
 
+### 2026-09-17 — the 404 list, and the credit links that already existed
+
+**Correction to the baseline.** §2 recorded the 404 URLs as unidentified and
+§8 listed getting credit links from client sites as the biggest open item. Both
+were wrong, and the second was wrong because I only checked the client
+homepages with `curl`. Every one of those sites already credits Humberto, on an
+imprint/about/contact page:
+
+| Site | Credit page | Link target | rel |
+| --- | --- | --- | --- |
+| karimboumjimar.com | `/imprint`, `/contact` | `https://hubmerto.com` | noopener noreferrer |
+| mariematusz.com | `/en/about` | apex **and** `www` | noopener noreferrer |
+| emilio-tamez | `/imprint`, `/about` | `https://www.hubmerto.com/` | noopener noreferrer |
+| anonymousempire.art | `/impressum/` | `https://hubmerto.com` | noopener |
+| memphy.co | homepage | `https://www.hubmerto.com` | noopener |
+
+None carry `nofollow`, and every credit page is indexable. Four of these point
+at `www` and so now travel through the 308 — worth pointing at the apex on the
+sites Humberto controls. `rel="noreferrer"` also strips the Referer header, so
+those visits land in analytics as Direct; dropping `noreferrer` while keeping
+`noopener` would make the referral visible.
+
+**The 404s** (Humberto pulled the list from Search Console). All ten are from a
+**previous portfolio**, not this repo: flat client-name slugs
+(`/siemens-energy`, `/nike`, `/naturstrom-rebranding`, `/fullcircle`,
+`/ev-chargin-app`), a `/work` index that `/projects` replaced, and a dead `/de/`
+locale. The count is already decaying on its own, 15 → 10 since 2026-08-22.
+`/projects/saisonkalender` is **not** among them — the redirect added earlier
+addresses none of these. It is kept anyway: that page was real until 2026-09-02.
+
+**The "Redirect error" was `https://hubmerto.com/projects` itself**, referred
+from `www.hubmerto.com/projects` — the apex→www→apex loop. Last successful
+crawl 2026-06-04. The domain flip closed it; the live test now returns "URL is
+available to Google" and indexing has been requested.
+
+| Change | Evidence |
+| --- | --- |
+| Redirects added for `/work` → `/projects`, `/de/work` → `/projects`, `/de` and `/de/:path*` → `/` — the only four old URLs whose subject still exists here | commit `5091b35` |
+| The six client-name slugs left as clean 404s. That work is not on this site, so a redirect to `/projects` would be a soft 404 Google drops anyway; `/ev-chargin-app` is a typo in an inbound link, and redirecting it would teach Google the typo is real | deliberate |
+| Sitemap resubmitted at the apex, 11 URLs, Success. The old `www` sitemap entry is still registered in Search Console and should be removed so there is one canonical sitemap | Humberto, Search Console |
+
 ### 2026-09-17 — apex made canonical (Humberto)
 **Attribution: Humberto, in the Vercel dashboard — not my change.**
 
@@ -242,6 +283,10 @@ contribution, not a promised outcome.
 1. ~~**Set `hubmerto.com` as the primary domain in Vercel.**~~ **Done
    2026-09-17 by Humberto**, with a 308 rather than Vercel's default 307. See
    the log. The canonical mismatch described in the baseline no longer exists.
+2. **Point the four `www` credit links at the apex** on memphy.co, the Emilio
+   Tamez site and mariematusz.com, and consider dropping `rel="noreferrer"` so
+   the referral shows up in analytics.
+3. **Remove the `www` sitemap entry** in Search Console.
 2. **Export the 404 list from Search Console.** Pages → "Not found (404)" →
    Export. Ten URLs is a lot for a 13-page site and only one
    (`/projects/saisonkalender`) can be identified from the repo. The same export
