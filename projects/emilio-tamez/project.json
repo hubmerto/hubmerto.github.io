@@ -90,10 +90,10 @@
             ]
         },
         {
-            "text": "An art-first portfolio for Emilio Tamez, a photographer in New York, where the photographs are the only spectacle and the site behaves like a printed object. Twenty-four works sit behind a single rolling column of numbers with no first or last; a flick sets it coasting like a flywheel. Opening a project doesn't feel like navigation: the photograph you click flies into place and the page rearranges around it. Fashion commissions live apart, in a darker register of the same system."
+            "text": "Emilio Tamez wanted a site where nothing performs except the photographs, so it behaves like an object you turn in your hands. Twenty-four works hang on a single column of numbers with no beginning and no end. \"If I just roll my finger fast, it keeps running until it loses traction,\" she said, and the column became a flywheel. Each time it comes back around, a work shows a different face, changed while no one is looking."
         },
         {
-            "text": "There is no database. An editor built into the site lets Emilio reorder, write and publish in three languages, each change a single Git commit; within a day of handover she had published more than thirty times."
+            "text": "Nothing here feels like loading a page. Click a photograph and it flies into its gallery; close the project and the last picture you looked at flies home and stays on as the cover. Fashion waits behind one switch, the same instrument tuned dark. She runs the site herself, and published thirty times on her first day."
         }
     ]
 }
