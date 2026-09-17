@@ -431,11 +431,55 @@
         return frag;
     }
 
+    // Re-attach the parts of a node that cannot survive as markup: the caption
+    // and code the inspector reads off the element, and the ready-state
+    // listeners that fade the loader out.
+    function hydrateNode(n, media) {
+        if (media.code) {
+            n._code = media.code;
+            n._codeLang = media.codeLang || 'js';
+            n._codeTitle = media.codeTitle || '';
+        }
+        if (media.caption) n._caption = media.caption;
+
+        function markReady() { n.classList.add('media-ready'); }
+        var el = n.querySelector('video, iframe, img');
+        if (!el) return;
+        if (media.type === 'video') {
+            el.addEventListener('loadeddata', markReady, { once: true });
+            el.addEventListener('ended', function() { el.currentTime = 0; el.play().catch(function(){}); });
+        } else if (media.type === 'iframe') {
+            el.addEventListener('load', markReady, { once: true });
+        } else {
+            // A pre-rendered loading="lazy" image inside the canvas never gets
+            // requested: at parse time the canvas has no transform yet, so the
+            // browser rules it out of view and the transform that later brings it
+            // into view does not re-trigger the load. Flipping it to eager starts
+            // the fetch, which is what the runtime-built version did anyway.
+            if (!el.complete) el.loading = 'eager';
+            if (el.complete && el.naturalWidth) markReady();
+            else {
+                el.addEventListener('load', markReady, { once: true });
+                el.addEventListener('error', markReady, { once: true });
+            }
+        }
+    }
+
     function renderCanvas(project) {
         var canvas = document.getElementById('canvas');
-        (project.media || []).forEach(function(m) {
-            canvas.appendChild(createNode(m));
-        });
+        var media = project.media || [];
+        // The nodes are pre-rendered into the HTML by scripts/prerender-projects.mjs
+        // so the images and their alt text are in the served page. Only build them
+        // when they aren't there, or when the pre-render has gone stale.
+        var existing = canvas.querySelectorAll('.node');
+        if (existing.length && existing.length === media.length) {
+            media.forEach(function(m, i) { hydrateNode(existing[i], m); });
+        } else {
+            if (existing.length) canvas.innerHTML = '';
+            media.forEach(function(m) {
+                canvas.appendChild(createNode(m));
+            });
+        }
         // Lazy-attach video sources when node enters viewport
         var lazyVideos = canvas.querySelectorAll('video[data-src]');
         if (lazyVideos.length && 'IntersectionObserver' in window) {

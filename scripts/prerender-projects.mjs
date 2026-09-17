@@ -83,6 +83,59 @@ const slugs = readdirSync(projectsDir, { withFileTypes: true })
     .map((d) => d.name)
     .sort();
 
+const CANVAS_START = '<!-- prerender:canvas:start -->';
+const CANVAS_END = '<!-- prerender:canvas:end -->';
+
+/**
+ * The canvas nodes, exactly as createNode() builds them, so the project's
+ * images ship in the HTML with their alt text instead of appearing only once
+ * the drag canvas has been built. template.js re-attaches the JS-only parts
+ * (_caption, _code, ready-state listeners) to whatever it finds here.
+ */
+function renderCanvas(project, slug) {
+    return (project.media || [])
+        .map((m) => {
+            // resolveMediaPaths() rewrites relative srcs at runtime; do the same here.
+            const src = /^([a-z]+:|\/)/i.test(m.src) ? m.src : `/projects/${slug}/${m.src}`;
+
+            let el;
+            if (m.type === 'video') {
+                const mime = m.mime || (m.src.endsWith('.webm') ? 'video/webm' : 'video/mp4');
+                el = `<video autoplay loop muted playsinline preload="none" data-src="${esc(src)}" data-mime="${esc(mime)}"></video>`;
+            } else if (m.type === 'iframe') {
+                const title = m.title ? ` title="${esc(m.title)}"` : '';
+                el = `<iframe src="${esc(src)}" loading="lazy" allow="autoplay" referrerpolicy="no-referrer-when-downgrade"${title}></iframe>`;
+            } else {
+                const alt = ` alt="${esc(m.alt || '')}"`;
+                el = `<img loading="lazy" decoding="async" src="${esc(src)}"${alt}>`;
+            }
+
+            const cls = ['node'];
+            if (m.invertOnDark) cls.push('invert-on-dark');
+            if (m.format === 'mobile' || m.mobileFrame) cls.push('mobile-frame');
+
+            let style = '';
+            if (m.spin) {
+                cls.push('spin');
+                const dur = m.spin === 'fast' ? '3s' : m.spin === 'slow' ? '20s' : m.spin === 'medium' ? '8s' : m.spin;
+                style = ` style="--spin-duration:${esc(dur)}"`;
+            }
+
+            let data = '';
+            if (m.w !== undefined) data += ` data-w="${esc(m.w)}"`;
+            if (m.h !== undefined) data += ` data-h="${esc(m.h)}"`;
+            if (m.size !== undefined) data += ` data-size="${esc(m.size)}"`;
+            if (m.cx !== undefined) data += ` data-cx="${esc(m.cx)}"`;
+            if (m.cy !== undefined) data += ` data-cy="${esc(m.cy)}"`;
+            if (m.cx !== undefined && m.cy !== undefined) data += ` data-fixed="true"`;
+
+            const handles = ['tl', 'tr', 'bl', 'br'].map((p) => `<div class="handle ${p}" data-handle="${p}"></div>`).join('');
+
+            return `<div class="${cls.join(' ')}"${data}${style}>${el}<div class="node-loader" aria-hidden="true"></div>${handles}</div>`;
+        })
+        .join('');
+}
+
 let changed = 0;
 for (const slug of slugs) {
     const pagePath = join(projectsDir, slug, 'index.html');
@@ -93,6 +146,7 @@ for (const slug of slugs) {
 
     const project = JSON.parse(readFileSync(join(projectsDir, slug, 'project.json'), 'utf8'));
     const inner = `${START}${renderSidebar(project)}${END}`;
+    const canvasInner = `${CANVAS_START}${renderCanvas(project, slug)}${CANVAS_END}`;
 
     const html = readFileSync(pagePath, 'utf8');
     const aside = /(<aside[^>]*id="sidebar-left"[^>]*>)([\s\S]*?)(<\/aside>)/;
@@ -101,9 +155,17 @@ for (const slug of slugs) {
         continue;
     }
 
-    const next = html
+    // Nodes contain nested </div>, so replace between the markers once they exist.
+    const canvasMarkers = new RegExp(`${CANVAS_START}[\\s\\S]*?${CANVAS_END}`);
+    const canvasEmpty = /(<div[^>]*id="canvas"[^>]*>)(\s*)(<\/div>)/;
+
+    let next = html
         .replace(aside, (_, open, __, close) => `${open}${inner}${close}`)
         .replace(/(src=")(\/projects\/template\.js)(\?v=[0-9a-f]+)?(")/g, `$1$2?v=${templateHash}$4`);
+
+    if (canvasMarkers.test(next)) next = next.replace(canvasMarkers, canvasInner);
+    else if (canvasEmpty.test(next)) next = next.replace(canvasEmpty, (_, open, __, close) => `${open}${canvasInner}${close}`);
+    else console.warn(`  ${slug}: #canvas not empty and no markers — canvas left alone`);
     if (next !== html) {
         writeFileSync(pagePath, next);
         changed++;

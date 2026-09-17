@@ -1,97 +1,104 @@
 {
-    "slug": "strelitzia",
-    "title": "Strelitzia",
-    "hudIndex": "01",
-    "media": [
-        {
-            "type": "image",
-            "src": "media/strelitzia_hero_01_final-display.png",
-            "cx": 0,
-            "cy": -320,
-            "size": 0.95
-        },
-        {
-            "type": "image",
-            "src": "media/strelitzia_hero_02_detail-backlit.png",
-            "cx": 0,
-            "cy": 320,
-            "size": 0.95
-        },
-        {
-            "type": "video",
-            "src": "media/strelitzia_01_wireframe.mp4",
-            "size": 0.75,
-            "cx": -1000,
-            "cy": -300
-        },
-        {
-            "type": "video",
-            "src": "media/strelitzia_02_orbit.mp4",
-            "size": 0.75,
-            "cx": -1000,
-            "cy": 300
-        },
-        {
-            "type": "image",
-            "src": "media/strelitzia_render_01_three-quarter-front.png",
-            "size": 0.65,
-            "cx": 900,
-            "cy": -600
-        },
-        {
-            "type": "image",
-            "src": "media/strelitzia_render_02_back-three-quarter.png",
-            "size": 0.65,
-            "cx": 900,
-            "cy": 0
-        },
-        {
-            "type": "image",
-            "src": "media/strelitzia_render_03_front-on.png",
-            "size": 0.65,
-            "cx": 900,
-            "cy": 600
-        }
-    ],
-    "columns": [
-        {
-            "title": "Strelitzia",
-            "tags": "3d · blender · 2023",
-            "meta": [
-                {
-                    "label": "Client",
-                    "value": "Self-initiated"
-                },
-                {
-                    "label": "Year",
-                    "value": "2023"
-                },
-                {
-                    "label": "Department",
-                    "value": "3D"
-                },
-                {
-                    "label": "Typology",
-                    "value": "Spec project, material study"
-                },
-                {
-                    "label": "Software",
-                    "value": "Blender"
-                },
-                {
-                    "label": "Output",
-                    "value": "Turntable video loops"
-                }
-            ]
-        },
-        {
-            "text": "The portfolio study takes a single botanical subject, the bird of paradise, and strips it of its natural palette to rebuild it under museum conditions: black lacquer on the outer sepals, deep gold on the inner petals, condensation held on the surface as if kept behind glass at the wrong temperature."
-        },
-        {
-            "text": "The species was chosen for its geometry rather than its color, asymmetric and angular, a hard spathe and blade-like sepals fused into a structure that reads as apparatus rather than ornament, supplying sharp creases, long curvature and thin edges where light breaks. Each material is tuned against that geometry. The lacquer runs near-mirror on the ridges and falls off fast into the creases, so form is read through reflection rather than shading, while the gold sits warmer and softer to separate the inner structure from the shell."
-        },
-        {
-            "text": "Condensation gathers dense in the crevices and thins across the exposed faces, giving the gloss a scale reference. The whole is lit as product photography, a controlled key against a black surround so the lacquer returns the light source as a readable shape rather than a glow, then rendered as seamless turntable loops that show every face of the material in sequence."
-        }
-    ]
+ "slug": "strelitzia",
+ "title": "Strelitzia",
+ "hudIndex": "01",
+ "media": [
+  {
+   "type": "image",
+   "src": "media/strelitzia_hero_01_final-display.png",
+   "alt": "Bird of paradise flower lit against black, cream petals fanned above a dark grey-purple sheath",
+   "cx": 0,
+   "cy": -320,
+   "size": 0.95
+  },
+  {
+   "type": "image",
+   "src": "media/strelitzia_hero_02_detail-backlit.png",
+   "alt": "Backlit close-up of the bird of paradise, water beads on the sheath and a navy tongue behind the cream petals",
+   "cx": 0,
+   "cy": 320,
+   "size": 0.95
+  },
+  {
+   "type": "video",
+   "src": "media/strelitzia_01_wireframe.mp4",
+   "alt": "Blender with the finished bird of paradise render open in the render window",
+   "size": 0.75,
+   "cx": -1000,
+   "cy": -300
+  },
+  {
+   "type": "video",
+   "src": "media/strelitzia_02_orbit.mp4",
+   "alt": "Blender viewport orbiting the untextured wireframe mesh of the flower",
+   "size": 0.75,
+   "cx": -1000,
+   "cy": 300
+  },
+  {
+   "type": "image",
+   "src": "media/strelitzia_render_01_three-quarter-front.png",
+   "alt": "Three-quarter front render of the bird of paradise, cream petals over a plum-toned sheath",
+   "size": 0.65,
+   "cx": 900,
+   "cy": -600
+  },
+  {
+   "type": "image",
+   "src": "media/strelitzia_render_02_back-three-quarter.png",
+   "alt": "Rear three-quarter render, petals leaning away and the sheath crossing the frame",
+   "size": 0.65,
+   "cx": 900,
+   "cy": 0
+  },
+  {
+   "type": "image",
+   "src": "media/strelitzia_render_03_front-on.png",
+   "alt": "Symmetrical front-on render, petals fanned wide around a single navy tongue",
+   "size": 0.65,
+   "cx": 900,
+   "cy": 600
+  }
+ ],
+ "columns": [
+  {
+   "title": "Strelitzia",
+   "tags": "3d · blender · 2023",
+   "meta": [
+    {
+     "label": "Client",
+     "value": "Self-initiated"
+    },
+    {
+     "label": "Year",
+     "value": "2023"
+    },
+    {
+     "label": "Department",
+     "value": "3D"
+    },
+    {
+     "label": "Typology",
+     "value": "Spec project, material study"
+    },
+    {
+     "label": "Software",
+     "value": "Blender"
+    },
+    {
+     "label": "Output",
+     "value": "Turntable video loops"
+    }
+   ]
+  },
+  {
+   "text": "The portfolio study takes a single botanical subject, the bird of paradise, and strips it of its natural palette to rebuild it under museum conditions: black lacquer on the outer sepals, deep gold on the inner petals, condensation held on the surface as if kept behind glass at the wrong temperature."
+  },
+  {
+   "text": "The species was chosen for its geometry rather than its color, asymmetric and angular, a hard spathe and blade-like sepals fused into a structure that reads as apparatus rather than ornament, supplying sharp creases, long curvature and thin edges where light breaks. Each material is tuned against that geometry. The lacquer runs near-mirror on the ridges and falls off fast into the creases, so form is read through reflection rather than shading, while the gold sits warmer and softer to separate the inner structure from the shell."
+  },
+  {
+   "text": "Condensation gathers dense in the crevices and thins across the exposed faces, giving the gloss a scale reference. The whole is lit as product photography, a controlled key against a black surround so the lacquer returns the light source as a readable shape rather than a glow, then rendered as seamless turntable loops that show every face of the material in sequence."
+  }
+ ]
 }

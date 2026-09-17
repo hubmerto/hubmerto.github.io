@@ -1,31 +1,67 @@
 {
-    "slug": "marie-matusz",
-    "title": "Marie Matusz",
-    "hudIndex": "07",
-    "media": [
-        { "type": "video", "src": "media/marie-matusz.mp4" },
-        { "type": "image", "src": "media/logo.png", "alt": "Marie Matusz monogram", "caption": "Monogram — the MM ligature drawn as intersecting planes of glass, transparent where they cross." },
-        { "type": "image", "src": "media/work-1.webp", "alt": "Marie Matusz — catalogue work", "caption": "A catalogue work, held at depth in the dark field of the index." }
-    ],
-    "columns": [
-        {
-            "title": "Marie Matusz",
-            "tags": "digital · 2026",
-            "meta": [
-                { "label": "Year", "value": "2026" },
-                { "label": "Format", "value": "Website, spatial index" },
-                { "label": "Client", "value": "Marie Matusz, artist (Basel)" },
-                { "label": "Design & Dev", "value": "Humberto Gesser" },
-                { "label": "Stack", "value": "Next.js, TypeScript, vanilla CSS" },
-                { "label": "Typeface", "value": "Lucifer" },
-                { "label": "Site", "value": "mariematusz.com", "href": "https://mariematusz.com" }
-            ]
-        },
-        {
-            "text": "Marie Matusz works with display and context as her material, and describes her practice as \"placing things at a distance that we can get closer to.\" The site is built from that sentence: a single continuous space in which her works hang at depth in a dark field, and scrolling is the act of approach. Reaching a work and opening it is one unbroken gesture. The clicked image carries itself into its gallery, its companion images are born from the same vanishing point everything else comes from, and on closing nothing retreats: every image expands past the viewer and exits the frame. The world only moves forward."
-        },
-        {
-            "text": "It is a hand-built Next.js application, styled in plain CSS from a single token system, and it never navigates. The tunnel lives in the layout and never unmounts, so every page is a state of one persistent scene rather than a new document. A single critically damped spring is the only thing that moves the camera: scroll, focal snapping, the gallery, and the rush between pages all point at it, so no two animations ever fight. Opening a work is a shared-element transition, the clicked image measured and carried into place rather than swapped, and the catalogue, served as AVIF, is decoded by a background queue that warms each image before it is requested. The interface withholds itself, and the work stays the brightest thing on screen."
-        }
-    ]
+ "slug": "marie-matusz",
+ "title": "Marie Matusz",
+ "hudIndex": "07",
+ "media": [
+  {
+   "type": "video",
+   "src": "media/marie-matusz.mp4",
+   "alt": "An installation view rushing forward through a dark field of motion streaks"
+  },
+  {
+   "type": "image",
+   "src": "media/logo.png",
+   "alt": "Marie Matusz monogram",
+   "caption": "Monogram — the MM ligature drawn as intersecting planes of glass, transparent where they cross."
+  },
+  {
+   "type": "image",
+   "src": "media/work-1.webp",
+   "alt": "Marie Matusz — catalogue work",
+   "caption": "A catalogue work, held at depth in the dark field of the index."
+  }
+ ],
+ "columns": [
+  {
+   "title": "Marie Matusz",
+   "tags": "digital · 2026",
+   "meta": [
+    {
+     "label": "Year",
+     "value": "2026"
+    },
+    {
+     "label": "Format",
+     "value": "Website, spatial index"
+    },
+    {
+     "label": "Client",
+     "value": "Marie Matusz, artist (Basel)"
+    },
+    {
+     "label": "Design & Dev",
+     "value": "Humberto Gesser"
+    },
+    {
+     "label": "Stack",
+     "value": "Next.js, TypeScript, vanilla CSS"
+    },
+    {
+     "label": "Typeface",
+     "value": "Lucifer"
+    },
+    {
+     "label": "Site",
+     "value": "mariematusz.com",
+     "href": "https://mariematusz.com"
+    }
+   ]
+  },
+  {
+   "text": "Marie Matusz works with display and context as her material, and describes her practice as \"placing things at a distance that we can get closer to.\" The site is built from that sentence: a single continuous space in which her works hang at depth in a dark field, and scrolling is the act of approach. Reaching a work and opening it is one unbroken gesture. The clicked image carries itself into its gallery, its companion images are born from the same vanishing point everything else comes from, and on closing nothing retreats: every image expands past the viewer and exits the frame. The world only moves forward."
+  },
+  {
+   "text": "It is a hand-built Next.js application, styled in plain CSS from a single token system, and it never navigates. The tunnel lives in the layout and never unmounts, so every page is a state of one persistent scene rather than a new document. A single critically damped spring is the only thing that moves the camera: scroll, focal snapping, the gallery, and the rush between pages all point at it, so no two animations ever fight. Opening a work is a shared-element transition, the clicked image measured and carried into place rather than swapped, and the catalogue, served as AVIF, is decoded by a background queue that warms each image before it is requested. The interface withholds itself, and the work stays the brightest thing on screen."
+  }
+ ]
 }
