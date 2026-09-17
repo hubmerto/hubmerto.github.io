@@ -1,0 +1,103 @@
+{
+    "slug": "memphy",
+    "title": "Memphy",
+    "hudIndex": "08",
+    "media": [
+        {
+            "type": "image",
+            "src": "media/room.webp",
+            "alt": "memphy.co — the GO ALL NIGHT room",
+            "caption": "GO ALL NIGHT: memphy on one screen, the caller on the line on the other, the chat running underneath.",
+            "cx": 0,
+            "cy": -330,
+            "size": 0.9
+        },
+        {
+            "type": "video",
+            "src": "media/memphy-logo.mp4",
+            "caption": "The chrome emblem, extruded from her mark in Three.js. It spun alone on the holding page the day the domain went live.",
+            "cx": 0,
+            "cy": 330,
+            "size": 0.6
+        },
+        {
+            "type": "image",
+            "src": "media/modeling.webp",
+            "alt": "memphy.co — MODELING room",
+            "caption": "MODELING: 27 jobs, each with a photo stage, full credits and a MORE LIKE THIS wall.",
+            "cx": -1050,
+            "cy": -330,
+            "size": 0.75
+        },
+        {
+            "type": "image",
+            "src": "media/music.webp",
+            "alt": "memphy.co — MUSIC room",
+            "caption": "MUSIC: self-hosted videos and sets under one tube-site player bar.",
+            "cx": 1050,
+            "cy": -330,
+            "size": 0.75
+        },
+        {
+            "type": "image",
+            "src": "media/shop.webp",
+            "alt": "memphy.co — SHOP",
+            "caption": "SHOP: live products from SA1NT ONE's Shopify beside archived sold-out pieces.",
+            "cx": -1050,
+            "cy": 330,
+            "size": 0.75
+        },
+        {
+            "type": "image",
+            "src": "media/phone.webp",
+            "alt": "memphy.co on a phone",
+            "caption": "On a phone, the rooms stack under a fixed row of tabs.",
+            "cx": 1000,
+            "cy": 330,
+            "size": 0.85
+        }
+    ],
+    "columns": [
+        {
+            "title": "Memphy",
+            "tags": "digital · 2026",
+            "meta": [
+                {
+                    "label": "Year",
+                    "value": "2026"
+                },
+                {
+                    "label": "Format",
+                    "value": "Website, merch shop, CMS"
+                },
+                {
+                    "label": "Client",
+                    "value": "memphy, model, DJ and producer (Brooklyn)"
+                },
+                {
+                    "label": "Store",
+                    "value": "SA1NT ONE (Shopify)"
+                },
+                {
+                    "label": "Design & Dev",
+                    "value": "Humberto Gesser"
+                },
+                {
+                    "label": "Stack",
+                    "value": "Vanilla JS, Three.js, Vercel, Shopify Storefront API"
+                },
+                {
+                    "label": "Site",
+                    "value": "memphy.co",
+                    "href": "https://www.memphy.co"
+                }
+            ]
+        },
+        {
+            "text": "memphy.co is the site of memphy, a Brooklyn model, DJ and producer, built in the interface of a 2010-era webcam site. Visitors land in a live room: memphy performs her single on one screen while fans take turns on the line on the other, and a chat scrolls in fifteen languages. Around it sit her modeling, music, gigs and a merch shop, all in the same vernacular. The parody carries real information: every credit, comment and press link on the site is sourced."
+        },
+        {
+            "text": "The site is one static HTML file, built in six weeks. One player bar drives native video, YouTube and SoundCloud. The shop checks out through her label's Shopify, and an editor lets her team update the site themselves, publishing each change as a Git commit."
+        }
+    ]
+}

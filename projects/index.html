@@ -99,12 +99,12 @@
         }
         main.loaded { opacity: 1; }
 
-        /* Masonry-like grid: 12 cols, items span variably */
+        /* Masonry-like grid: 12 cols, rows alternate two tiles (span 6) and three (span 4) */
         .grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
-            gap: 96px 64px;
-            grid-auto-flow: dense;
+            gap: 48px 32px;
+            align-items: start;
         }
 
         .piece {
@@ -226,38 +226,38 @@
         /* Every tile is an 820×700 horizontal frame */
         .piece { aspect-ratio: 820 / 700; }
         .piece-media {
-            top: 22%; bottom: 22%;
-            left: 18.11%; right: 18.11%;
+            top: 9%; bottom: 9%;
+            left: 7.5%; right: 7.5%;
         }
         /* Vertical opt-in (700×820) for any future piece */
         .piece.vertical { aspect-ratio: 700 / 820; }
         .piece.vertical .piece-media {
-            top: 18.11%; bottom: 18.11%;
-            left: 22%; right: 22%;
+            top: 7.5%; bottom: 7.5%;
+            left: 9%; right: 9%;
         }
         /* Tight frame: reduce margin around image (frame hugs the image) */
         .piece.tight.vertical .piece-media {
-            top: 8%; bottom: 8%;
-            left: 10%; right: 10%;
+            top: 4%; bottom: 4%;
+            left: 5%; right: 5%;
         }
         .piece.tight:not(.vertical) .piece-media {
-            top: 10%; bottom: 10%;
-            left: 8%; right: 8%;
+            top: 5%; bottom: 5%;
+            left: 4%; right: 4%;
         }
 
         /* Sentinel for infinite scroll */
         .sentinel { grid-column: 1 / -1; height: 1px; }
 
         @media (max-width: 900px) {
-            .grid { grid-template-columns: repeat(6, 1fr); gap: 56px 32px; }
-            .span-3 { grid-column: span 3; }
-            .span-4, .span-5, .span-6, .span-8 { grid-column: span 6; }
+            .grid { grid-template-columns: repeat(6, 1fr); gap: 32px 20px; }
+            .span-6 { grid-column: span 3; }
+            .span-4 { grid-column: span 2; }
             main { padding: 32px 6vw 80px; }
             .page-header { padding: 18px 16px; }
             .piece::after { outline-width: 6px; outline-offset: -3px; }
         }
         @media (max-width: 520px) {
-            .grid { grid-template-columns: repeat(2, 1fr); gap: 40px 16px; }
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 28px 16px; }
             .span-3, .span-4, .span-5, .span-6, .span-8 { grid-column: span 2; }
             main { padding: 24px 16px 60px; }
         }
@@ -289,16 +289,16 @@
 (function() {
     // Catalog: each piece = one tile. Multiple pieces per project (uses existing media).
     var catalog = [
-        { project: 'Memphy', tag: 'WEB', href: '/projects/memphy', type: 'video', src: '/projects/memphy/media/memphy-logo.mp4', mime: 'video/mp4', span: 6, locked: true },
-        { project: 'Karim Boumjimar', tag: 'WEB', href: '/projects/karim-boumjimar', type: 'image', src: '/projects/karim-boumjimar/media/vase.png', span: 6 },
-        { project: 'Marie Matusz', tag: 'WEB', href: '/projects/marie-matusz', type: 'video', src: '/projects/marie-matusz/media/marie-matusz.mp4', mime: 'video/mp4', span: 6, tight: true },
-        { project: 'Strelitzia', tag: '3D', href: '/projects/strelitzia', type: 'image', src: '/projects/strelitzia/media/strelitzia-1.png', span: 6 },
-        { project: 'Emojify', tag: 'TOOL', href: '/projects/emojify', type: 'image', src: '/projects/emojify/media/musik_plastikman.png', span: 4 },
-        { project: 'Boiler Eggs', tag: 'TOOL', href: '/projects/boiler-eggs', type: 'video', src: '/projects/boiler-eggs/media/boiler-eggs.mp4', mime: 'video/mp4', span: 5, vertical: true, tight: true },
-        { project: 'Anonymous Empire', tag: 'ARCHIVE', href: '/projects/anonymous-empire', type: 'video', src: '/projects/anonymous-empire/media/pile.webm', mime: 'video/webm', span: 4 }
+        { project: 'Memphy', tag: 'WEB', href: '/projects/memphy', type: 'video', src: '/projects/memphy/media/memphy-logo.mp4', mime: 'video/mp4' },
+        { project: 'Karim Boumjimar', tag: 'WEB', href: '/projects/karim-boumjimar', type: 'image', src: '/projects/karim-boumjimar/media/vase.png' },
+        { project: 'Marie Matusz', tag: 'WEB', href: '/projects/marie-matusz', type: 'video', src: '/projects/marie-matusz/media/marie-matusz.mp4', mime: 'video/mp4', tight: true },
+        { project: 'Strelitzia', tag: '3D', href: '/projects/strelitzia', type: 'image', src: '/projects/strelitzia/media/strelitzia-1.png' },
+        { project: 'Emojify', tag: 'TOOL', href: '/projects/emojify', type: 'image', src: '/projects/emojify/media/musik_plastikman.png' },
+        { project: 'Boiler Eggs', tag: 'TOOL', href: '/projects/boiler-eggs', type: 'video', src: '/projects/boiler-eggs/media/boiler-eggs.mp4', mime: 'video/mp4', vertical: true, tight: true },
+        { project: 'Anonymous Empire', tag: 'ARCHIVE', href: '/projects/anonymous-empire', type: 'video', src: '/projects/anonymous-empire/media/pile.webm', mime: 'video/webm' }
         // Scan Chamber — hidden for now (lives at /scan-chamber, self-contained piece). Un-comment to surface in the grid.
         // TODO before surfacing: add a poster thumbnail (set `src`, and `type`/`mime` to match) and confirm `tag` (placeholder '3D').
-        // { project: 'Scan Chamber', tag: '3D', href: '/scan-chamber', type: 'image', src: '/scan-chamber/media/poster.png', span: 5 },
+        // { project: 'Scan Chamber', tag: '3D', href: '/scan-chamber', type: 'image', src: '/scan-chamber/media/poster.png' },
     ];
 
     var grid = document.getElementById('grid');
@@ -313,7 +313,7 @@
             el = document.createElement('a');
             el.href = item.href;
         }
-        el.className = 'piece span-' + (item.span || 4) + (item.locked ? ' locked' : '') + (item.vertical ? ' vertical' : '') + (item.tight ? ' tight' : '');
+        el.className = 'piece span-' + item.span + (item.locked ? ' locked' : '') + (item.vertical ? ' vertical' : '') + (item.tight ? ' tight' : '');
 
         var media = document.createElement('div');
         media.className = 'piece-media';
@@ -389,8 +389,12 @@
     function appendPage() {
         pageCount++;
         var frag = document.createDocumentFragment();
+        // Rows alternate 2 and 3 tiles: span 6 / span 4 on the 12-col grid.
+        var rows = [2, 3], row = 0, left = rows[0];
         catalog.forEach(function(item) {
+            item.span = 12 / rows[row % rows.length];
             frag.appendChild(buildPiece(item));
+            if (--left === 0) { row++; left = rows[row % rows.length]; }
         });
         // Re-insert sentinel at end
         var oldSentinel = document.getElementById('sentinel');
